@@ -5,6 +5,7 @@
  */
 package app;
 
+import entidades.Usuarios;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -17,6 +18,12 @@ import javafx.stage.StageStyle;
  * @author Matth
  */
 public class App extends Application {
+    private static App instance;
+    private Usuarios usuarioActual;
+    
+    public App() {
+        instance = this;
+    }
     
     @Override
     public void start(Stage stage) throws Exception {
@@ -29,11 +36,19 @@ public class App extends Application {
         stage.show();
     }
 
+    public static App getInstance() {
+        return instance;
+    }
+
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
         launch(args);
+    }
+    
+    public void gotoLogin(){
+        
     }
     
 }

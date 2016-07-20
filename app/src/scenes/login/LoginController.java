@@ -10,6 +10,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -40,9 +41,7 @@ public class LoginController implements Initializable {
     }    
     
     public void salir(){
-        stage = (Stage) btnSalir.getScene().getWindow();
-        stage.close();
-        
+        Platform.exit();
     }
     
     public void ingresar(){
@@ -58,7 +57,7 @@ public class LoginController implements Initializable {
         
         stage.getScene().setRoot(root);
         
-        
+        stage.setFullScreen(true);
     }
     
     
