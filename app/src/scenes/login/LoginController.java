@@ -56,8 +56,6 @@ public class LoginController implements Initializable {
         }
         
         stage.getScene().setRoot(root);
-        
-        stage.setFullScreen(true);
     }
     
     
