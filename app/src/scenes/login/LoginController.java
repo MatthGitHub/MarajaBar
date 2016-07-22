@@ -33,7 +33,7 @@ public class LoginController implements Initializable {
     @FXML public Button btnSalir;
     @FXML public Button btnIngresar;
     
-    Stage stage;
+    private Stage stage;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {

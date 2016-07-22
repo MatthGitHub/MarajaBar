@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="scenes.mesas.MesasController">
+    <stylesheets>
+        <URL value="@mesas.css" />
+    </stylesheets>
+   <children>
+      <VBox layoutY="-1.0" prefHeight="400.0" prefWidth="600.0">
+         <children>
+            <Pane prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <Label fx:id="idMesa" layoutX="206.0" layoutY="6.0" prefHeight="35.0" prefWidth="177.0" text="Mesa">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+            <Pane prefHeight="456.0" prefWidth="600.0">
+               <children>
+                  <TableView fx:id="tvMesa" prefHeight="266.0" prefWidth="305.0">
+                    <columns>
+                      <TableColumn prefWidth="163.0" text="Nombre" />
+                      <TableColumn minWidth="5.0" prefWidth="55.0" text="Precio" />
+                        <TableColumn text="Total" />
+                    </columns>
+                  </TableView>
+                  <TableView fx:id="tvProductos" layoutX="301.0" prefHeight="304.0" prefWidth="299.0">
+                     <columns>
+                        <TableColumn fx:id="colNombre" prefWidth="225.0" text="Nombre" />
+                        <TableColumn fx:id="colPrecio" minWidth="0.0" prefWidth="68.0" text="Precio" />
+                     </columns>
+                  </TableView>
+                  <TitledPane animated="false" layoutY="266.0" prefHeight="48.0" prefWidth="299.0" text="Total">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <Label fx:id="lblTotal" alignment="CENTER" contentDisplay="CENTER" layoutX="-6.0" layoutY="-8.0" prefHeight="35.0" prefWidth="305.0" text="\$" textAlignment="CENTER" />
+                           </children>
+                        </AnchorPane>
+                    </content>
+                  </TitledPane>
+               </children>
+            </Pane>
+            <Pane prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <Button fx:id="btnSalir" layoutX="25.0" layoutY="13.0" mnemonicParsing="false" onAction="#salir" text="Salir" />
+                  <Button layoutX="276.0" layoutY="13.0" mnemonicParsing="false" text="Cerrar Mesa" />
+                  <Button fx:id="btnAgregar" layoutX="527.0" layoutY="13.0" mnemonicParsing="false" onAction="#agregar" text="Agregar" />
+               </children></Pane>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
