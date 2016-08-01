@@ -28,14 +28,15 @@
                <children>
                   <TableView fx:id="tvMesa" prefHeight="266.0" prefWidth="305.0">
                     <columns>
-                      <TableColumn prefWidth="163.0" text="Nombre" />
-                      <TableColumn minWidth="5.0" prefWidth="55.0" text="Precio" />
-                        <TableColumn text="Total" />
+                      <TableColumn fx:id="colNombreC" prefWidth="163.0" text="Nombre" />
+                      <TableColumn fx:id="colPrecioC" minWidth="5.0" prefWidth="55.0" text="Precio" />
+                        <TableColumn fx:id="colTotal" text="Total" />
                     </columns>
                   </TableView>
                   <TableView fx:id="tvProductos" layoutX="301.0" prefHeight="304.0" prefWidth="299.0">
                      <columns>
-                        <TableColumn fx:id="colNombre" prefWidth="225.0" text="Nombre" />
+                        <TableColumn fx:id="colId" prefWidth="39.0" text="ID" />
+                        <TableColumn fx:id="colNombre" prefWidth="191.0" text="Nombre" />
                         <TableColumn fx:id="colPrecio" minWidth="0.0" prefWidth="68.0" text="Precio" />
                      </columns>
                   </TableView>

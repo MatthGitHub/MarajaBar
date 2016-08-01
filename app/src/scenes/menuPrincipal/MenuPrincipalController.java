@@ -22,13 +22,18 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.effect.BlendMode;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import scenes.login.LoginController;
@@ -44,19 +49,29 @@ public class MenuPrincipalController implements Initializable {
     @FXML
     public MenuItem btnSalir;
     @FXML
-    public GridPane gpane;
+    public FlowPane flwPane;
+    @FXML
+    public MenuBar menuVentana;
+    @FXML
+    public Button btnIconizar;
+    @FXML
+    public Button btnMaximizar;
 
     private MesaServ serviciosMesa;
     private List<Mesa> listaMesas;
     private List<Button> mesas;
     private Evento evento;
-
+    private int c;
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        //c es mi bandera para saber si esta la ventana maximizada
+        c = 0;
+        menuVentana.setBlendMode(BlendMode.GREEN);
+        flwPane.setHgap(10);
         mesas = new ArrayList<>();
         serviciosMesa = new MesaServ();
         listaMesas = serviciosMesa.traerTodos();
@@ -85,12 +100,42 @@ public class MenuPrincipalController implements Initializable {
                     stageM.show();
                 }
             });
-            gpane.add(buton, i, j);
+            flwPane.getChildren().add(buton);
             j++;
         }
     }
 
     public void salir() throws IOException {
         Platform.exit();
+    }
+    
+    public void moverVentana(){
+        
+    }
+    
+    public void maximizarVentana(){
+        Screen screen = Screen.getPrimary();
+        Rectangle2D bounds = screen.getVisualBounds();
+        Stage stage = (Stage) btnMaximizar.getScene().getWindow();
+        if(c == 0){
+            stage.setX(bounds.getMinX());
+            stage.setY(bounds.getMinY());
+            stage.setWidth(bounds.getWidth());
+            stage.setHeight(bounds.getHeight());
+            c = 1;
+        }else{
+            stage.setX(800);
+            stage.setY(600);
+            stage.setWidth(bounds.getWidth()/2);
+            stage.setHeight(bounds.getHeight()/2);
+            c = 0;
+        }
+        
+        
+    }
+    
+    public void iconizarVentana(){
+        Stage stage = (Stage) btnIconizar.getScene().getWindow();
+        stage.setIconified(true);
     }
 }
