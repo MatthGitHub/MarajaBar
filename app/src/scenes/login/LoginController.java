@@ -5,6 +5,8 @@
  */
 package scenes.login;
 
+import app.ControlledScreen;
+import app.ScreensController;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -24,7 +26,7 @@ import javafx.stage.Stage;
  *
  * @author Matth
  */
-public class LoginController implements Initializable {
+public class LoginController implements Initializable,ControlledScreen {
 
     /**
      * Initializes the controller class.
@@ -34,6 +36,8 @@ public class LoginController implements Initializable {
     @FXML public Button btnIngresar;
     
     private Stage stage;
+    
+    private ScreensController myController; 
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -45,17 +49,12 @@ public class LoginController implements Initializable {
     }
     
     public void ingresar(){
-        stage = (Stage) btnIngresar.getScene().getWindow();
-        Parent root = stage.getScene().getRoot();
-        
-        
-        try {
-            root = FXMLLoader.load(getClass().getResource("/scenes/menuPrincipal/MenuPrincipal.fxml"));
-        } catch (IOException ex) {
-            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        stage.getScene().setRoot(root);
+        myController.setScreen("menuPpal");
+    }
+
+    @Override
+    public void setScreenParent(ScreensController screenParent) {
+        myController = screenParent; 
     }
     
     

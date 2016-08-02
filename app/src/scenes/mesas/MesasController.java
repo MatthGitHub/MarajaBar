@@ -5,16 +5,15 @@
  */
 package scenes.mesas;
 
-import com.sun.javafx.collections.ElementObservableListDecorator;
+import app.ControlledScreen;
+import app.ScreensController;
 import entidades.Productos;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-import javafx.beans.binding.ListBinding;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.ObservableListBase;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -23,7 +22,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import javax.swing.JOptionPane;
 import servicios.ProductoServ;
 
 /**
@@ -31,7 +29,7 @@ import servicios.ProductoServ;
  *
  * @author Administrador
  */
-public class MesasController implements Initializable {
+public class MesasController implements Initializable, ControlledScreen {
 
     @FXML
     public TableView<Productos> tvProductos;
@@ -50,6 +48,7 @@ public class MesasController implements Initializable {
     private ObservableList<Productos> listaProd;
     private ObservableList<Productos> listaConsu;
     private List<Productos> preList;
+    private ScreensController myController;
 
     /**
      * Initializes the controller class.
@@ -87,7 +86,11 @@ public class MesasController implements Initializable {
     }
 
     public void salir() {
-        Stage stage = (Stage) btnSalir.getScene().getWindow();
-        stage.hide();
+        myController.setScreen("menuPpal");
+    }
+
+    @Override
+    public void setScreenParent(ScreensController screenParent) {
+        myController =  screenParent;
     }
 }

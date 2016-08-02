@@ -7,41 +7,47 @@ package app;
 
 import entidades.Usuarios;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import org.eclipse.persistence.internal.oxm.mappings.Login;
 
 /**
  *
  * @author Matth
  */
 public class App extends Application {
-    private static App instance;
     private Usuarios usuarioActual;
-    
-    public App() {
-        instance = this;
-    }
+   /**
+    * Guardo estaticamente un string con la ruta del FXML
+    */ 
+   public static String LoginFXML = "/scenes/login/Login.fxml";
+   public static String MenuPpalFXML = "/scenes/menuPrincipal/MenuPrincipal.fxml";
+   public static String MesasFXML = "/scenes/mesas/Mesas.fxml";
+   public static String UsuariosFXML = "/scenes/usuarios/Usuarios.fxml";
     
     @Override
     public void start(Stage stage) throws Exception {
-        stage.initStyle(StageStyle.UNDECORATED);
-        stage.setResizable(true);
-        stage.getIcons().add(new Image("/resources/images/Icono.png"));
-        Parent root = FXMLLoader.load(getClass().getResource("/scenes/login/Login.fxml"));
         
-        Scene scene = new Scene(root);
-    
+        stage.setTitle("Maraja Bar");
+        stage.initStyle(StageStyle.UNDECORATED);
+
+        //mainCointainer posee un hash con los nodos y su nombre como referencia
+        ScreensController mainContainer = new ScreensController();
+        
+        //Cargo las pantallas en el hash
+        mainContainer.loadScreen("login", App.LoginFXML);
+        mainContainer.loadScreen("menuPpal", App.MenuPpalFXML);
+        mainContainer.loadScreen("mesas", App.MesasFXML);
+        mainContainer.loadScreen("usuarios", UsuariosFXML);
+        mainContainer.setScreen("login");
+        
+        Scene scene = new Scene(mainContainer);
+        
+        
+        //xx.getChildren().remove(test);
+        
         stage.setScene(scene);
         stage.show();
-    }
-
-    public static App getInstance() {
-        return instance;
     }
 
     /**
@@ -50,9 +56,6 @@ public class App extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-    
-    public void gotoLogin(){
-        
-    }
+
     
 }

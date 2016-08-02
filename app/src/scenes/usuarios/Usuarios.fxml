@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="scenes.usuarios.UsuariosController">
+    <stylesheets>
+        <URL value="@usuarios.css" />
+    </stylesheets>
+   <children>
+      <AnchorPane prefHeight="400.0" prefWidth="600.0">
+         <children>
+            <VBox layoutX="6.0" prefHeight="400.0" prefWidth="594.0">
+               <children>
+                  <Pane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="216.0" layoutY="1.0" text="Usuarios" textAlignment="CENTER">
+                           <font>
+                              <Font size="36.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </Pane>
+                  <TabPane prefHeight="461.0" prefWidth="594.0" tabClosingPolicy="UNAVAILABLE">
+                    <tabs>
+                      <Tab text="Usuarios">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <TableView prefHeight="236.0" prefWidth="594.0">
+                                      <columns>
+                                        <TableColumn prefWidth="283.0" text="Usuario" />
+                                        <TableColumn minWidth="0.0" prefWidth="310.0" text="Rol" />
+                                      </columns>
+                                    </TableView>
+                                    <Button layoutX="268.0" layoutY="236.0" mnemonicParsing="false" text="Eliminar" />
+                                 </children>
+                              </AnchorPane>
+                        </content>
+                      </Tab>
+                      <Tab text="Modificar">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                        </content>
+                      </Tab>
+                        <Tab text="Nuevo">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <VBox layoutX="-1.0" layoutY="-1.0" prefHeight="275.0" prefWidth="594.0">
+                                       <children>
+                                          <Pane prefHeight="202.0" prefWidth="594.0" />
+                                          <Pane prefHeight="323.0" prefWidth="594.0">
+                                             <children>
+                                                <PasswordField layoutX="149.0" layoutY="60.0" prefHeight="27.0" prefWidth="279.0" promptText="Confirmar clave" />
+                                                <TextField fx:id="txtUsuario" layoutX="148.0" layoutY="14.0" prefHeight="27.0" prefWidth="280.0" promptText="Nombre de usuario" />
+                                                <PasswordField layoutX="149.0" layoutY="106.0" prefHeight="27.0" prefWidth="279.0" promptText="Confirmar clave" />
+                                             </children>
+                                          </Pane>
+                                          <Pane prefHeight="200.0" prefWidth="200.0">
+                                             <children>
+                                                <Button layoutX="253.0" layoutY="12.0" mnemonicParsing="false" text="Guardar" />
+                                             </children>
+                                          </Pane>
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </AnchorPane>
+                          </content>
+                        </Tab>
+                    </tabs>
+                  </TabPane>
+                  <Pane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <Button fx:id="btnVolver" layoutX="8.0" layoutY="13.0" mnemonicParsing="false" onAction="#volver" text="Volver" />
+                     </children>
+                  </Pane>
+               </children>
+            </VBox>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

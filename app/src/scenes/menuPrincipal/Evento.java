@@ -5,6 +5,7 @@
  */
 package scenes.menuPrincipal;
 
+import app.ScreensController;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,9 +23,15 @@ import scenes.login.LoginController;
  *
  * @author Administrador
  */
-public abstract class Evento extends ActionEvent{
+public abstract class Evento implements EventHandler{
     private Stage stage;
+    private ScreensController myController;
+    
     public void abrirMesa(){
+        
+        myController = new ScreensController();
+        
+        
         stage = new Stage();
         Parent root = null;
         
@@ -37,4 +44,5 @@ public abstract class Evento extends ActionEvent{
         
         stage.getScene().setRoot(root);
     }
+
 }

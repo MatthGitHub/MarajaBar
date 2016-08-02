@@ -10,55 +10,52 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" scaleShape="false" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="scenes.menuPrincipal.MenuPrincipalController">
-    <stylesheets>
-        <URL value="@menuprincipal.css" />
-    </stylesheets>
+<StackPane prefHeight="488.0" prefWidth="696.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="scenes.menuPrincipal.MenuPrincipalController">
    <children>
       <VBox fx:id="vbox" prefHeight="400.0" prefWidth="600.0">
          <children>
             <MenuBar fx:id="menuVentana" onDragDetected="#moverVentana" prefHeight="29.0" prefWidth="600.0">
-              <menus>
-                <Menu mnemonicParsing="false">
+               <menus>
+                  <Menu mnemonicParsing="false">
                      <graphic>
                         <Button fx:id="btnMaximizar" mnemonicParsing="false" onAction="#maximizarVentana" text="[]" />
                      </graphic>
-                </Menu>
+                  </Menu>
                   <Menu mnemonicParsing="false">
                      <graphic>
                         <Button fx:id="btnIconizar" mnemonicParsing="false" onAction="#iconizarVentana" text="-" />
                      </graphic>
                   </Menu>
-              </menus>
+               </menus>
             </MenuBar>
             <Pane prefHeight="28.0" prefWidth="600.0">
                <children>
-                  <MenuBar layoutY="2.0" prefHeight="24.0" prefWidth="600.0">
-                    <menus>
-                      <Menu mnemonicParsing="false" text="Archivo">
-                        <items>
-                          <MenuItem fx:id="btnSalir" mnemonicParsing="false" onAction="#salir" text="Salir" />
-                        </items>
-                      </Menu>
-                        <Menu mnemonicParsing="false" text="Ver">
-                          <items>
-                            <MenuItem mnemonicParsing="false" text="Ventas" />
-                          </items>
+                  <MenuBar prefHeight="29.0" prefWidth="696.0">
+                     <menus>
+                        <Menu mnemonicParsing="false" text="Archivo">
+                           <items>
+                              <MenuItem fx:id="btnSalir" mnemonicParsing="false" onAction="#salir" text="Salir" />
+                           </items>
                         </Menu>
-                      <Menu mnemonicParsing="false" text="Opciones">
-                        <items>
-                          <MenuItem mnemonicParsing="false" text="Proveedores" />
+                        <Menu mnemonicParsing="false" text="Ver">
+                           <items>
+                              <MenuItem mnemonicParsing="false" text="Ventas" />
+                           </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="Opciones">
+                           <items>
+                              <MenuItem mnemonicParsing="false" text="Proveedores" />
                               <MenuItem mnemonicParsing="false" text="Mesas" />
                               <MenuItem mnemonicParsing="false" text="Productos" />
-                              <MenuItem mnemonicParsing="false" text="Usuarios" />
-                        </items>
-                      </Menu>
-                      <Menu mnemonicParsing="false" text="Ayuda">
-                        <items>
-                          <MenuItem mnemonicParsing="false" text="Acerca" />
-                        </items>
-                      </Menu>
-                    </menus>
+                              <MenuItem fx:id="itemUsuarios" mnemonicParsing="false" onAction="#usuarios" text="Usuarios" />
+                           </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="Ayuda">
+                           <items>
+                              <MenuItem mnemonicParsing="false" text="Acerca" />
+                           </items>
+                        </Menu>
+                     </menus>
                   </MenuBar>
                </children>
             </Pane>
@@ -69,9 +66,10 @@
                         <Font name="Arial" size="48.0" />
                      </font>
                   </Label>
-               </children></Pane>
-            <FlowPane fx:id="flwPane" prefHeight="272.0" prefWidth="600.0" />
+               </children>
+            </Pane>
+            <FlowPane fx:id="flwPane" prefHeight="113.0" prefWidth="551.0" />
          </children>
       </VBox>
    </children>
-</AnchorPane>
+</StackPane>
