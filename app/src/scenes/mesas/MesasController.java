@@ -7,21 +7,31 @@ package scenes.mesas;
 
 import app.ControlledScreen;
 import app.ScreensController;
+import com.sun.javafx.beans.event.AbstractNotifyListener;
 import entidades.Productos;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.DialogEvent;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import javax.swing.JOptionPane;
 import servicios.ProductoServ;
 
 /**
@@ -36,7 +46,7 @@ public class MesasController implements Initializable, ControlledScreen {
     @FXML
     public TableColumn colNombre, colPrecio, colId;
     @FXML
-    public TableView<Productos> tvConsumiendo;
+    public TableView<Productos> tvMesa;
     @FXML
     public TableColumn colNombreC, colPrecioC, colTotal;
     @FXML
@@ -46,8 +56,7 @@ public class MesasController implements Initializable, ControlledScreen {
 
     private ProductoServ serviciosP;
     private ObservableList<Productos> listaProd;
-    private ObservableList<Productos> listaConsu;
-    private List<Productos> preList;
+    private ObservableList<Productos> preList;
     private ScreensController myController;
 
     /**
@@ -56,8 +65,9 @@ public class MesasController implements Initializable, ControlledScreen {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        preList = new ArrayList<>();
+        preList = FXCollections.observableArrayList();
         cargarTablaProductos();
+        cargarTablaConsumido();
     }
 
     private void cargarTablaProductos() {
@@ -72,18 +82,23 @@ public class MesasController implements Initializable, ControlledScreen {
         tvProductos.setItems(listaProd);
     }
 
-    public void agregar() {
-
-        if (tvProductos.getSelectionModel().getSelectedIndex() > 0) {
-            colNombreC.setCellValueFactory(new PropertyValueFactory<Productos, String>("nombreProducto"));
-            colPrecioC.setCellValueFactory(new PropertyValueFactory<Productos, String>("Precio"));
-            colTotal.setCellValueFactory(new PropertyValueFactory<>("1"));
-
-            preList.add(tvProductos.getSelectionModel().getSelectedItem());
-            listaConsu = FXCollections.observableArrayList(preList);
-            tvConsumiendo.setItems(listaConsu);
-        }
+    private void cargarTablaConsumido() {
+        colNombreC.setCellValueFactory(new PropertyValueFactory<Productos, String>("nombreProducto"));
+        colPrecioC.setCellValueFactory(new PropertyValueFactory<Productos, String>("Precio"));
+        colTotal.setCellValueFactory(new PropertyValueFactory<>("1"));
     }
+
+    public void agregar() {
+        if(tvProductos.getSelectionModel().getSelectedIndex() > 0){
+            preList.add(tvProductos.getSelectionModel().getSelectedItem());
+            tvMesa.setItems(preList);
+        }else{
+            
+        }
+        
+        
+    }
+    
 
     public void salir() {
         myController.setScreen("menuPpal");
@@ -91,6 +106,6 @@ public class MesasController implements Initializable, ControlledScreen {
 
     @Override
     public void setScreenParent(ScreensController screenParent) {
-        myController =  screenParent;
+        myController = screenParent;
     }
 }

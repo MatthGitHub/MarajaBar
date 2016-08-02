@@ -122,7 +122,7 @@ public class Roles implements Serializable {
 
     @Override
     public String toString() {
-        return "entidades.Roles[ idRol=" + idRol + " ]";
+        return this.descripcion;
     }
     
 }

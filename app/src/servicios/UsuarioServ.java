@@ -5,22 +5,22 @@
  */
 package servicios;
 
-import controladores.MesaJpaController;
-import controladores.ProductosJpaController;
-import entidades.Mesa;
-import entidades.Productos;
+import controladores.UsuariosJpaController;
+import entidades.Usuarios;
 import java.util.List;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 /**
  *
- * @author Administrador
+ * @author Matth
  */
-public class ProductoServ {
-     public List<Productos> traerTodos() {
+public class UsuarioServ {
+    public List<Usuarios> traerTodos(){
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("appPU");
-        ProductosJpaController jpa = new ProductosJpaController(emf);
-        return jpa.findProductosEntities();
+        UsuariosJpaController jpa = new UsuariosJpaController(emf);
+        return jpa.findUsuariosEntities();
     }
+    
+    
 }
