@@ -68,15 +68,15 @@
                                           <Pane prefHeight="202.0" prefWidth="594.0" />
                                           <Pane prefHeight="323.0" prefWidth="594.0">
                                              <children>
-                                                <PasswordField layoutX="18.0" layoutY="50.0" prefHeight="27.0" prefWidth="279.0" promptText="Confirmar clave" />
+                                                <PasswordField fx:id="pswrClave" layoutX="18.0" layoutY="50.0" prefHeight="27.0" prefWidth="279.0" promptText="Confirmar clave" />
                                                 <TextField fx:id="txtUsuario" layoutX="17.0" layoutY="1.0" prefHeight="27.0" prefWidth="280.0" promptText="Nombre de usuario" />
-                                                <PasswordField layoutX="18.0" layoutY="97.0" prefHeight="27.0" prefWidth="279.0" promptText="Confirmar clave" />
+                                                <PasswordField fx:id="pswrConfirmar" layoutX="18.0" layoutY="97.0" prefHeight="27.0" prefWidth="279.0" promptText="Confirmar clave" />
                                                 <ComboBox fx:id="cmbxRoles" layoutX="322.0" layoutY="1.0" prefHeight="27.0" prefWidth="262.0" promptText="Rol" />
                                              </children>
                                           </Pane>
                                           <Pane prefHeight="200.0" prefWidth="200.0">
                                              <children>
-                                                <Button layoutX="253.0" layoutY="12.0" mnemonicParsing="false" text="Guardar" />
+                                                <Button layoutX="253.0" layoutY="12.0" mnemonicParsing="false" onAction="#guardarUsuario" text="Guardar" />
                                              </children>
                                           </Pane>
                                        </children>

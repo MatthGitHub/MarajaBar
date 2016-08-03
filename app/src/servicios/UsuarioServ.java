@@ -22,5 +22,18 @@ public class UsuarioServ {
         return jpa.findUsuariosEntities();
     }
     
+    public boolean guardarUsuario(Usuarios user){
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("appPU");
+        UsuariosJpaController jpa = new UsuariosJpaController(emf);
+        
+        try {
+            jpa.create(user);
+            return true;
+        } catch (Exception e) {
+            System.out.println(e + "Error carga usuario UsuarioServ");
+            return false;
+        }
+        
+    }
     
 }
