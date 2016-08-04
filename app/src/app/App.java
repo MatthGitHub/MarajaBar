@@ -24,10 +24,10 @@ public class App extends Application {
    public static String MenuPpalFXML = "/scenes/menuPrincipal/MenuPrincipal.fxml";
    public static String MesasFXML = "/scenes/mesas/Mesas.fxml";
    public static String UsuariosFXML = "/scenes/usuarios/Usuarios.fxml";
+   public static String ProveedoresFXML = "/scenes/proveedores/Proveedores.fxml";
     
     @Override
     public void start(Stage stage) throws Exception {
-        
         stage.setTitle("Maraja Bar");
         stage.initStyle(StageStyle.UNDECORATED);
 
@@ -39,6 +39,7 @@ public class App extends Application {
         mainContainer.loadScreen("menuPpal", App.MenuPpalFXML);
         mainContainer.loadScreen("mesas", App.MesasFXML);
         mainContainer.loadScreen("usuarios", UsuariosFXML);
+        mainContainer.loadScreen("proveedores", ProveedoresFXML);
         mainContainer.setScreen("login");
         
         Scene scene = new Scene(mainContainer);

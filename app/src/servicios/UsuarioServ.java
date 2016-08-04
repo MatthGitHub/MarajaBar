@@ -16,16 +16,15 @@ import javax.persistence.Persistence;
  * @author Matth
  */
 public class UsuarioServ {
-    public List<Usuarios> traerTodos(){
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("appPU");
-        UsuariosJpaController jpa = new UsuariosJpaController(emf);
+
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory("appPU");
+    UsuariosJpaController jpa = new UsuariosJpaController(emf);
+
+    public List<Usuarios> traerTodos() {
         return jpa.findUsuariosEntities();
     }
-    
-    public boolean guardarUsuario(Usuarios user){
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("appPU");
-        UsuariosJpaController jpa = new UsuariosJpaController(emf);
-        
+
+    public boolean guardarUsuario(Usuarios user) {
         try {
             jpa.create(user);
             return true;
@@ -33,7 +32,28 @@ public class UsuarioServ {
             System.out.println(e + "Error carga usuario UsuarioServ");
             return false;
         }
-        
+
+    }
+
+    public boolean eliminarUsuario(int id) {
+        try {
+            jpa.destroy(id);
+            System.out.println("Usuario eliminado correctamente");
+            return true;
+        } catch (Exception e) {
+            System.out.println(e +"- Error al eliminar usuario UsuarioServ");
+            return false;
+        }
     }
     
+    public boolean editarUsuario(Usuarios user){
+        try {
+            jpa.edit(user);
+            return true;
+        } catch (Exception e) {
+            System.out.println(e+"- Error al modificar usuario UsuarioServ");
+            return false;
+        }
+    }
+
 }

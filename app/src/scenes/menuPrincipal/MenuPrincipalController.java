@@ -18,11 +18,17 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Rectangle2D;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.effect.BlendMode;
+import static javafx.scene.input.KeyCode.X;
+import static javafx.scene.input.KeyCode.Y;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import servicios.MesaServ;
 
@@ -49,6 +55,9 @@ public class MenuPrincipalController implements Initializable, ControlledScreen 
     private List<Button> mesas;
     private Evento evento;
     
+    private static double xOffset = 0;
+    private static double yOffset = 0;
+    
     private ScreensController myController;
     private ScreensController mesaScreen;
 
@@ -59,7 +68,7 @@ public class MenuPrincipalController implements Initializable, ControlledScreen 
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         mesaScreen = new ScreensController();
-        
+
         
         menuVentana.setBlendMode(BlendMode.GREEN);
         flwPane.setHgap(10);
@@ -90,13 +99,41 @@ public class MenuPrincipalController implements Initializable, ControlledScreen 
         Platform.exit();
     }
     
+    public void presionarVentana(){
+        menuVentana.setOnMousePressed(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                xOffset = myController.getScene().getWindow().getX() - event.getScreenX();
+                yOffset = myController.getScene().getWindow().getY() - event.getScreenY();
+            }
+        });
+    }
+    
     public void moverVentana(){
-        
+        menuVentana.setOnMouseDragged(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                myController.getScene().getWindow().setX(event.getScreenX() + xOffset);
+                myController.getScene().getWindow().setY(event.getScreenY() + yOffset);
+            }
+        });
     }
     
     public void maximizarVentana(){
+        Stage primaryStage = (Stage) btnMaximizar.getScene().getWindow();
+        primaryStage.hide();
+        primaryStage.setMaximized(true);
+        primaryStage.show();
         
-        
+        /*
+        Screen screen = Screen.getPrimary();
+        Rectangle2D bounds = screen.getVisualBounds();
+
+        primaryStage.setX(bounds.getMinX());
+        primaryStage.setY(bounds.getMinY());
+        primaryStage.setWidth(bounds.getWidth());
+        primaryStage.setHeight(bounds.getHeight());
+        */
     }
     
     public void iconizarVentana(){
@@ -106,6 +143,10 @@ public class MenuPrincipalController implements Initializable, ControlledScreen 
     
     public void usuarios(){
         myController.setScreen("usuarios");
+    }
+    
+    public void proveedores(){
+        myController.setScreen("proveedores");
     }
     
     @Override

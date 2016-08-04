@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
 <?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.net.*?>
@@ -24,6 +25,11 @@
                               <Font size="36.0" />
                            </font>
                         </Label>
+                        <ImageView fitHeight="47.0" fitWidth="57.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../resources/images/usuarios.jpg" />
+                           </image>
+                        </ImageView>
                      </children>
                   </Pane>
                   <TabPane prefHeight="461.0" prefWidth="594.0" tabClosingPolicy="UNAVAILABLE">
@@ -38,7 +44,7 @@
                                         <TableColumn fx:id="colRol" minWidth="0.0" prefWidth="310.0" text="Rol" />
                                       </columns>
                                     </TableView>
-                                    <Button layoutX="268.0" layoutY="236.0" mnemonicParsing="false" text="Eliminar" />
+                                    <Button fx:id="btnEliminar" layoutX="268.0" layoutY="236.0" mnemonicParsing="false" onAction="#eliminarUsuario" text="Eliminar" />
                                  </children>
                               </AnchorPane>
                         </content>
@@ -47,15 +53,16 @@
                         <content>
                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
-                                    <Label fx:id="lblusuario" alignment="CENTER" contentDisplay="CENTER" layoutX="174.0" layoutY="22.0" prefHeight="34.0" prefWidth="224.0" textAlignment="CENTER">
+                                    <Label fx:id="lblUsuario" alignment="CENTER" contentDisplay="CENTER" layoutX="174.0" layoutY="22.0" prefHeight="34.0" prefWidth="224.0" textAlignment="CENTER">
                                        <font>
                                           <Font size="36.0" />
                                        </font>
                                     </Label>
-                                    <ComboBox fx:id="cmbxRoles1" layoutX="318.0" layoutY="124.0" prefHeight="27.0" prefWidth="262.0" promptText="Rol" />
-                                    <PasswordField fx:id="pswrdClave" layoutX="14.0" layoutY="124.0" prefHeight="27.0" prefWidth="258.0" promptText="Nueva clave" />
-                                    <PasswordField fx:id="pswrdClave" layoutX="14.0" layoutY="170.0" prefHeight="27.0" prefWidth="259.0" promptText="Repetir nueva clave" />
-                                    <Button fx:id="btnGuardarModif" layoutX="257.0" layoutY="224.0" mnemonicParsing="false" text="Guardar" />
+                                    <ComboBox fx:id="cmbxRolesMod" layoutX="318.0" layoutY="97.0" prefHeight="27.0" prefWidth="262.0" promptText="Rol" />
+                                    <PasswordField fx:id="pswrClaveMod" layoutX="15.0" layoutY="144.0" prefHeight="27.0" prefWidth="258.0" promptText="Nueva clave" />
+                                    <PasswordField fx:id="pswrConfirmarMod" layoutX="14.0" layoutY="184.0" prefHeight="27.0" prefWidth="259.0" promptText="Repetir nueva clave" />
+                                    <Button fx:id="btnGuardarMod" layoutX="257.0" layoutY="224.0" mnemonicParsing="false" onAction="#guardarUsuarioMod" text="Guardar" />
+                                    <PasswordField fx:id="pswrActualMod" layoutX="14.0" layoutY="97.0" prefHeight="27.0" prefWidth="259.0" promptText="Clave actual" />
                                  </children></AnchorPane>
                         </content>
                       </Tab>
@@ -68,8 +75,8 @@
                                           <Pane prefHeight="202.0" prefWidth="594.0" />
                                           <Pane prefHeight="323.0" prefWidth="594.0">
                                              <children>
-                                                <PasswordField fx:id="pswrClave" layoutX="18.0" layoutY="50.0" prefHeight="27.0" prefWidth="279.0" promptText="Confirmar clave" />
                                                 <TextField fx:id="txtUsuario" layoutX="17.0" layoutY="1.0" prefHeight="27.0" prefWidth="280.0" promptText="Nombre de usuario" />
+                                                <PasswordField fx:id="pswrClave" layoutX="18.0" layoutY="50.0" prefHeight="27.0" prefWidth="279.0" promptText="Confirmar clave" />
                                                 <PasswordField fx:id="pswrConfirmar" layoutX="18.0" layoutY="97.0" prefHeight="27.0" prefWidth="279.0" promptText="Confirmar clave" />
                                                 <ComboBox fx:id="cmbxRoles" layoutX="322.0" layoutY="1.0" prefHeight="27.0" prefWidth="262.0" promptText="Rol" />
                                              </children>
@@ -77,6 +84,7 @@
                                           <Pane prefHeight="200.0" prefWidth="200.0">
                                              <children>
                                                 <Button layoutX="253.0" layoutY="12.0" mnemonicParsing="false" onAction="#guardarUsuario" text="Guardar" />
+                                                <Button fx:id="btnLimpiarForm" layoutX="14.0" layoutY="12.0" mnemonicParsing="false" onAction="#limpiarFormNuevo" text="Limpiar" />
                                              </children>
                                           </Pane>
                                        </children>
