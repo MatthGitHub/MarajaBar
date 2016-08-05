@@ -49,7 +49,7 @@ public class Productos implements Serializable {
     private String descripcion;
     @Basic(optional = false)
     @Column(name = "precio")
-    private int precio;
+    private Integer precio;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "productos")
     private List<Detalleventas> detalleventasList;
 
@@ -90,11 +90,11 @@ public class Productos implements Serializable {
         this.descripcion = descripcion;
     }
 
-    public int getPrecio() {
+    public Integer getPrecio() {
         return precio;
     }
 
-    public void setPrecio(int precio) {
+    public void setPrecio(Integer precio) {
         this.precio = precio;
     }
 

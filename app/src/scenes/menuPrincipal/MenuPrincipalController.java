@@ -149,6 +149,9 @@ public class MenuPrincipalController implements Initializable, ControlledScreen 
         myController.setScreen("proveedores");
     }
     
+    public void productos(){
+        myController.setScreen("productos");
+    }
     @Override
     public void setScreenParent(ScreensController screenParent) {
         myController = screenParent;

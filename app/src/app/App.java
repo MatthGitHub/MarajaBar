@@ -25,6 +25,7 @@ public class App extends Application {
    public static String MesasFXML = "/scenes/mesas/Mesas.fxml";
    public static String UsuariosFXML = "/scenes/usuarios/Usuarios.fxml";
    public static String ProveedoresFXML = "/scenes/proveedores/Proveedores.fxml";
+   public static String ProductosFXML = "/scenes/productos/Productos.fxml";
     
     @Override
     public void start(Stage stage) throws Exception {
@@ -40,10 +41,10 @@ public class App extends Application {
         mainContainer.loadScreen("mesas", App.MesasFXML);
         mainContainer.loadScreen("usuarios", UsuariosFXML);
         mainContainer.loadScreen("proveedores", ProveedoresFXML);
+        mainContainer.loadScreen("productos", ProductosFXML);
         mainContainer.setScreen("login");
         
         Scene scene = new Scene(mainContainer);
-        
         
         //xx.getChildren().remove(test);
         

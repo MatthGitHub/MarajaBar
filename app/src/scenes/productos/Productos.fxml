@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="scenes.productos.ProductosController">
+    <stylesheets>
+        <URL value="@productos.css" />
+    </stylesheets>
+   <children>
+      <VBox prefHeight="400.0" prefWidth="600.0">
+         <children>
+            <Pane prefHeight="60.0" prefWidth="600.0">
+               <children>
+                  <Label alignment="CENTER" layoutX="191.0" layoutY="7.0" prefHeight="44.0" prefWidth="226.0" text="Productos">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+            <TabPane prefHeight="277.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
+              <tabs>
+                <Tab text="Productos">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="184.0" prefWidth="600.0">
+                           <children>
+                              <TableView fx:id="tblProductos" prefHeight="248.0" prefWidth="600.0">
+                                 <columns>
+                                    <TableColumn fx:id="colNombre" prefWidth="188.0" text="Nombre" />
+                                    <TableColumn fx:id="colDescripcion" prefWidth="315.0" text="Descripcion" />
+                                    <TableColumn fx:id="colPrecio" prefWidth="96.0" text="Precio" />
+                                 </columns>
+                              </TableView>
+                           </children>
+                        </AnchorPane>
+                  </content>
+                </Tab>
+                <Tab onClosed="#limpiarModificar" onSelectionChanged="#modificarProductos" text="Modificar">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <Label fx:id="lblProducto" alignment="CENTER" layoutX="89.0" layoutY="14.0" prefHeight="29.0" prefWidth="437.0">
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="txtNombreMod" layoutX="21.0" layoutY="67.0" promptText="Nombre" />
+                              <TextField fx:id="txtPrecioMod" layoutX="279.0" layoutY="67.0" promptText="Precio" />
+                              <TextArea fx:id="txtaDescripcionMod" layoutX="21.0" layoutY="103.0" prefHeight="121.0" prefWidth="431.0" promptText="Descripcion" />
+                              <Button fx:id="btnGuardarMod" layoutX="497.0" layoutY="189.0" mnemonicParsing="false" onAction="#guardarProductoMod" text="Guardar" />
+                           </children>
+                        </AnchorPane>
+                  </content>
+                </Tab>
+                  <Tab text="Nuevo">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <VBox prefHeight="247.0" prefWidth="600.0">
+                                 <children>
+                                    <Pane prefHeight="200.0" prefWidth="200.0" />
+                                    <Pane prefHeight="300.0" prefWidth="600.0">
+                                       <children>
+                                          <TextField fx:id="txtNombre" layoutX="14.0" layoutY="14.0" prefHeight="27.0" prefWidth="226.0" promptText="Nombre" />
+                                          <TextField fx:id="txtPrecio" layoutX="289.0" layoutY="14.0" promptText="Precio" />
+                                          <TextArea fx:id="txtaDescripcion" layoutX="91.0" layoutY="55.0" prefHeight="74.0" prefWidth="365.0" promptText="Escriba una descripcion aqui" />
+                                          <Label layoutX="269.0" layoutY="19.0" text="\$" />
+                                       </children>
+                                    </Pane>
+                                    <Pane prefHeight="200.0" prefWidth="200.0">
+                                       <children>
+                                          <Button fx:id="btnLimpiar" layoutX="14.0" layoutY="11.0" mnemonicParsing="false" onAction="#limpiarFormNuevo" text="Limpiar" />
+                                          <Button fx:id="btnGuardar" layoutX="271.0" layoutY="11.0" mnemonicParsing="false" onAction="#guardarProducto" text="Guardar" />
+                                       </children>
+                                    </Pane>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </AnchorPane>
+                    </content>
+                  </Tab>
+              </tabs>
+            </TabPane>
+            <Pane prefHeight="65.0" prefWidth="600.0">
+               <children>
+                  <Button fx:id="btnVolver" layoutX="14.0" layoutY="19.0" mnemonicParsing="false" onAction="#volver" text="Volver" />
+               </children>
+            </Pane>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

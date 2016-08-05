@@ -179,6 +179,7 @@ public class UsuariosController implements Initializable, ControlledScreen {
             user.setNombreUsuario(lblUsuario.getText());
             if(serviciosU.editarUsuario(user)){
                 limpiarModificar();
+                refrescarTablaUsuarios();
             }
         }
     }
