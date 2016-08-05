@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package scenes.productos;
+package scenes.roles;
 
 import app.ControlledScreen;
 import app.ScreensController;
-import entidades.Productos;
+import entidades.Roles;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -17,17 +17,15 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
-import servicios.ProductoServ;
+import servicios.RoleServ;
 
 /**
  * FXML Controller class
  *
  * @author Matth
  */
-public class ProductosController implements Initializable,ControlledScreen {
+public class RolesController implements Initializable,ControlledScreen {
     private ScreensController myController;
     /**
      * Initializes the controller class.
@@ -35,97 +33,84 @@ public class ProductosController implements Initializable,ControlledScreen {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        serviciosP = new ProductoServ();
-        cargarTablaProductos();
-        llenarTablaProductos();
-    } 
+    }    
+    
+     /**
+     * -----------Variables Roles
+     */
+    @FXML
+    TableColumn colDescripcion;
+    @FXML
+    TableView tblRoles;
+    
+    private RoleServ serviciosR;
+    private ObservableList<Roles> listaRoles;
+    private Roles rol;
     
     /**
-     * -----------Variables Productos
-     */
-    @FXML
-    TableColumn colNombre,colDescripcion,colPrecio;
-    @FXML
-    TableView tblProductos;
-    
-    private ProductoServ serviciosP;
-    private ObservableList<Productos> listaProd;
-    private Productos producto;
-    
-    /**
-     * -----------FIN Variables productos
+     * -----------FIN Variables rol
      */
     /**
-     *  ----------Variables modificar productos
+     *  ----------Variables modificar rol
      */
     @FXML
-    public Label lblProducto;
-    @FXML
-    public TextField txtNombreMod,txtPrecioMod;
-    @FXML
-    public TextArea txtaDescripcionMod;
+    public Label lblRol;
+    public List <Permisos> listaPermisos;
     /**
-     *  ----------FIN Variables modificar producto
+     *  ----------FIN Variables modificar rol
      */
     /**
-     *  ----------Variables nuevo producto
+     *  ----------Variables nuevo rol
      */
     @FXML
-    public TextField txtPrecio,txtNombre;
-    @FXML
-    public TextArea txtaDescripcion;
+    public TextField txtDescripcion;
     /**
-     *  ----------FIN Variables nuevo producto
+     *  ----------FIN Variables nuevo rol
      */
-       
+   
     
  /**
  * ------------------------------------------------------------------------------------------------------------------------------------------------------------
- * ---------------------------------------- Pestaña Productos -----------------------------------------------------------------------------------------------
+ * ---------------------------------------- Pestaña Roles -----------------------------------------------------------------------------------------------
  * ------------------------------------------------------------------------------------------------------------------------------------------------------------
  */
-    public void cargarTablaProductos(){
-        colNombre.setCellValueFactory(new PropertyValueFactory<Productos, String>("nombreProducto"));
-        colDescripcion.setCellValueFactory(new PropertyValueFactory<Productos, String>("Descripcion"));
-        colPrecio.setCellValueFactory(new PropertyValueFactory<Productos, String>("precio"));
+    public void cargarTablaRoles(){
+        colDescripcion.setCellValueFactory(new PropertyValueFactory<Roles, String>("Descripcion"));
     }
     
-    public void llenarTablaProductos(){
-        listaProd = FXCollections.observableArrayList(serviciosP.traerTodos());
-        tblProductos.setItems(listaProd);
+    public void llenarTablaRoles(){
+        listaRoles = FXCollections.observableArrayList(serviciosR.traerTodos());
+        tblRoles.setItems(listaRoles);
     }
     
-    public void limpiarTablaProductos(){
-        tblProductos.getItems().clear();
+    public void limpiarTablaRoles(){
+        tblRoles.getItems().clear();
     }
     
-    public void refrescarTablaProductos(){
-        limpiarTablaProductos();
-        llenarTablaProductos();
+    public void refrescarTablaRoles(){
+        limpiarTablaRoles();
+        llenarTablaRoles();
     }
     
-    public void eliminarProducto(){
-        producto = (Productos) tblProductos.getSelectionModel().getSelectedItem();
-        serviciosP.eliminarProducto(producto.getIdProducto());
-        refrescarTablaProductos();
+    public void eliminarRol(){
+        rol = (Roles) tblRoles.getSelectionModel().getSelectedItem();
+        serviciosR.eliminarRol(rol.getIdRol());
+        refrescarTablaRoles();
     }
 /**
  * ------------------------------------------------------------------------------------------------------------------------------------------------------------
- * ---------------------------------------- FIN Pestaña productos -------------------------------------------------------------------------------------------
+ * ---------------------------------------- FIN Pestaña roles -------------------------------------------------------------------------------------------
  * ------------------------------------------------------------------------------------------------------------------------------------------------------------
  */
  /**
  * ------------------------------------------------------------------------------------------------------------------------------------------------------------
- * ---------------------------------------- Pestaña modificar productos -------------------------------------------------------------------------------------
+ * ---------------------------------------- Pestaña modificar rol -------------------------------------------------------------------------------------
  * ------------------------------------------------------------------------------------------------------------------------------------------------------------
  */
-   public void modificarProductos() {
-        if(tblProductos.getSelectionModel().getSelectedIndex() != -1){
-            producto = (Productos) tblProductos.getSelectionModel().getSelectedItem();
-            lblProducto.setText(producto.getNombreProducto());
-            txtNombreMod.setText(producto.getNombreProducto());
-            txtaDescripcionMod.setText(producto.getDescripcion());
-            txtPrecioMod.setText(producto.getPrecio().toString());
+   public void modificarRoles() {
+        if(tblRoles.getSelectionModel().getSelectedIndex() != -1){
+            rol = (Roles) tblRoles.getSelectionModel().getSelectedItem();
+            lblRol.setText(rol.getDescripcion());
         }
     }
 
@@ -231,7 +216,7 @@ public class ProductosController implements Initializable,ControlledScreen {
 * -------------------------------------------------------------------------------------------------------------------------------------------------------------
 */
     
-
+    
     @Override
     public void setScreenParent(ScreensController screenParent) {
         myController = screenParent;

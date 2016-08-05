@@ -8,7 +8,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="scenes.productos.ProductosController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="scenes.productos.ProductosController">
     <stylesheets>
         <URL value="@productos.css" />
     </stylesheets>
@@ -30,13 +30,14 @@
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="184.0" prefWidth="600.0">
                            <children>
-                              <TableView fx:id="tblProductos" prefHeight="248.0" prefWidth="600.0">
+                              <TableView fx:id="tblProductos" prefHeight="200.0" prefWidth="600.0">
                                  <columns>
                                     <TableColumn fx:id="colNombre" prefWidth="188.0" text="Nombre" />
                                     <TableColumn fx:id="colDescripcion" prefWidth="315.0" text="Descripcion" />
                                     <TableColumn fx:id="colPrecio" prefWidth="96.0" text="Precio" />
                                  </columns>
                               </TableView>
+                              <Button fx:id="btnEliminar" layoutX="271.0" layoutY="202.0" mnemonicParsing="false" onAction="#eliminarProducto" text="Eliminar" />
                            </children>
                         </AnchorPane>
                   </content>

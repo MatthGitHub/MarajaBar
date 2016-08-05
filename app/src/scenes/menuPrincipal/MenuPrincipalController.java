@@ -18,17 +18,12 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Rectangle2D;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.effect.BlendMode;
-import static javafx.scene.input.KeyCode.X;
-import static javafx.scene.input.KeyCode.Y;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
 import servicios.MesaServ;
 
@@ -151,6 +146,10 @@ public class MenuPrincipalController implements Initializable, ControlledScreen 
     
     public void productos(){
         myController.setScreen("productos");
+    }
+    
+    public void roles(){
+        myController.setScreen("roles");
     }
     @Override
     public void setScreenParent(ScreensController screenParent) {

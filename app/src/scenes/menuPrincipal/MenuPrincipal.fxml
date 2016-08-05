@@ -50,8 +50,7 @@
                               <Menu mnemonicParsing="false" text="Seguridad">
                                 <items>
                                     <MenuItem fx:id="itemUsuarios" mnemonicParsing="false" onAction="#usuarios" text="Usuarios" />
-                                  <MenuItem mnemonicParsing="false" text="Roles" />
-                                    <MenuItem mnemonicParsing="false" text="Modificar rol" />
+                                  <MenuItem fx:id="itemRoles" mnemonicParsing="false" onAction="#roles" text="Roles" />
                                 </items>
                               </Menu>
                            </items>
