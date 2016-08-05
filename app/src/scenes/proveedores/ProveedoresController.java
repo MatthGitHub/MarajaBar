@@ -69,6 +69,8 @@ public class ProveedoresController implements Initializable,ControlledScreen {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         serviciosP = new ProveedoreServ();
+        cargarTablaProveedores();
+        llenarTablaProveedores();
     }    
     
  /**
@@ -181,6 +183,7 @@ public class ProveedoresController implements Initializable,ControlledScreen {
      */
     public void guardarProveedor() {
         if (validar() == true) {
+            proveedor = new Proveedores();
             proveedor.setNombreProveedor(txtNombre.getText());
             proveedor.setCuit(txtCuit.getText());
             proveedor.setEmail(txtCorreo.getText());

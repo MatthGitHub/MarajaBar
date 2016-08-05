@@ -16,7 +16,7 @@ import javax.persistence.Persistence;
  * @author Matth
  */
 public class ProveedoreServ {
-    EntityManagerFactory emf = Persistence.createEntityManagerFactory("appPu");
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory("appPU");
     ProveedoresJpaController jpa = new ProveedoresJpaController(emf);
     
     public List<Proveedores> traerTodos(){
