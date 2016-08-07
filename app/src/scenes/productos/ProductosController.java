@@ -143,6 +143,7 @@ public class ProductosController implements Initializable,ControlledScreen {
             producto.setPrecio(Integer.parseInt(txtPrecioMod.getText()));
             if(serviciosP.editarProducto(producto)){
                 limpiarModificar();
+                refrescarTablaProductos();
             }
         }
     }

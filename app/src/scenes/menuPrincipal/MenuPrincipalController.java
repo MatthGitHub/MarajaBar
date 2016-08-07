@@ -71,8 +71,7 @@ public class MenuPrincipalController implements Initializable, ControlledScreen 
         serviciosMesa = new MesaServ();
         listaMesas = serviciosMesa.traerTodos();
         for (int i = 0; i < listaMesas.size(); i++) {
-            mesaScreen.loadScreen("mesa"+i, "/scenes/mesas/Mesas.fxml");
-            
+            //mesaScreen.loadScreen("mesa", "/scenes/mesas/Mesas.fxml");
             
             Button buton = new Button();
             buton.setMinSize(100, 50);
