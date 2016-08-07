@@ -68,6 +68,10 @@ public class RolesController implements Initializable,ControlledScreen {
      */
     @FXML
     public TextField txtDescripcion;
+    @FXML
+    public TableColumn colNombrePermiso,colDescripcionPermiso,colNombrePermisoAgregar,colDescripcionPermisoAgregar;
+    @FXML
+    public TableView tblPermisos,tblPermisosAgregar;
     
     private Roles rol;
     /**
@@ -118,12 +122,12 @@ public class RolesController implements Initializable,ControlledScreen {
     }
 /**
  * ------------------------------------------------------------------------------------------------------------------------------------------------------------
- * ---------------------------------------- FIN Pestaña roles -------------------------------------------------------------------------------------------
+ * ---------------------------------------- FIN Pestaña roles -------------------------------------------------------------------------------------------------
  * ------------------------------------------------------------------------------------------------------------------------------------------------------------
  */
  /**
  * ------------------------------------------------------------------------------------------------------------------------------------------------------------
- * ---------------------------------------- Pestaña modificar rol -------------------------------------------------------------------------------------
+ * ---------------------------------------- Pestaña modificar rol ---------------------------------------------------------------------------------------------
  * ------------------------------------------------------------------------------------------------------------------------------------------------------------
  */
     
@@ -225,21 +229,77 @@ public class RolesController implements Initializable,ControlledScreen {
     }
 /**
  * ------------------------------------------------------------------------------------------------------------------------------------------------------------
- * ---------------------------------------- FIN Pestaña modificar rol ---------------------------------------------------------------------------------
+ * ---------------------------------------- FIN Pestaña modificar rol -----------------------------------------------------------------------------------------
  * ------------------------------------------------------------------------------------------------------------------------------------------------------------
  */
  /**
  * ------------------------------------------------------------------------------------------------------------------------------------------------------------
- * ------------------------------------ Pestaña nuevo rol -----------------------------------------------------------------------------------------------
+ * ------------------------------------ Pestaña nuevo rol -----------------------------------------------------------------------------------------------------
  * ------------------------------------------------------------------------------------------------------------------------------------------------------------
  */
+    
+    /**
+     * ------------ Tabla de permisos del rol a crear ----------------------
+     */
+    public void cargarTablaPermisos(){
+        colNombrePermiso.setCellValueFactory(new PropertyValueFactory<Permisos, String>("nombrePermiso"));
+        colDescripcionPermiso.setCellValueFactory(new PropertyValueFactory<Permisos, String>("Descripcion"));
+    }
+    
+    public void limpiarTablaPermisos(){
+        tblPermisos.getItems().clear();
+    }
+    
+    public void quitarPermiso(){
+        tblPermisos.getItems().remove(tblPermisos.getSelectionModel().getSelectedItem());
+        refrescarTablaPermisosAgregar();
+    }
+    /**
+     *  ----------- FIN Tabla de permisos del rol a crear ------------------
+     */
+    /**
+     * ------------- Tabla de permisos disponibles para agregar al rol ----------------
+     */
+    public void cargarTablaPermisosAgregar(){
+        colNombrePermisoAgregar.setCellValueFactory(new PropertyValueFactory<Permisos, String>("nombrePermiso"));
+        colDescripcionPermisoAgregar.setCellValueFactory(new PropertyValueFactory<Permisos, String>("Descripcion"));
+    }
+    
+    public void llenarTablaPermisosAgregar(){
+        listaPermisos = FXCollections.observableArrayList(serviciosP.traerTodos());
+        if(!tblPermisos.getItems().isEmpty()){
+            listaPermisos.removeAll(tblPermisos.getItems());
+        }
+        tblPermisosAgregar.setItems(listaPermisos);
+    }
+    
+    public void limpiarTablaPermisosAgregar(){
+        tblPermisosAgregar.getItems().clear();
+    }
+    
+    public void refrescarTablaPermisosAgregar(){
+        limpiarTablaPermisosAgregar();
+        llenarTablaPermisosAgregar();
+    }
+    
+    /**
+     * ------------- FIN Tabla de permisos disponibles para agregar al rol ----------------
+     */
+    
+    public void nuevoRol(){
+        rol = new Roles();
+        cargarTablaPermisos();
+        cargarTablaPermisosAgregar();
+        llenarTablaPermisosAgregar();
+    }
     /**
      * Metodo que persiste el rol nuevo en la base de datos
      */
     public void guardarRol() {
         if (validar() == true) {
-            rol = new Roles();
+            //rol = new Roles();
             rol.setDescripcion(txtDescripcion.getText());
+            rol.setPermisosList(tblPermisos.getItems());
             if(serviciosR.guardarRol(rol)){
                 System.out.println("Rol guardado");
                 limpiarFormNuevo();
@@ -256,7 +316,12 @@ public class RolesController implements Initializable,ControlledScreen {
      */
     private boolean validar() {
             if(!txtDescripcion.getText().trim().isEmpty()){
-                return true;
+                if(!tblPermisos.getItems().isEmpty()){
+                    return true;
+                }else{
+                    System.out.println("El rol debe tener al menos un permiso!");
+                    return false;
+                }
             }else{
                 System.out.println("La descripcion esta vacia");
                 return false;
@@ -267,8 +332,17 @@ public class RolesController implements Initializable,ControlledScreen {
      */
     public void limpiarFormNuevo(){
         txtDescripcion.setText("");
-
+        limpiarTablaPermisos();
     }
+    
+    public void agregarPermiso(){
+        if(tblPermisosAgregar.getSelectionModel().getSelectedIndex() != -1){
+            tblPermisos.getItems().add(tblPermisosAgregar.getSelectionModel().getSelectedItem());
+            refrescarTablaPermisosAgregar();
+        }
+    }
+    
+    
 /**
 * -------------------------------------------------------------------------------------------------------------------------------------------------------------
 * ------------------------------------FIN Pestaña nuevo rol ---------------------------------------------------------------------------------------------
