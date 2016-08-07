@@ -30,6 +30,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Permisos.findByIdPermiso", query = "SELECT p FROM Permisos p WHERE p.idPermiso = :idPermiso"),
     @NamedQuery(name = "Permisos.findByDescripcion", query = "SELECT p FROM Permisos p WHERE p.descripcion = :descripcion")})
 public class Permisos implements Serializable {
+    @Basic(optional = false)
+    @Column(name = "nombrePermiso")
+    private String nombrePermiso;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -102,6 +105,14 @@ public class Permisos implements Serializable {
     @Override
     public String toString() {
         return "entidades.Permisos[ idPermiso=" + idPermiso + " ]";
+    }
+
+    public String getNombrePermiso() {
+        return nombrePermiso;
+    }
+
+    public void setNombrePermiso(String nombrePermiso) {
+        this.nombrePermiso = nombrePermiso;
     }
     
 }

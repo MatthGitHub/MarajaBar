@@ -35,6 +35,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Productos.findByDescripcion", query = "SELECT p FROM Productos p WHERE p.descripcion = :descripcion"),
     @NamedQuery(name = "Productos.findByPrecio", query = "SELECT p FROM Productos p WHERE p.precio = :precio")})
 public class Productos implements Serializable {
+    @Basic(optional = false)
+    @Column(name = "precio")
+    private Integer precio;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -47,9 +50,6 @@ public class Productos implements Serializable {
     private String nombreProducto;
     @Column(name = "Descripcion")
     private String descripcion;
-    @Basic(optional = false)
-    @Column(name = "precio")
-    private Integer precio;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "productos")
     private List<Detalleventas> detalleventasList;
 
@@ -90,13 +90,6 @@ public class Productos implements Serializable {
         this.descripcion = descripcion;
     }
 
-    public Integer getPrecio() {
-        return precio;
-    }
-
-    public void setPrecio(Integer precio) {
-        this.precio = precio;
-    }
 
     @XmlTransient
     public List<Detalleventas> getDetalleventasList() {
@@ -130,6 +123,14 @@ public class Productos implements Serializable {
     @Override
     public String toString() {
         return "entidades.Productos[ idProducto=" + idProducto + " ]";
+    }
+
+    public Integer getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(Integer precio) {
+        this.precio = precio;
     }
     
 }

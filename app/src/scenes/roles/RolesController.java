@@ -7,8 +7,10 @@ package scenes.roles;
 
 import app.ControlledScreen;
 import app.ScreensController;
+import entidades.Permisos;
 import entidades.Roles;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,6 +20,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
+import servicios.PermisoServ;
 import servicios.RoleServ;
 
 /**
@@ -27,13 +31,6 @@ import servicios.RoleServ;
  */
 public class RolesController implements Initializable,ControlledScreen {
     private ScreensController myController;
-    /**
-     * Initializes the controller class.
-     */
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
     
      /**
      * -----------Variables Roles
@@ -45,7 +42,6 @@ public class RolesController implements Initializable,ControlledScreen {
     
     private RoleServ serviciosR;
     private ObservableList<Roles> listaRoles;
-    private Roles rol;
     
     /**
      * -----------FIN Variables rol
@@ -55,7 +51,15 @@ public class RolesController implements Initializable,ControlledScreen {
      */
     @FXML
     public Label lblRol;
-    public List <Permisos> listaPermisos;
+    @FXML
+    public TableColumn colNombrePermisoMod,colDescripcionPermisoMod,colNombrePermisoAgregarMod,colDescripcionPermisoAgregarMod;
+    @FXML
+    public TableView tblPermisosMod,tblPermisosAgregarMod;
+    
+    
+    public ObservableList <Permisos> listaPermisos;
+    private PermisoServ serviciosP;
+    
     /**
      *  ----------FIN Variables modificar rol
      */
@@ -64,10 +68,25 @@ public class RolesController implements Initializable,ControlledScreen {
      */
     @FXML
     public TextField txtDescripcion;
+    
+    private Roles rol;
     /**
      *  ----------FIN Variables nuevo rol
      */
-   
+    
+    
+    /**
+     * Initializes the controller class.
+     */
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        // TODO
+        serviciosR = new RoleServ();
+        serviciosP = new PermisoServ();
+        cargarTablaRoles();
+        llenarTablaRoles();
+    }    
+    
     
  /**
  * ------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -107,112 +126,152 @@ public class RolesController implements Initializable,ControlledScreen {
  * ---------------------------------------- Pestaña modificar rol -------------------------------------------------------------------------------------
  * ------------------------------------------------------------------------------------------------------------------------------------------------------------
  */
+    
+    /**
+     * ------------ Tabla de permisos del rol a modificar ----------------------
+     */
+    public void cargarTablaPermisosMod(){
+        colNombrePermisoMod.setCellValueFactory(new PropertyValueFactory<Permisos, String>("nombrePermiso"));
+        colDescripcionPermisoMod.setCellValueFactory(new PropertyValueFactory<Permisos, String>("Descripcion"));
+    }
+    
+    public void llenarTablaPermisosMod(){
+        listaPermisos = FXCollections.observableArrayList(rol.getPermisosList());
+        tblPermisosMod.setItems(listaPermisos);
+    }
+    
+    public void limpiarTablaPermisosMod(){
+        tblPermisosMod.getItems().clear();
+    }
+    
+    public void refrescarTablaPermisosMod(){
+        limpiarTablaPermisosMod();
+        llenarTablaPermisosMod();
+    }
+    
+    public void quitarPermisoMod(){
+        Permisos permiso = new Permisos();
+        permiso = (Permisos) tblPermisosMod.getSelectionModel().getSelectedItem();
+        rol.getPermisosList().remove(permiso);
+        guardarRolMod();
+        refrescarTablaPermisosMod();
+        refrescarTablaPermisosModAgregar();
+    }
+    /**
+     *  ----------- FIN Tabla de permisos del rol a modificar ------------------
+     */
+    /**
+     * ------------- Tabla de permisos disponibles para agregar al rol ----------------
+     */
+    public void cargarTablaPermisosAgregarMod(){
+        colNombrePermisoAgregarMod.setCellValueFactory(new PropertyValueFactory<Permisos, String>("nombrePermiso"));
+        colDescripcionPermisoAgregarMod.setCellValueFactory(new PropertyValueFactory<Permisos, String>("Descripcion"));
+    }
+    
+    public void llenarTablaPermisosAgregarMod(){
+        listaPermisos = FXCollections.observableArrayList(serviciosP.traerTodos());
+        listaPermisos.removeAll(rol.getPermisosList());
+        tblPermisosAgregarMod.setItems(listaPermisos);
+    }
+    
+    public void limpiarTablaPermisosAgregarMod(){
+        tblPermisosAgregarMod.getItems().clear();
+    }
+    
+    public void refrescarTablaPermisosModAgregar(){
+        limpiarTablaPermisosAgregarMod();
+        llenarTablaPermisosAgregarMod();
+    }
+    
+    /**
+     * ------------- FIN Tabla de permisos disponibles para agregar al rol ----------------
+     */
+    /**
+     * Este metodo es el que corre cuando se entra en la pestaña de modificar
+     * y carga todo lo que corresponde de esta pestaña.
+     */
    public void modificarRoles() {
         if(tblRoles.getSelectionModel().getSelectedIndex() != -1){
             rol = (Roles) tblRoles.getSelectionModel().getSelectedItem();
             lblRol.setText(rol.getDescripcion());
+            cargarTablaPermisosMod();
+            llenarTablaPermisosMod();
+            cargarTablaPermisosAgregarMod();
+            llenarTablaPermisosAgregarMod();
         }
     }
 
     public void limpiarModificar() {
-        lblProducto.setText("");
-        txtNombreMod.setText("");
-        txtaDescripcionMod.setText("");
-        txtPrecioMod.setText("");
+        lblRol.setText("");
+        limpiarTablaPermisosMod();
     }
     
-    public void guardarProductoMod(){
-        if(validarFormMod()){
-            producto.setNombreProducto(txtNombreMod.getText());
-            producto.setDescripcion(txtaDescripcionMod.getText());
-            producto.setPrecio(Integer.parseInt(txtPrecioMod.getText()));
-            if(serviciosP.editarProducto(producto)){
-                limpiarModificar();
+    public void guardarRolMod(){
+            if(serviciosR.editarRol(rol)){
+                
             }
-        }
     }
     
-    private boolean validarFormMod(){
-        if(!txtNombreMod.getText().trim().isEmpty()){
-            if(!txtaDescripcionMod.getText().trim().isEmpty()){
-                if(!txtPrecioMod.getText().trim().isEmpty()){
-                    return true;
-                }else{
-                    System.out.println("El campo precio nueva esta vacio");
-                    return false;
-                }
-            }else{
-                System.out.println("La descripcion esta vacia");
-                return false;
+    public void agregarPermisoMod(){
+        if(tblRoles.getSelectionModel().getSelectedIndex() != -1){
+             if(tblPermisosAgregarMod.getSelectionModel().getSelectedIndex() != -1){
+                rol.getPermisosList().add((Permisos) tblPermisosAgregarMod.getSelectionModel().getSelectedItem());
+                guardarRolMod();
+                refrescarTablaPermisosMod();
+                refrescarTablaPermisosModAgregar();
             }
-        }else{
-            System.out.println("El campo nombre esta vacio");
-            return false;
-        }
+         }
+        
     }
 /**
  * ------------------------------------------------------------------------------------------------------------------------------------------------------------
- * ---------------------------------------- FIN Pestaña modificar producto ---------------------------------------------------------------------------------
+ * ---------------------------------------- FIN Pestaña modificar rol ---------------------------------------------------------------------------------
  * ------------------------------------------------------------------------------------------------------------------------------------------------------------
  */
  /**
  * ------------------------------------------------------------------------------------------------------------------------------------------------------------
- * ------------------------------------ Pestaña nuevo producto -----------------------------------------------------------------------------------------------
+ * ------------------------------------ Pestaña nuevo rol -----------------------------------------------------------------------------------------------
  * ------------------------------------------------------------------------------------------------------------------------------------------------------------
  */
     /**
-     * Metodo que persiste el producto nuevo en la base de datos
+     * Metodo que persiste el rol nuevo en la base de datos
      */
-    public void guardarProducto() {
+    public void guardarRol() {
         if (validar() == true) {
-            producto = new Productos();
-            producto.setNombreProducto(txtNombre.getText());
-            producto.setDescripcion(txtaDescripcion.getText());
-            producto.setPrecio(Integer.parseInt(txtPrecio.getText()));
-            if(serviciosP.guardarProducto(producto)){
-                System.out.println("Producto guardado");
+            rol = new Roles();
+            rol.setDescripcion(txtDescripcion.getText());
+            if(serviciosR.guardarRol(rol)){
+                System.out.println("Rol guardado");
                 limpiarFormNuevo();
-                refrescarTablaProductos();
+                refrescarTablaRoles();
             }else{
-                System.out.println("Error al guardar producto");
+                System.out.println("Error al guardar rol");
             }
         }
     }
     /**
-     * Este metodo valida que los campos del formulario nuevo producto esten correctamente completados 
+     * Este metodo valida que los campos del formulario nuevo rol esten correctamente completados 
      * Retorna TRUE en caso de que esten correctos, caso contrario retorna FALSE
      * @return boolean
      */
     private boolean validar() {
-        if(!txtNombre.getText().trim().isEmpty()){
-            if(!txtaDescripcion.getText().trim().isEmpty()){
-                if(!txtPrecio.getText().trim().isEmpty()){
-                    return true;
-                }else{
-                    System.out.println("El campo precio nueva esta vacio");
-                    return false;
-                }
+            if(!txtDescripcion.getText().trim().isEmpty()){
+                return true;
             }else{
                 System.out.println("La descripcion esta vacia");
                 return false;
             }
-        }else{
-            System.out.println("El campo nombre esta vacio");
-            return false;
-        }
-
     }
     /**
-     * Limpia todos los campos del formulario nuevo producto
+     * Limpia todos los campos del formulario nuevo rol
      */
     public void limpiarFormNuevo(){
-        txtNombre.setText("");
-        txtaDescripcion.setText("");
-        txtPrecio.setText("");
+        txtDescripcion.setText("");
+
     }
 /**
 * -------------------------------------------------------------------------------------------------------------------------------------------------------------
-* ------------------------------------FIN Pestaña nuevo producto ---------------------------------------------------------------------------------------------
+* ------------------------------------FIN Pestaña nuevo rol ---------------------------------------------------------------------------------------------
 * -------------------------------------------------------------------------------------------------------------------------------------------------------------
 */
     

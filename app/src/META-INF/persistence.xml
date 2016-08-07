@@ -13,6 +13,8 @@
     <class>entidades.Mesa</class>
     <class>entidades.Compras</class>
     <class>entidades.Mercaderia</class>
+    <class>entidades.EstadosCaja</class>
+    <class>entidades.Cajas</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/marajabar?zeroDateTimeBehavior=convertToNull"/>
       <property name="javax.persistence.jdbc.user" value="root"/>

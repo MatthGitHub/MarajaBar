@@ -8,7 +8,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="scenes.roles.RolesController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="scenes.roles.RolesController">
     <stylesheets>
         <URL value="@roles.css" />
     </stylesheets>
@@ -26,13 +26,13 @@
             </Pane>
             <TabPane prefHeight="348.0" prefWidth="607.0" tabClosingPolicy="UNAVAILABLE">
               <tabs>
-                <Tab fx:id="tblRoles" text="Roles">
+                <Tab fx:id="tabRoles" text="Roles">
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="241.0" prefWidth="607.0">
                            <children>
                               <TableView fx:id="tblRoles" prefHeight="231.0" prefWidth="607.0">
                                 <columns>
-                                  <TableColumn prefWidth="606.0" text="Descripcion" />
+                                  <TableColumn fx:id="colDescripcion" prefWidth="606.0" text="Descripcion" />
                                 </columns>
                               </TableView>
                               <Button fx:id="btnEliminar" layoutX="270.0" layoutY="243.0" mnemonicParsing="false" text="Eliminar" />
@@ -40,23 +40,30 @@
                         </AnchorPane>
                   </content>
                 </Tab>
-                <Tab text="Modificar">
+                <Tab onSelectionChanged="#modificarRoles" text="Modificar">
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <Label fx:id="lblRol" alignment="CENTER" layoutX="134.0" layoutY="14.0" prefHeight="29.0" prefWidth="340.0">
+                              <Label fx:id="lblRol" alignment="CENTER" layoutX="134.0" layoutY="6.0" prefHeight="29.0" prefWidth="340.0">
                                  <font>
                                     <Font size="24.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="14.0" layoutY="50.0" prefHeight="17.0" prefWidth="365.0" text="Agregar o quitar permisos para el rol a continuacion:" />
-                              <Button fx:id="btnGuardarMod" layoutX="270.0" layoutY="257.0" mnemonicParsing="false" text="Guardar" />
-                              <TableView fx:id="tblPermisosMod" layoutX="7.0" layoutY="70.0" prefHeight="181.0" prefWidth="582.0">
+                              <Label layoutX="14.0" layoutY="35.0" prefHeight="17.0" prefWidth="365.0" text="Agregar o quitar permisos para el rol a continuacion:" />
+                              <TableView fx:id="tblPermisosMod" layoutX="-1.0" layoutY="59.0" prefHeight="192.0" prefWidth="311.0">
                                  <columns>
-                                    <TableColumn prefWidth="75.0" text="ID" />
-                                    <TableColumn prefWidth="494.0" text="Descripcion" />
+                                    <TableColumn fx:id="colNombrePermisoMod" prefWidth="131.0" text="Nombre" />
+                                    <TableColumn fx:id="colDescripcionPermisoMod" prefWidth="179.0" text="Descripcion" />
                                  </columns>
                               </TableView>
+                              <Button fx:id="btnQuitar" layoutX="127.0" layoutY="251.0" mnemonicParsing="false" onAction="#quitarPermisoMod" text="Quitar" />
+                              <TableView fx:id="tblPermisosAgregarMod" layoutX="310.0" layoutY="59.0" prefHeight="192.0" prefWidth="297.0">
+                                 <columns>
+                                    <TableColumn fx:id="colNombrePermisoAgregarMod" prefWidth="131.0" text="Nombre" />
+                                    <TableColumn fx:id="colDescripcionPermisoAgregarMod" prefWidth="179.0" text="Descripcion" />
+                                 </columns>
+                              </TableView>
+                              <Button fx:id="btnAgregar" layoutX="429.0" layoutY="251.0" mnemonicParsing="false" onAction="#agregarPermisoMod" text="Agregar" />
                            </children>
                         </AnchorPane>
                   </content>
@@ -66,10 +73,10 @@
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
                               <TextField fx:id="txtDescripcion" layoutX="14.0" layoutY="20.0" prefHeight="27.0" prefWidth="238.0" promptText="Descripcion o nombre del rol" />
-                              <TableView fx:id="tblPermisos" layoutX="14.0" layoutY="55.0" prefHeight="200.0" prefWidth="570.0">
+                              <TableView fx:id="tblPermisos" layoutX="-4.0" layoutY="59.0" prefHeight="196.0" prefWidth="614.0">
                                 <columns>
-                                  <TableColumn prefWidth="75.0" text="ID" />
-                                  <TableColumn prefWidth="494.0" text="Descripcion" />
+                                  <TableColumn fx:id="colNombrePermiso" prefWidth="155.0" text="Nombre" />
+                                  <TableColumn fx:id="colDescripcionPermiso" prefWidth="414.0" text="Descripcion" />
                                 </columns>
                               </TableView>
                               <Button fx:id="btnGuardar" layoutX="270.0" layoutY="257.0" mnemonicParsing="false" text="Guardar" />
