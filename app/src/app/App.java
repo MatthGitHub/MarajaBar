@@ -6,36 +6,63 @@
 package app;
 
 import entidades.Usuarios;
+import java.util.Optional;
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.stage.WindowEvent;
 
 /**
  *
  * @author Matth
  */
 public class App extends Application {
+
     private Usuarios usuarioActual;
-   /**
-    * Guardo estaticamente un string con la ruta del FXML
-    */ 
-   public static String LoginFXML = "/scenes/login/Login.fxml";
-   public static String MenuPpalFXML = "/scenes/menuPrincipal/MenuPrincipal.fxml";
-   public static String MesasFXML = "/scenes/mesas/Mesas.fxml";
-   public static String UsuariosFXML = "/scenes/usuarios/Usuarios.fxml";
-   public static String ProveedoresFXML = "/scenes/proveedores/Proveedores.fxml";
-   public static String ProductosFXML = "/scenes/productos/Productos.fxml";
-   public static String RolesFXML = "/scenes/roles/Roles.fxml";
-    
+    /**
+     * Guardo estaticamente un string con la ruta del FXML
+     */
+    public static String LoginFXML = "/scenes/login/Login.fxml";
+    public static String MenuPpalFXML = "/scenes/menuPrincipal/MenuPrincipal.fxml";
+    public static String MesasFXML = "/scenes/mesas/Mesas.fxml";
+    public static String UsuariosFXML = "/scenes/usuarios/Usuarios.fxml";
+    public static String ProveedoresFXML = "/scenes/proveedores/Proveedores.fxml";
+    public static String ProductosFXML = "/scenes/productos/Productos.fxml";
+    public static String RolesFXML = "/scenes/roles/Roles.fxml";
+
     @Override
     public void start(Stage stage) throws Exception {
         stage.setTitle("Maraja Bar");
-        stage.initStyle(StageStyle.UNDECORATED);
+        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent event) {
+
+                // consume event
+                event.consume();
+
+                // show close dialog
+                Alert alert = new Alert(AlertType.CONFIRMATION);
+                alert.setTitle("Close Confirmation");
+                alert.setHeaderText("Do you really want to quit?");
+                alert.initOwner(stage);
+
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.get() == ButtonType.OK) {
+                    Platform.exit();
+                }
+            }
+        });
+        //stage.initStyle(StageStyle.UNDECORATED);
 
         //mainCointainer posee un hash con los nodos y su nombre como referencia
         ScreensController mainContainer = new ScreensController();
-        
+
         //Cargo las pantallas en el hash
         mainContainer.loadScreen("login", App.LoginFXML);
         mainContainer.loadScreen("menuPpal", App.MenuPpalFXML);
@@ -45,11 +72,10 @@ public class App extends Application {
         mainContainer.loadScreen("productos", ProductosFXML);
         mainContainer.loadScreen("roles", RolesFXML);
         mainContainer.setScreen("login");
-        
+
         Scene scene = new Scene(mainContainer);
-        
+
         //xx.getChildren().remove(test);
-        
         stage.setScene(scene);
         stage.show();
     }
@@ -61,5 +87,4 @@ public class App extends Application {
         launch(args);
     }
 
-    
 }
