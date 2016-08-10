@@ -18,11 +18,14 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.effect.BlendMode;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
 import servicios.MesaServ;
@@ -38,12 +41,6 @@ public class MenuPrincipalController implements Initializable, ControlledScreen 
     public MenuItem btnSalir;
     @FXML
     public FlowPane flwPane;
-    @FXML
-    public MenuBar menuVentana;
-    @FXML
-    public Button btnIconizar;
-    @FXML
-    public Button btnMaximizar;
 
     private MesaServ serviciosMesa;
     private List<Mesa> listaMesas;
@@ -55,23 +52,28 @@ public class MenuPrincipalController implements Initializable, ControlledScreen 
     
     private ScreensController myController;
     private ScreensController mesaScreen;
-
+    private String mesa;
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        mesaScreen = new ScreensController();
-
         
-        menuVentana.setBlendMode(BlendMode.GREEN);
+        mesaScreen = new ScreensController();
+        
         flwPane.setHgap(10);
         mesas = new ArrayList<>();
         serviciosMesa = new MesaServ();
         listaMesas = serviciosMesa.traerTodos();
         for (int i = 0; i < listaMesas.size(); i++) {
-            //mesaScreen.loadScreen("mesa", "/scenes/mesas/Mesas.fxml");
+            if(i == 0){
+                mesa = "zero";
+            }
+            if(i == 1){
+                mesa = "uno";
+            }
+            
             
             Button buton = new Button();
             buton.setMinSize(100, 50);
@@ -83,56 +85,16 @@ public class MenuPrincipalController implements Initializable, ControlledScreen 
                 @Override
                 public void handle(ActionEvent event) {
                     myController.setScreen("mesas");
+                    
                 }
             });
             flwPane.getChildren().add(buton);
         }
+        
     }
 
     public void salir() throws IOException {
         Platform.exit();
-    }
-    
-    public void presionarVentana(){
-        menuVentana.setOnMousePressed(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                xOffset = myController.getScene().getWindow().getX() - event.getScreenX();
-                yOffset = myController.getScene().getWindow().getY() - event.getScreenY();
-            }
-        });
-    }
-    
-    public void moverVentana(){
-        menuVentana.setOnMouseDragged(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                myController.getScene().getWindow().setX(event.getScreenX() + xOffset);
-                myController.getScene().getWindow().setY(event.getScreenY() + yOffset);
-            }
-        });
-    }
-    
-    public void maximizarVentana(){
-        Stage primaryStage = (Stage) btnMaximizar.getScene().getWindow();
-        primaryStage.hide();
-        primaryStage.setMaximized(true);
-        primaryStage.show();
-        
-        /*
-        Screen screen = Screen.getPrimary();
-        Rectangle2D bounds = screen.getVisualBounds();
-
-        primaryStage.setX(bounds.getMinX());
-        primaryStage.setY(bounds.getMinY());
-        primaryStage.setWidth(bounds.getWidth());
-        primaryStage.setHeight(bounds.getHeight());
-        */
-    }
-    
-    public void iconizarVentana(){
-        Stage stage = (Stage) btnIconizar.getScene().getWindow();
-        stage.setIconified(true);
     }
     
     public void usuarios(){

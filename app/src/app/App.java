@@ -48,8 +48,8 @@ public class App extends Application {
 
                 // show close dialog
                 Alert alert = new Alert(AlertType.CONFIRMATION);
-                alert.setTitle("Close Confirmation");
-                alert.setHeaderText("Do you really want to quit?");
+                alert.setTitle("Confirmar");
+                alert.setHeaderText("Seguro desea salir?");
                 alert.initOwner(stage);
 
                 Optional<ButtonType> result = alert.showAndWait();
@@ -58,7 +58,6 @@ public class App extends Application {
                 }
             }
         });
-        //stage.initStyle(StageStyle.UNDECORATED);
 
         //mainCointainer posee un hash con los nodos y su nombre como referencia
         ScreensController mainContainer = new ScreensController();

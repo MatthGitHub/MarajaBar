@@ -10,27 +10,13 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<StackPane prefHeight="488.0" prefWidth="696.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="scenes.menuPrincipal.MenuPrincipalController">
+<AnchorPane prefHeight="200.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="scenes.menuPrincipal.MenuPrincipalController">
    <children>
-      <VBox fx:id="vbox" prefHeight="400.0" prefWidth="600.0">
+      <VBox fx:id="vbox" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <MenuBar fx:id="menuVentana" disable="true" onDragDetected="#moverVentana" opacity="0.0" prefHeight="29.0" prefWidth="600.0">
-               <menus>
-                  <Menu mnemonicParsing="false">
-                     <graphic>
-                        <Button fx:id="btnMaximizar" mnemonicParsing="false" onAction="#maximizarVentana" text="[]" />
-                     </graphic>
-                  </Menu>
-                  <Menu mnemonicParsing="false">
-                     <graphic>
-                        <Button fx:id="btnIconizar" mnemonicParsing="false" onAction="#iconizarVentana" text="-" />
-                     </graphic>
-                  </Menu>
-               </menus>
-            </MenuBar>
             <Pane prefHeight="28.0" prefWidth="600.0">
                <children>
-                  <MenuBar prefHeight="29.0" prefWidth="696.0">
+                  <MenuBar prefHeight="29.0" prefWidth="600.0">
                      <menus>
                         <Menu mnemonicParsing="false" text="Archivo">
                            <items>
@@ -48,10 +34,10 @@
                               <MenuItem mnemonicParsing="false" text="Mesas" />
                               <MenuItem fx:id="itemProductos" mnemonicParsing="false" onAction="#productos" text="Productos" />
                               <Menu mnemonicParsing="false" text="Seguridad">
-                                <items>
+                                 <items>
                                     <MenuItem fx:id="itemUsuarios" mnemonicParsing="false" onAction="#usuarios" text="Usuarios" />
-                                  <MenuItem fx:id="itemRoles" mnemonicParsing="false" onAction="#roles" text="Roles" />
-                                </items>
+                                    <MenuItem fx:id="itemRoles" mnemonicParsing="false" onAction="#roles" text="Roles" />
+                                 </items>
                               </Menu>
                            </items>
                         </Menu>
@@ -66,7 +52,7 @@
             </Pane>
             <Pane prefHeight="73.0" prefWidth="600.0">
                <children>
-                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="128.0" layoutY="6.0" prefHeight="14.0" prefWidth="287.0" text="Mesas">
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="186.0" layoutY="9.0" prefHeight="14.0" prefWidth="287.0" text="Mesas">
                      <font>
                         <Font name="Arial" size="48.0" />
                      </font>
@@ -77,4 +63,4 @@
          </children>
       </VBox>
    </children>
-</StackPane>
+</AnchorPane>
