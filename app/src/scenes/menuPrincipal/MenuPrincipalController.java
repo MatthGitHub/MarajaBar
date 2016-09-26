@@ -66,6 +66,7 @@ public class MenuPrincipalController implements Initializable, ControlledScreen 
         mesas = new ArrayList<>();
         serviciosMesa = new MesaServ();
         listaMesas = serviciosMesa.traerTodos();
+       /*
         for (int i = 0; i < listaMesas.size(); i++) {
             if(i == 0){
                 mesa = "zero";
@@ -90,7 +91,7 @@ public class MenuPrincipalController implements Initializable, ControlledScreen 
             });
             flwPane.getChildren().add(buton);
         }
-        
+        */
     }
 
     public void salir() throws IOException {
