@@ -38,6 +38,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+        
         stage.setTitle("Maraja Bar");
         stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override

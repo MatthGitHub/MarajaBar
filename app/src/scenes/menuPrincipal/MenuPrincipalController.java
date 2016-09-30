@@ -39,20 +39,17 @@ public class MenuPrincipalController implements Initializable, ControlledScreen 
 
     @FXML
     public MenuItem btnSalir;
-    @FXML
-    public FlowPane flwPane;
+ 
 
     private MesaServ serviciosMesa;
     private List<Mesa> listaMesas;
     private List<Button> mesas;
     private Evento evento;
     
-    private static double xOffset = 0;
-    private static double yOffset = 0;
+
     
     private ScreensController myController;
-    private ScreensController mesaScreen;
-    private String mesa;
+
     /**
      * Initializes the controller class.
      */
@@ -60,12 +57,7 @@ public class MenuPrincipalController implements Initializable, ControlledScreen 
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         
-        mesaScreen = new ScreensController();
-        
-        flwPane.setHgap(10);
-        mesas = new ArrayList<>();
-        serviciosMesa = new MesaServ();
-        listaMesas = serviciosMesa.traerTodos();
+
        /*
         for (int i = 0; i < listaMesas.size(); i++) {
             if(i == 0){
