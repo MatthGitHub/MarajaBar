@@ -5,6 +5,7 @@
  */
 package scenes.login;
 
+import app.App;
 import app.ControlledScreen;
 import app.ScreensController;
 import java.net.URL;
@@ -29,8 +30,7 @@ public class LoginController implements Initializable,ControlledScreen {
     @FXML public Button btnSalir;
     @FXML public Button btnIngresar;
     
-    private Stage stage;
-    
+
     private ScreensController myController; 
     
     @Override
@@ -44,6 +44,8 @@ public class LoginController implements Initializable,ControlledScreen {
     
     public void ingresar(){
         myController.setScreen("menuPpal");
+        App.habilitarResize();
+        
     }
 
     @Override

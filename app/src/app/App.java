@@ -25,6 +25,7 @@ import javafx.stage.WindowEvent;
 public class App extends Application {
 
     private Usuarios usuarioActual;
+    private static Stage stage;
     /**
      * Guardo estaticamente un string con la ruta del FXML
      */
@@ -38,7 +39,8 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        
+        this.stage = stage;
+        stage.setResizable(false);
         stage.setTitle("Maraja Bar");
         stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
@@ -85,6 +87,10 @@ public class App extends Application {
      */
     public static void main(String[] args) {
         launch(args);
+    }
+    
+    public static void habilitarResize(){
+        stage.setResizable(true);
     }
 
 }

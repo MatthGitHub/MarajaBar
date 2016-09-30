@@ -15,43 +15,36 @@
         <URL value="@login2.css" />
     </stylesheets>
    <children>
-      <StackPane layoutY="-1.0" prefHeight="416.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox layoutY="209.0" prefHeight="200.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <VBox prefHeight="416.0" prefWidth="600.0">
-               <StackPane.margin>
-                  <Insets />
-               </StackPane.margin>
+            <Pane prefHeight="200.0" prefWidth="200.0">
                <children>
-                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
-                     <children>
-                        <ImageView fitHeight="133.0" fitWidth="155.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="467.0" AnchorPane.topAnchor="0.0">
-                           <image>
-                              <Image url="@../../resources/images/Login.jpg" />
-                           </image>
-                        </ImageView>
-                        <ImageView fitHeight="133.0" fitWidth="155.0" layoutX="467.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="467.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="2.0">
-                           <image>
-                              <Image url="@../../resources/images/Login.jpg" />
-                           </image>
-                        </ImageView>
-                        <Label contentDisplay="CENTER" layoutX="204.0" layoutY="44.0" prefHeight="45.0" prefWidth="193.0" text="Maraja Bar" textAlignment="CENTER" textFill="#0f0f0f" AnchorPane.bottomAnchor="47.0" AnchorPane.leftAnchor="204.0" AnchorPane.rightAnchor="203.0" AnchorPane.topAnchor="44.0">
-                           <font>
-                              <Font name="Apple Symbols" size="36.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </AnchorPane>
-                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
-                     <children>
-                        <TextField alignment="TOP_CENTER" layoutX="207.0" layoutY="14.0" promptText="Usuario" AnchorPane.bottomAnchor="95.0" AnchorPane.leftAnchor="207.0" AnchorPane.rightAnchor="226.0" AnchorPane.topAnchor="14.0" />
-                        <PasswordField alignment="TOP_CENTER" layoutX="207.0" layoutY="55.0" promptText="Contraseña" AnchorPane.bottomAnchor="54.0" AnchorPane.leftAnchor="207.0" AnchorPane.rightAnchor="226.0" AnchorPane.topAnchor="55.0" />
-                        <Button fx:id="btnSalir" layoutX="207.0" layoutY="95.0" mnemonicParsing="false" onAction="#salir" text="Salir" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="207.0" AnchorPane.rightAnchor="348.0" AnchorPane.topAnchor="95.0" />
-                        <Button fx:id="btnIngresar" layoutX="294.0" layoutY="95.0" mnemonicParsing="false" onAction="#ingresar" prefHeight="27.0" prefWidth="104.0" text="Ingresar" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="294.0" AnchorPane.rightAnchor="202.0" AnchorPane.topAnchor="95.0" />
-                     </children>
-                  </AnchorPane>
-                  <AnchorPane prefHeight="200.0" prefWidth="200.0" />
+                  <ImageView fitHeight="133.0" fitWidth="365.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../resources/images/Login.jpg" />
+                     </image>
+                  </ImageView>
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="153.0" layoutY="22.0" prefHeight="45.0" prefWidth="307.0" text="Maraja Bar" textAlignment="CENTER" textFill="#0f0f0f">
+                     <font>
+                        <Font name="Apple Symbols" size="36.0" />
+                     </font>
+                  </Label>
+                  <ImageView fitHeight="133.0" fitWidth="361.0" layoutX="467.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../resources/images/Login.jpg" />
+                     </image>
+                  </ImageView>
                </children>
-            </VBox>
-         </children></StackPane>
+            </Pane>
+            <Pane prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <TextField alignment="TOP_CENTER" layoutX="206.0" layoutY="41.0" promptText="Usuario" />
+                  <PasswordField alignment="TOP_CENTER" layoutX="206.0" layoutY="87.0" promptText="Contraseña" />
+                  <Button fx:id="btnSalir" layoutX="102.0" layoutY="138.0" mnemonicParsing="false" onAction="#salir" prefHeight="27.0" prefWidth="104.0" text="Salir" />
+                  <Button fx:id="btnIngresar" layoutX="373.0" layoutY="138.0" mnemonicParsing="false" onAction="#ingresar" prefHeight="27.0" prefWidth="104.0" text="Ingresar" />
+               </children>
+            </Pane>
+         </children>
+      </VBox>
    </children>
 </AnchorPane>
