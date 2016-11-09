@@ -7,6 +7,7 @@ package gui.main;
 
 import gui.login.LoginView;
 import gui.menuPrincipal.MenuPrincipal;
+import gui.proveedores.ProveedoresNuevoDialog;
 import gui.proveedores.ProveedoresView;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -20,6 +21,7 @@ public final class Main extends javax.swing.JFrame {
     private LoginView loginView;
     private MenuPrincipal menuPpalView;
     private ProveedoresView proveedoresView;
+    private ProveedoresNuevoDialog proveedoresNuevo;
 /* -------------------  Variables views  ------------------------------------------- */    
     /**
      * Creates new form Main
@@ -50,7 +52,7 @@ public final class Main extends javax.swing.JFrame {
     /**
      * Ingreso al menu principal
      */
-    public void goMenuPrincipal(){
+    public void goMenuPrincipalPrimera(){
         menuPpalView = MenuPrincipal.getMenuPrincipal(this);
         if(!menuPpalView.isVisible() == false){
             getContentPane().add(menuPpalView);
@@ -68,6 +70,20 @@ public final class Main extends javax.swing.JFrame {
     }
     
     /**
+     * Ingreso al menu principal
+     */
+    public void goMenuPrincipal(){
+        menuPpalView = MenuPrincipal.getMenuPrincipal(this);
+        if(!menuPpalView.isVisible() == false){
+            getContentPane().add(menuPpalView);
+            revalidate();
+        }else{
+            menuPpalView.setVisible(true);
+            revalidate();
+        }
+    }
+    
+    /**
      * Ingreso a la vista de todos los proveedores
      */
     public void goProveedoresView(){
@@ -80,7 +96,18 @@ public final class Main extends javax.swing.JFrame {
         revalidate();
     }
     
-    
+    /**
+     * Muestra dialog de nuevo proveedor
+     */
+    public void goProveedoresNuevoDialog( ){
+        if(proveedoresNuevo == null){
+            proveedoresNuevo = new ProveedoresNuevoDialog(this,true);
+        }else{
+            proveedoresNuevo.goProveedoresNuevoPanel();
+            proveedoresNuevo.setVisible(true);
+        }
+        revalidate();
+    }
     
     
     /**
@@ -274,6 +301,9 @@ public final class Main extends javax.swing.JFrame {
 
     private void mi_menuPrincipalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mi_menuPrincipalActionPerformed
         // TODO add your handling code here:
+        this.getContentPane().removeAll();
+        goMenuPrincipal();
+        this.repaint();
     }//GEN-LAST:event_mi_menuPrincipalActionPerformed
 
     /**

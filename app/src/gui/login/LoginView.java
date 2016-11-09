@@ -126,7 +126,7 @@ public class LoginView extends MenuP {
 
     private void btn_ingresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ingresarActionPerformed
         // TODO add your handling code here:
-        mainFrame.goMenuPrincipal();
+        mainFrame.goMenuPrincipalPrimera();
         setVisible(false);
     }//GEN-LAST:event_btn_ingresarActionPerformed
 

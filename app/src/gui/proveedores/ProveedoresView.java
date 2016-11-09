@@ -105,6 +105,7 @@ public class ProveedoresView extends MenuP {
 
     private void btn_nuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_nuevoActionPerformed
         // TODO add your handling code here:
+        mainFrame.goProveedoresNuevoDialog();
     }//GEN-LAST:event_btn_nuevoActionPerformed
 
 
