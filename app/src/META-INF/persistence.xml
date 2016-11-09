@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+  <persistence-unit name="appPU" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>negocio.entidades.Detalleventas</class>
+    <class>negocio.entidades.Proveedores</class>
+    <class>negocio.entidades.Productos</class>
+    <class>negocio.entidades.Cajas</class>
+    <class>negocio.entidades.Detallecompras</class>
+    <class>negocio.entidades.Permisos</class>
+    <class>negocio.entidades.Roles</class>
+    <class>negocio.entidades.Compras</class>
+    <class>negocio.entidades.Sectores</class>
+    <class>negocio.entidades.Usuarios</class>
+    <class>negocio.entidades.EstadosCaja</class>
+    <class>negocio.entidades.Mesa</class>
+    <class>negocio.entidades.Mercaderia</class>
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/marajabar?zeroDateTimeBehavior=convertToNull"/>
+      <property name="javax.persistence.jdbc.user" value="root"/>
+      <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+      <property name="javax.persistence.jdbc.password" value="root"/>
+    </properties>
+  </persistence-unit>
+</persistence>
