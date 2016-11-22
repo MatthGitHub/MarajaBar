@@ -5,14 +5,13 @@
  */
 package gui.login;
 
-import com.sun.j3d.utils.applet.MainFrame;
 import gui.main.Main;
 import gui.resources.MenuP;
 import java.awt.Frame;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-/**
+/** 
  *
  * @author Matth
  */

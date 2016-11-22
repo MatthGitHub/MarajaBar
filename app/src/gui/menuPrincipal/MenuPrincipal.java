@@ -9,6 +9,8 @@ import gui.comanda.ComandaFrame;
 import gui.main.Main;
 import gui.resources.MenuP;
 import gui.resources.PanelMesas;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.EventListener;
 import java.util.List;
@@ -20,7 +22,7 @@ import servicios.dto.DtoMesa;
  *
  * @author Matth
  */
-public class MenuPrincipal extends MenuP {
+public class MenuPrincipal extends MenuP implements ActionListener{
     private static MenuPrincipal estePanel;
     Main mainFrame;
     /**
@@ -31,6 +33,7 @@ public class MenuPrincipal extends MenuP {
         this.mainFrame = mainFrame;
         setVisible(true);
         jifMesas.setVisible(false);
+        
     }
     
     public static MenuPrincipal getMenuPrincipal(Main mainFrame){
@@ -40,7 +43,10 @@ public class MenuPrincipal extends MenuP {
         return estePanel;
     }
     
-    
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        mainFrame.goComandaFrame();
+    }
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -58,7 +64,7 @@ public class MenuPrincipal extends MenuP {
         jLabel1 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
         jifMesas = new javax.swing.JInternalFrame();
-        jPanel1 = new PanelMesas();
+        jpMesas = new PanelMesas();
         btn_movil = new javax.swing.JButton();
 
         setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Menu Principal", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Bookshelf Symbol 7", 0, 24))); // NOI18N
@@ -87,20 +93,21 @@ public class MenuPrincipal extends MenuP {
 
         jButton2.setText("Cerrar sesion");
 
+        jifMesas.setTitle("Mesas");
         jifMesas.setVisible(true);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout jpMesasLayout = new javax.swing.GroupLayout(jpMesas);
+        jpMesas.setLayout(jpMesasLayout);
+        jpMesasLayout.setHorizontalGroup(
+            jpMesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 923, Short.MAX_VALUE)
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 500, Short.MAX_VALUE)
+        jpMesasLayout.setVerticalGroup(
+            jpMesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 503, Short.MAX_VALUE)
         );
 
-        jifMesas.getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
+        jifMesas.getContentPane().add(jpMesas, java.awt.BorderLayout.CENTER);
 
         btn_movil.setText("Movil");
 
@@ -122,7 +129,7 @@ public class MenuPrincipal extends MenuP {
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btn_movil, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jifMesas)))
+                        .addComponent(jifMesas, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
                 .addGap(12, 12, 12))
         );
         layout.setVerticalGroup(
@@ -143,7 +150,7 @@ public class MenuPrincipal extends MenuP {
                         .addGap(18, 18, 18)
                         .addComponent(btn_movil, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jifMesas))
+                    .addComponent(jifMesas, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton2))
         );
@@ -158,12 +165,14 @@ public class MenuPrincipal extends MenuP {
         if(jifMesas.isVisible()){
             jifMesas.setVisible(false);
         }else{
+            
             jifMesas.setVisible(true);
             List<DtoMesa> mesas = FacadeNegocio.getFacadeNegocio().getTodasLasMesas("Abajo");
             for(int i = 0; i < mesas.size(); i++){
                 JButton boton = new JButton("Mesa "+mesas.get(i).getNumeroMesa().toString());
-                
-                jifMesas.add(boton);
+                boton.setSize(120,100);
+                boton.addActionListener(this);
+                jpMesas.add(boton);
             }
         }
     }//GEN-LAST:event_btnAbajoActionPerformed
@@ -177,7 +186,9 @@ public class MenuPrincipal extends MenuP {
     private javax.swing.JButton btn_salon;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JInternalFrame jifMesas;
+    private javax.swing.JPanel jpMesas;
     // End of variables declaration//GEN-END:variables
+
+    
 }

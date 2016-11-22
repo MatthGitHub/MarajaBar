@@ -11,6 +11,8 @@ import gui.menuPrincipal.MenuPrincipal;
 import gui.productos.ProductosView;
 import gui.proveedores.ProveedoresNuevoDialog;
 import gui.proveedores.ProveedoresView;
+import java.awt.Image;
+import java.awt.Toolkit;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -27,6 +29,16 @@ public final class Main extends javax.swing.JFrame {
     private ProductosView productosView;
     private ComandaFrame comandasView;
 /* -------------------  Variables views  ------------------------------------------- */    
+    @Override
+    public Image getIconImage() {
+        Image retValue = Toolkit.getDefaultToolkit().
+                getImage(ClassLoader.getSystemResource("resources/icono.png"));
+
+
+        return retValue;
+    }
+    
+    
     /**
      * Creates new form Main
      */
@@ -131,9 +143,8 @@ public final class Main extends javax.swing.JFrame {
      */
     public void goComandaFrame(){
         if(comandasView == null){
-            comandasView = ComandaFrame.getComandaFrame();
+            comandasView = new ComandaFrame();
         }else{
-            comandasView.goComandaPanel(null);//Pasar la mesa por parametro para la comanda
             comandasView.setVisible(true);
         }
         revalidate();
@@ -171,6 +182,7 @@ public final class Main extends javax.swing.JFrame {
         mi_listarUsuarios = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setIconImage(getIconImage());
 
         jm_archivo.setText("Archivo");
 
