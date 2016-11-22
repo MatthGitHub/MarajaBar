@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 07-08-2016 a las 04:18:55
+-- Tiempo de generación: 22-11-2016 a las 03:06:22
 -- Versión del servidor: 5.6.24
 -- Versión de PHP: 5.6.8
 
@@ -72,6 +72,17 @@ CREATE TABLE IF NOT EXISTS `detalleventas` (
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `estadoMesa`
+--
+
+CREATE TABLE IF NOT EXISTS `estadoMesa` (
+  `idEstadoMesa` int(11) NOT NULL,
+  `descripcion` varchar(15) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `estadosCaja`
 --
 
@@ -101,16 +112,9 @@ CREATE TABLE IF NOT EXISTS `mercaderia` (
 
 CREATE TABLE IF NOT EXISTS `mesa` (
   `idMesa` int(11) NOT NULL,
-  `Descripcion` varchar(150) COLLATE utf8_spanish2_ci DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
-
---
--- Volcado de datos para la tabla `mesa`
---
-
-INSERT INTO `mesa` (`idMesa`, `Descripcion`) VALUES
-(1, 'mesa 1'),
-(2, 'mesa 2');
+  `Descripcion` varchar(150) COLLATE utf8_spanish2_ci DEFAULT NULL,
+  `fkSector` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 -- --------------------------------------------------------
 
@@ -175,7 +179,7 @@ CREATE TABLE IF NOT EXISTS `proveedores` (
 --
 
 INSERT INTO `proveedores` (`idProveedor`, `nombreProveedor`, `cuit`, `telefono`, `email`) VALUES
-(1, 'Merco Sur', '99-000988767-3', '01154654321', 'elmerco@tetrae.todo');
+(1, 'Merco Sur', '99-000988767-3', '01154654322', 'elmerco@tetrae.todo');
 
 -- --------------------------------------------------------
 
@@ -186,7 +190,7 @@ INSERT INTO `proveedores` (`idProveedor`, `nombreProveedor`, `cuit`, `telefono`,
 CREATE TABLE IF NOT EXISTS `roles` (
   `idRol` int(11) NOT NULL,
   `Descripcion` varchar(20) COLLATE utf8_spanish2_ci NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 --
 -- Volcado de datos para la tabla `roles`
@@ -215,6 +219,38 @@ INSERT INTO `rolespermisos` (`fkRol`, `fkPermiso`) VALUES
 (1, 1),
 (2, 1),
 (1, 2);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `sectores`
+--
+
+CREATE TABLE IF NOT EXISTS `sectores` (
+  `idSector` int(11) NOT NULL,
+  `nombreSector` varchar(15) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `sectores`
+--
+
+INSERT INTO `sectores` (`idSector`, `nombreSector`) VALUES
+(2, 'Salon'),
+(3, 'Arriba'),
+(4, 'Abajo'),
+(5, 'Afuera');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tipoProducto`
+--
+
+CREATE TABLE IF NOT EXISTS `tipoProducto` (
+  `idTipoProducto` int(11) NOT NULL,
+  `descripcion` varchar(15) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -282,6 +318,12 @@ ALTER TABLE `detalleventas`
   ADD KEY `fkProducto` (`fkProducto`);
 
 --
+-- Indices de la tabla `estadoMesa`
+--
+ALTER TABLE `estadoMesa`
+  ADD PRIMARY KEY (`idEstadoMesa`);
+
+--
 -- Indices de la tabla `estadosCaja`
 --
 ALTER TABLE `estadosCaja`
@@ -298,7 +340,8 @@ ALTER TABLE `mercaderia`
 -- Indices de la tabla `mesa`
 --
 ALTER TABLE `mesa`
-  ADD PRIMARY KEY (`idMesa`);
+  ADD PRIMARY KEY (`idMesa`),
+  ADD KEY `fkSalon` (`fkSector`);
 
 --
 -- Indices de la tabla `permisos`
@@ -332,6 +375,18 @@ ALTER TABLE `rolespermisos`
   ADD KEY `fkPermiso` (`fkPermiso`);
 
 --
+-- Indices de la tabla `sectores`
+--
+ALTER TABLE `sectores`
+  ADD PRIMARY KEY (`idSector`);
+
+--
+-- Indices de la tabla `tipoProducto`
+--
+ALTER TABLE `tipoProducto`
+  ADD PRIMARY KEY (`idTipoProducto`);
+
+--
 -- Indices de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
@@ -361,6 +416,11 @@ ALTER TABLE `cajas`
 ALTER TABLE `compras`
   MODIFY `idCompras` int(11) NOT NULL AUTO_INCREMENT;
 --
+-- AUTO_INCREMENT de la tabla `estadoMesa`
+--
+ALTER TABLE `estadoMesa`
+  MODIFY `idEstadoMesa` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT de la tabla `estadosCaja`
 --
 ALTER TABLE `estadosCaja`
@@ -374,7 +434,7 @@ ALTER TABLE `mercaderia`
 -- AUTO_INCREMENT de la tabla `mesa`
 --
 ALTER TABLE `mesa`
-  MODIFY `idMesa` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+  MODIFY `idMesa` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `permisos`
 --
@@ -394,7 +454,17 @@ ALTER TABLE `proveedores`
 -- AUTO_INCREMENT de la tabla `roles`
 --
 ALTER TABLE `roles`
-  MODIFY `idRol` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+  MODIFY `idRol` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT de la tabla `sectores`
+--
+ALTER TABLE `sectores`
+  MODIFY `idSector` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
+--
+-- AUTO_INCREMENT de la tabla `tipoProducto`
+--
+ALTER TABLE `tipoProducto`
+  MODIFY `idTipoProducto` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
@@ -428,6 +498,12 @@ ALTER TABLE `detalleventas`
 --
 ALTER TABLE `mercaderia`
   ADD CONSTRAINT `mercaderia_ibfk_1` FOREIGN KEY (`fkProveedor`) REFERENCES `proveedores` (`idProveedor`) ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `mesa`
+--
+ALTER TABLE `mesa`
+  ADD CONSTRAINT `mesa_ibfk_1` FOREIGN KEY (`fkSector`) REFERENCES `sectores` (`idSector`);
 
 --
 -- Filtros para la tabla `rolespermisos`
