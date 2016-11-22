@@ -5,8 +5,10 @@
  */
 package gui.main;
 
+import gui.comanda.ComandaFrame;
 import gui.login.LoginView;
 import gui.menuPrincipal.MenuPrincipal;
+import gui.productos.ProductosView;
 import gui.proveedores.ProveedoresNuevoDialog;
 import gui.proveedores.ProveedoresView;
 import javax.swing.JFrame;
@@ -22,6 +24,8 @@ public final class Main extends javax.swing.JFrame {
     private MenuPrincipal menuPpalView;
     private ProveedoresView proveedoresView;
     private ProveedoresNuevoDialog proveedoresNuevo;
+    private ProductosView productosView;
+    private ComandaFrame comandasView;
 /* -------------------  Variables views  ------------------------------------------- */    
     /**
      * Creates new form Main
@@ -109,6 +113,31 @@ public final class Main extends javax.swing.JFrame {
         revalidate();
     }
     
+    /**
+     * Ingreso a la vista de todos los productos
+     */
+    public void goProductosView(){
+        productosView = ProductosView.getProductosView(this);
+        if(!productosView.isVisible() == false){
+            getContentPane().add(productosView);
+        }else{
+            productosView.setVisible(true);
+        }
+        revalidate();
+    }
+    
+    /**
+     * Ingreso a la vista de las comandas
+     */
+    public void goComandaFrame(){
+        if(comandasView == null){
+            comandasView = ComandaFrame.getComandaFrame();
+        }else{
+            comandasView.goComandaPanel(null);//Pasar la mesa por parametro para la comanda
+            comandasView.setVisible(true);
+        }
+        revalidate();
+    }
     
     /**
      * This method is called from within the constructor to initialize the form.

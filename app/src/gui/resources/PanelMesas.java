@@ -14,15 +14,15 @@ import javax.swing.ImageIcon;
  *
  * @author Administrador
  */
-public class MenuP extends javax.swing.JPanel {
+public class PanelMesas extends javax.swing.JPanel {
     private static String fondo;
     private Image background;
     /**
      * Creates new form MiJPanel
      */
-    public MenuP() {
+    public PanelMesas() {
         initComponents();
-        fondo = "lib/imagenes/menuPrincipal.jpg";
+        fondo = "lib/imagenes/menuPrincipal4.jpg";
         setBackground(fondo);
     }
     
@@ -53,7 +53,7 @@ public class MenuP extends javax.swing.JPanel {
     
     public Image getIconImage() {
         Image retValue = Toolkit.getDefaultToolkit().
-                getImage(ClassLoader.getSystemResource("gui/resources/imagenes/MenuPrincipal5.jpg"));
+                getImage(ClassLoader.getSystemResource("gui/resources/imagenes/PanelMesas2.jpg"));
 
 
         return retValue;
