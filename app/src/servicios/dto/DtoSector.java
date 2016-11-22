@@ -10,19 +10,19 @@ package servicios.dto;
  * @author Matth
  */
 public class DtoSector {
-    private Integer numeroSector;
+    private Integer idSector;
     private String nombreSector;
     
     public DtoSector(){
         
     }
 
-    public Integer getNumeroSector() {
-        return numeroSector;
+    public Integer getIdSector() {
+        return idSector;
     }
 
-    public void setNumeroSector(Integer numeroSector) {
-        this.numeroSector = numeroSector;
+    public void setIdSector(Integer idSector) {
+        this.idSector = idSector;
     }
 
     public String getNombreSector() {

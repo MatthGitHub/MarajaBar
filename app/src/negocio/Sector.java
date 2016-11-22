@@ -10,8 +10,9 @@ package negocio;
  * @author Matth
  */
 public class Sector {
+    private Integer idSector;
     private String nombre;
-
+    
     public Sector(String nombre){
         this.nombre = nombre;
     }

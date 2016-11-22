@@ -16,12 +16,17 @@ public class ComandaFrame extends javax.swing.JFrame {
     /**
      * Creates new form ComandaFrame
      */
-    public ComandaFrame() {
+    public ComandaFrame(Integer idMesa) {
         initComponents();
         setResizable(false);
         setDefaultCloseOperation(0);
         setSize(500, 700);
         setVisible(true);
+        lbl_mesa.setText("Mesa: "+idMesa.toString());
+    }
+
+    private ComandaFrame() {
+    
     }
     
 
@@ -53,9 +58,10 @@ public class ComandaFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Comanda", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Bookshelf Symbol 7", 0, 24))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Comanda", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Bookshelf Symbol 7", 0, 24), java.awt.Color.white)); // NOI18N
 
         lbl_mesa.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        lbl_mesa.setForeground(java.awt.Color.white);
         lbl_mesa.setText("Mesa Nº ............");
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -109,7 +115,7 @@ public class ComandaFrame extends javax.swing.JFrame {
                 .addComponent(btn_abrir)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lbl_mesa)
-                .addGap(24, 24, 24)
+                .addGap(84, 84, 84)
                 .addComponent(btn_cerrar))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
@@ -146,7 +152,7 @@ public class ComandaFrame extends javax.swing.JFrame {
                         .addComponent(btn_abrir)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btn_cerrar)
                             .addComponent(lbl_mesa))
                         .addGap(3, 3, 3)))

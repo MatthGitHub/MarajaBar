@@ -29,15 +29,13 @@ public final class Main extends javax.swing.JFrame {
     private ProductosView productosView;
     private ComandaFrame comandasView;
 /* -------------------  Variables views  ------------------------------------------- */    
+/* -------------------  Asigno icono de la aplicacion  ----------------------------- */  
     @Override
     public Image getIconImage() {
-        Image retValue = Toolkit.getDefaultToolkit().
-                getImage(ClassLoader.getSystemResource("resources/icono.png"));
-
-
+        Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("resources/icono.png"));
         return retValue;
     }
-    
+/* -------------------  Asigno icono de la aplicacion  ----------------------------- */    
     
     /**
      * Creates new form Main
@@ -141,9 +139,9 @@ public final class Main extends javax.swing.JFrame {
     /**
      * Ingreso a la vista de las comandas
      */
-    public void goComandaFrame(){
+    public void goComandaFrame(Integer idMesa){
         if(comandasView == null){
-            comandasView = new ComandaFrame();
+            comandasView = new ComandaFrame(idMesa);
         }else{
             comandasView.setVisible(true);
         }

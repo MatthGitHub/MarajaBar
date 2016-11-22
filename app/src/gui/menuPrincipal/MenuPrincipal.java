@@ -9,12 +9,14 @@ import gui.comanda.ComandaFrame;
 import gui.main.Main;
 import gui.resources.MenuP;
 import gui.resources.PanelMesas;
+import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.EventListener;
 import java.util.List;
 import javax.swing.JButton;
+import javax.swing.JToggleButton;
 import negocio.FacadeNegocio;
 import servicios.dto.DtoMesa;
 
@@ -24,6 +26,7 @@ import servicios.dto.DtoMesa;
  */
 public class MenuPrincipal extends MenuP implements ActionListener{
     private static MenuPrincipal estePanel;
+    private Integer idMesa;
     Main mainFrame;
     /**
      * Creates new form MenuPrincipal
@@ -32,8 +35,6 @@ public class MenuPrincipal extends MenuP implements ActionListener{
         initComponents();
         this.mainFrame = mainFrame;
         setVisible(true);
-        jifMesas.setVisible(false);
-        
     }
     
     public static MenuPrincipal getMenuPrincipal(Main mainFrame){
@@ -45,7 +46,7 @@ public class MenuPrincipal extends MenuP implements ActionListener{
     
     @Override
     public void actionPerformed(ActionEvent e) {
-        mainFrame.goComandaFrame();
+        mainFrame.goComandaFrame(1);//mando el id de la mesa
     }
     
     /**
@@ -67,10 +68,12 @@ public class MenuPrincipal extends MenuP implements ActionListener{
         jpMesas = new PanelMesas();
         btn_movil = new javax.swing.JButton();
 
-        setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Menu Principal", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Bookshelf Symbol 7", 0, 24))); // NOI18N
+        setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Menu Principal", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Bookshelf Symbol 7", 0, 24), java.awt.Color.white)); // NOI18N
 
+        btn_salon.setBackground(new java.awt.Color(189, 154, 109));
         btn_salon.setText("Salon");
 
+        btn_arriba.setBackground(new java.awt.Color(189, 154, 109));
         btn_arriba.setText("Arriba");
         btn_arriba.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -78,8 +81,10 @@ public class MenuPrincipal extends MenuP implements ActionListener{
             }
         });
 
+        btn_afuera.setBackground(new java.awt.Color(189, 154, 109));
         btn_afuera.setText("Afuera");
 
+        btnAbajo.setBackground(new java.awt.Color(189, 154, 109));
         btnAbajo.setText("Abajo");
         btnAbajo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -87,7 +92,8 @@ public class MenuPrincipal extends MenuP implements ActionListener{
             }
         });
 
-        jLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
+        jLabel1.setForeground(java.awt.Color.white);
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Sectores");
 
@@ -96,19 +102,10 @@ public class MenuPrincipal extends MenuP implements ActionListener{
         jifMesas.setTitle("Mesas");
         jifMesas.setVisible(true);
 
-        javax.swing.GroupLayout jpMesasLayout = new javax.swing.GroupLayout(jpMesas);
-        jpMesas.setLayout(jpMesasLayout);
-        jpMesasLayout.setHorizontalGroup(
-            jpMesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 923, Short.MAX_VALUE)
-        );
-        jpMesasLayout.setVerticalGroup(
-            jpMesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 503, Short.MAX_VALUE)
-        );
-
+        jpMesas.setLayout(new java.awt.GridLayout(4, 4, 25, 25));
         jifMesas.getContentPane().add(jpMesas, java.awt.BorderLayout.CENTER);
 
+        btn_movil.setBackground(new java.awt.Color(189, 154, 109));
         btn_movil.setText("Movil");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -129,7 +126,7 @@ public class MenuPrincipal extends MenuP implements ActionListener{
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btn_movil, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jifMesas, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+                        .addComponent(jifMesas, javax.swing.GroupLayout.DEFAULT_SIZE, 625, Short.MAX_VALUE)))
                 .addGap(12, 12, 12))
         );
         layout.setVerticalGroup(
@@ -150,7 +147,7 @@ public class MenuPrincipal extends MenuP implements ActionListener{
                         .addGap(18, 18, 18)
                         .addComponent(btn_movil, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jifMesas, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(jifMesas, javax.swing.GroupLayout.DEFAULT_SIZE, 518, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton2))
         );
@@ -162,18 +159,13 @@ public class MenuPrincipal extends MenuP implements ActionListener{
 
     private void btnAbajoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAbajoActionPerformed
         // TODO add your handling code here:
-        if(jifMesas.isVisible()){
-            jifMesas.setVisible(false);
-        }else{
-            
-            jifMesas.setVisible(true);
-            List<DtoMesa> mesas = FacadeNegocio.getFacadeNegocio().getTodasLasMesas("Abajo");
-            for(int i = 0; i < mesas.size(); i++){
-                JButton boton = new JButton("Mesa "+mesas.get(i).getNumeroMesa().toString());
-                boton.setSize(120,100);
-                boton.addActionListener(this);
-                jpMesas.add(boton);
-            }
+        jpMesas.removeAll();
+        List<DtoMesa> mesas = FacadeNegocio.getFacadeNegocio().getTodasLasMesas("Abajo");
+        for(int i = 0; i < mesas.size(); i++){
+            JToggleButton boton = new JToggleButton("Mesa "+mesas.get(i).getIdMesa().toString(),false);
+            boton.setSize(120,100);
+            boton.addActionListener(this);
+            jpMesas.add(boton);
         }
     }//GEN-LAST:event_btnAbajoActionPerformed
 

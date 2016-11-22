@@ -6,6 +6,7 @@
       <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
         <TitledBorder justification="2" title="Menu Principal">
           <Font PropertyName="font" name="Bookshelf Symbol 7" size="24" style="0"/>
+          <Color PropertyName="color" blue="ff" green="ff" id="white" palette="1" red="ff" type="palette"/>
         </TitledBorder>
       </Border>
     </Property>
@@ -41,7 +42,7 @@
                           <Component id="btn_movil" alignment="0" min="-2" pref="127" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jifMesas" pref="0" max="32767" attributes="0"/>
+                      <Component id="jifMesas" pref="625" max="32767" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
@@ -67,7 +68,7 @@
                       <Component id="btn_movil" min="-2" pref="45" max="-2" attributes="0"/>
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
-                  <Component id="jifMesas" pref="0" max="32767" attributes="0"/>
+                  <Component id="jifMesas" pref="518" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jButton2" min="-2" max="-2" attributes="0"/>
@@ -78,11 +79,17 @@
   <SubComponents>
     <Component class="javax.swing.JButton" name="btn_salon">
       <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="6d" green="9a" red="bd" type="rgb"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Salon"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="btn_arriba">
       <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="6d" green="9a" red="bd" type="rgb"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Arriba"/>
       </Properties>
       <Events>
@@ -91,11 +98,17 @@
     </Component>
     <Component class="javax.swing.JButton" name="btn_afuera">
       <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="6d" green="9a" red="bd" type="rgb"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Afuera"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="btnAbajo">
       <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="6d" green="9a" red="bd" type="rgb"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Abajo"/>
       </Properties>
       <Events>
@@ -105,7 +118,10 @@
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Lucida Grande" size="18" style="0"/>
+          <Font name="Lucida Grande" size="24" style="0"/>
+        </Property>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="ff" green="ff" id="white" palette="1" red="ff" type="palette"/>
         </Property>
         <Property name="horizontalAlignment" type="int" value="0"/>
         <Property name="text" type="java.lang.String" value="Sectores"/>
@@ -134,23 +150,20 @@
             </Constraint>
           </Constraints>
 
-          <Layout>
-            <DimensionLayout dim="0">
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <EmptySpace min="0" pref="923" max="32767" attributes="0"/>
-              </Group>
-            </DimensionLayout>
-            <DimensionLayout dim="1">
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <EmptySpace min="0" pref="503" max="32767" attributes="0"/>
-              </Group>
-            </DimensionLayout>
+          <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridLayout">
+            <Property name="columns" type="int" value="4"/>
+            <Property name="horizontalGap" type="int" value="25"/>
+            <Property name="rows" type="int" value="4"/>
+            <Property name="verticalGap" type="int" value="25"/>
           </Layout>
         </Container>
       </SubComponents>
     </Container>
     <Component class="javax.swing.JButton" name="btn_movil">
       <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="6d" green="9a" red="bd" type="rgb"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Movil"/>
       </Properties>
     </Component>
