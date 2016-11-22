@@ -6,6 +6,8 @@
 package gui.comanda;
 
 import gui.resources.MenuP;
+import java.awt.Image;
+import java.awt.Toolkit;
 import negocio.Mesa;
 
 /**
@@ -13,6 +15,15 @@ import negocio.Mesa;
  * @author Matth
  */
 public class ComandaFrame extends javax.swing.JFrame {
+    
+    /* -------------------  Asigno icono de la comanda  ----------------------------- */  
+    @Override
+    public Image getIconImage() {
+        Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("resources/comanda.png"));
+        return retValue;
+    }
+    /* -------------------  Asigno icono de la comanda  ----------------------------- */   
+    
     /**
      * Creates new form ComandaFrame
      */
@@ -22,6 +33,7 @@ public class ComandaFrame extends javax.swing.JFrame {
         setDefaultCloseOperation(0);
         setSize(500, 700);
         setVisible(true);
+        setTitle("Mesa: "+idMesa.toString());
         lbl_mesa.setText("Mesa: "+idMesa.toString());
     }
 
@@ -57,8 +69,9 @@ public class ComandaFrame extends javax.swing.JFrame {
         jTextField1 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setIconImage(getIconImage());
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Comanda", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Bookshelf Symbol 7", 0, 24), java.awt.Color.white)); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Comanda", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Bradley Hand ITC", 0, 24), java.awt.Color.white)); // NOI18N
 
         lbl_mesa.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         lbl_mesa.setForeground(java.awt.Color.white);
@@ -84,8 +97,12 @@ public class ComandaFrame extends javax.swing.JFrame {
         ));
         jScrollPane2.setViewportView(jTable2);
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Pedidos:");
 
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Productos:");
 
         btn_quitar.setText("Quitar");
@@ -103,6 +120,8 @@ public class ComandaFrame extends javax.swing.JFrame {
 
         btn_agregar.setText("Agregar producto");
 
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Total:");
 
         jTextField1.setText("$###");
@@ -164,7 +183,7 @@ public class ComandaFrame extends javax.swing.JFrame {
                     .addComponent(btn_quitar)
                     .addComponent(jLabel3)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
                 .addComponent(jLabel2)
                 .addGap(14, 14, 14)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)

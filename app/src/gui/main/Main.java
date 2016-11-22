@@ -8,6 +8,8 @@ package gui.main;
 import gui.comanda.ComandaFrame;
 import gui.login.LoginView;
 import gui.menuPrincipal.MenuPrincipal;
+import gui.mesas.MesasNuevaDialog;
+import gui.mesas.MesasView;
 import gui.productos.ProductosView;
 import gui.proveedores.ProveedoresNuevoDialog;
 import gui.proveedores.ProveedoresView;
@@ -28,6 +30,8 @@ public final class Main extends javax.swing.JFrame {
     private ProveedoresNuevoDialog proveedoresNuevo;
     private ProductosView productosView;
     private ComandaFrame comandasView;
+    private MesasView mesasView;
+    private MesasNuevaDialog mesaNueva;
 /* -------------------  Variables views  ------------------------------------------- */    
 /* -------------------  Asigno icono de la aplicacion  ----------------------------- */  
     @Override
@@ -147,6 +151,32 @@ public final class Main extends javax.swing.JFrame {
         }
         revalidate();
     }
+    
+    /**
+     * Ingreso a la vista de todos los productos
+     */
+    public void goMesasView(){
+        mesasView = MesasView.getMesasView(this);
+        if(!mesasView.isVisible() == false){
+            getContentPane().add(mesasView);
+        }else{
+            mesasView.setVisible(true);
+        }
+        revalidate();
+    }
+    
+    /**
+     * Ingreso a la vista de nueva mesa
+     */
+    public void goMesaNuevaDialog(){
+        if(mesaNueva == null){
+            mesaNueva = new MesasNuevaDialog(this, true);
+        }else{
+            mesaNueva.setVisible(true);
+        }
+        revalidate();
+    }
+    
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -274,6 +304,11 @@ public final class Main extends javax.swing.JFrame {
         jm_mesas.add(mi_nuevaMesa);
 
         mi_listarMesas.setText("Ver todas");
+        mi_listarMesas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mi_listarMesasActionPerformed(evt);
+            }
+        });
         jm_mesas.add(mi_listarMesas);
 
         jm_configuracion.add(jm_mesas);
@@ -344,6 +379,13 @@ public final class Main extends javax.swing.JFrame {
         goMenuPrincipal();
         this.repaint();
     }//GEN-LAST:event_mi_menuPrincipalActionPerformed
+
+    private void mi_listarMesasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mi_listarMesasActionPerformed
+        // TODO add your handling code here:
+        this.getContentPane().removeAll();
+        goMesasView();
+        this.repaint();
+    }//GEN-LAST:event_mi_listarMesasActionPerformed
 
     /**
      * @param args the command line arguments

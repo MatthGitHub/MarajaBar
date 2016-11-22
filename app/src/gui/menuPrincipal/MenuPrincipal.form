@@ -5,7 +5,7 @@
     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
       <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
         <TitledBorder justification="2" title="Menu Principal">
-          <Font PropertyName="font" name="Bookshelf Symbol 7" size="24" style="0"/>
+          <Font PropertyName="font" name="Bradley Hand ITC" size="24" style="0"/>
           <Color PropertyName="color" blue="ff" green="ff" id="white" palette="1" red="ff" type="palette"/>
         </TitledBorder>
       </Border>
@@ -68,7 +68,7 @@
                       <Component id="btn_movil" min="-2" pref="45" max="-2" attributes="0"/>
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
-                  <Component id="jifMesas" pref="518" max="32767" attributes="0"/>
+                  <Component id="jifMesas" pref="512" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jButton2" min="-2" max="-2" attributes="0"/>

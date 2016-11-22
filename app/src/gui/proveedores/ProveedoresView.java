@@ -46,19 +46,24 @@ public class ProveedoresView extends MenuP {
         btn_nuevo = new javax.swing.JButton();
         btn_eliminar1 = new javax.swing.JButton();
 
-        setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Proveedores", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Bookshelf Symbol 7", 0, 24))); // NOI18N
+        setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Proveedores", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Bradley Hand ITC", 0, 24), new java.awt.Color(255, 255, 255))); // NOI18N
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Nombre", "CUIT", "Telefono", "Correo"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, true, true
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jt_proveedores.setViewportView(jTable1);
 
         btn_eliminar.setText("Eliminar");
@@ -80,26 +85,26 @@ public class ProveedoresView extends MenuP {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(jt_proveedores, javax.swing.GroupLayout.DEFAULT_SIZE, 776, Short.MAX_VALUE)
+                        .addGap(6, 6, 6))
+                    .addGroup(layout.createSequentialGroup()
                         .addComponent(btn_eliminar1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btn_eliminar)
-                        .addGap(57, 57, 57)
-                        .addComponent(btn_nuevo))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jt_proveedores, javax.swing.GroupLayout.DEFAULT_SIZE, 776, Short.MAX_VALUE)
-                        .addGap(6, 6, 6))))
+                        .addGap(62, 62, 62)
+                        .addComponent(btn_nuevo))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(41, 41, 41)
-                .addComponent(jt_proveedores)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jt_proveedores, javax.swing.GroupLayout.DEFAULT_SIZE, 463, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_nuevo)
+                    .addComponent(btn_eliminar1)
                     .addComponent(btn_eliminar)
-                    .addComponent(btn_eliminar1))
-                .addGap(64, 64, 64))
+                    .addComponent(btn_nuevo))
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
