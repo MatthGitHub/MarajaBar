@@ -16,6 +16,7 @@ public class DtoMesa {
     private String descripcion;
     private Integer sector;
     
+    
     public DtoMesa(){
         
     }

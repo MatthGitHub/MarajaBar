@@ -15,7 +15,7 @@ import negocio.Mesa;
  * @author Matth
  */
 public class ComandaFrame extends javax.swing.JFrame {
-    
+    private static ComandaFrame esteFrame;
     /* -------------------  Asigno icono de la comanda  ----------------------------- */  
     @Override
     public Image getIconImage() {
@@ -27,20 +27,26 @@ public class ComandaFrame extends javax.swing.JFrame {
     /**
      * Creates new form ComandaFrame
      */
-    public ComandaFrame(Integer idMesa) {
+    private ComandaFrame() {
         initComponents();
         setResizable(false);
         setDefaultCloseOperation(0);
         setSize(500, 700);
         setVisible(true);
+
+    }
+    
+    public static ComandaFrame getComandaFrame(){
+        if(esteFrame == null){
+            esteFrame = new ComandaFrame();
+        }
+        return esteFrame;
+    }
+    
+    public void setMesa(Integer idMesa){
         setTitle("Mesa: "+idMesa.toString());
         lbl_mesa.setText("Mesa: "+idMesa.toString());
     }
-
-    private ComandaFrame() {
-    
-    }
-    
 
   
     /**

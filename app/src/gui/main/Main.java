@@ -132,6 +132,7 @@ public final class Main extends javax.swing.JFrame {
      */
     public void goProductosView(){
         productosView = ProductosView.getProductosView(this);
+        
         if(!productosView.isVisible() == false){
             getContentPane().add(productosView);
         }else{
@@ -143,14 +144,22 @@ public final class Main extends javax.swing.JFrame {
     /**
      * Ingreso a la vista de las comandas
      */
-    public void goComandaFrame(Integer idMesa){
-        if(comandasView == null){
-            comandasView = new ComandaFrame(idMesa);
+    public void goComandaFrame( ){
+        comandasView = ComandaFrame.getComandaFrame();
+        
+        if(comandasView.isVisible()){
+            setLocationRelativeTo(this);
         }else{
             comandasView.setVisible(true);
         }
-        revalidate();
     }
+    
+    public ComandaFrame getComandaFrame(){
+        comandasView = ComandaFrame.getComandaFrame();
+        
+        return comandasView;
+    }
+       
     
     /**
      * Ingreso a la vista de todos los productos

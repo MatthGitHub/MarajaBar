@@ -13,6 +13,8 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.EventListener;
 import java.util.List;
 import javax.swing.JButton;
@@ -24,9 +26,8 @@ import servicios.dto.DtoMesa;
  *
  * @author Matth
  */
-public class MenuPrincipal extends MenuP implements ActionListener{
+public class MenuPrincipal extends MenuP {
     private static MenuPrincipal estePanel;
-    private Integer idMesa;
     Main mainFrame;
     /**
      * Creates new form MenuPrincipal
@@ -44,10 +45,6 @@ public class MenuPrincipal extends MenuP implements ActionListener{
         return estePanel;
     }
     
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        mainFrame.goComandaFrame(1);//mando el id de la mesa
-    }
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -162,11 +159,47 @@ public class MenuPrincipal extends MenuP implements ActionListener{
         jpMesas.removeAll();
         List<DtoMesa> mesas = FacadeNegocio.getFacadeNegocio().getTodasLasMesas("Abajo");
         for(int i = 0; i < mesas.size(); i++){
-            JToggleButton boton = new JToggleButton("Mesa "+mesas.get(i).getIdMesa().toString(),false);
+            JButton boton = new JButton("Mesa "+mesas.get(i).getIdMesa().toString());
+            final int idMesa = mesas.get(i).getIdMesa();
             boton.setSize(120,100);
-            boton.addActionListener(this);
+            boton.addActionListener(new ActionListener() {
+
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    
+                    mainFrame.goComandaFrame();
+                }
+            });
+            boton.addMouseListener(new MouseListener() {
+
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    boton.setBackground(new Color(51,255,153).brighter());
+                    mainFrame.getComandaFrame().setMesa(idMesa);
+                            
+                }
+
+                @Override
+                public void mousePressed(MouseEvent e) {
+                }
+
+                @Override
+                public void mouseReleased(MouseEvent e) {
+                }
+
+                @Override
+                public void mouseEntered(MouseEvent e) {
+                }
+
+                @Override
+                public void mouseExited(MouseEvent e) {
+                }
+            });
             jpMesas.add(boton);
         }
+        jifMesas.pack();
+        jifMesas.revalidate();
+        jifMesas.repaint();
     }//GEN-LAST:event_btnAbajoActionPerformed
 
 
