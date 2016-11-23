@@ -5,6 +5,8 @@
  */
 package servicios.dto;
 
+import negocio.Producto;
+
 /**
  *
  * @author matth
@@ -51,5 +53,11 @@ public class DtoProducto {
         this.precio = precio;
     }
     
+    public DtoProducto cargarDto(Producto aCargar){
+        this.setNombreProducto(aCargar.getNombreProducto());
+        this.setDescripcion(aCargar.getDescripcion());
+        this.setPrecio(aCargar.getPrecio());
+        return this;
+    }
     
 }
