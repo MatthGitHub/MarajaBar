@@ -45,4 +45,12 @@ public class FacadeNegocio {
        }
        return mesas;
    }
+   public DtoMesa getMesa(Integer idMesa){
+       BarController barController = BarController.getBarController();
+       DtoMesa miMesa = new DtoMesa();
+       
+       return miMesa;
+   }
+   
+   
 }

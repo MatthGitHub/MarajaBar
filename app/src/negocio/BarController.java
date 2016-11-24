@@ -28,6 +28,12 @@ public class BarController {
         return esteBar;
     }
     
+// ------------------------  Metodos Mesas -------------------------------------------    
+    /**
+     * 
+     * @param nombreSector
+     * @return 
+     */    
     public List<Mesa> getTodasLasMesas(String nombreSector){
         
         List<Mesa> listMesas = new ArrayList<>();
@@ -51,6 +57,12 @@ public class BarController {
         return listMesas;
     }
     
+    public Mesa getMesa(Integer idMesa){
+        
+    }
+    
+    
+// ------------------------  Metodos Mesas -------------------------------------------        
     public List<Sector> getTodosLosSectores(){
         sectores = new ArrayList<>();
         sectores.add(new Sector("Arriba"));

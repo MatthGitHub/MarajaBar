@@ -8,7 +8,9 @@ package gui.comanda;
 import gui.resources.MenuP;
 import java.awt.Image;
 import java.awt.Toolkit;
+import negocio.FacadeNegocio;
 import negocio.Mesa;
+import servicios.dto.DtoMesa;
 
 /**
  *
@@ -46,6 +48,7 @@ public class ComandaFrame extends javax.swing.JFrame {
     public void setMesa(Integer idMesa){
         setTitle("Mesa: "+idMesa.toString());
         lbl_mesa.setText("Mesa: "+idMesa.toString());
+        DtoMesa miMesa = FacadeNegocio.getFacadeNegocio().getMesa(idMesa);
     }
 
   
