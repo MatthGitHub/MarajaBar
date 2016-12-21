@@ -21,7 +21,7 @@ public class ProductosView extends MenuP {
      */
     private ProductosView(Main mainFrame) {
         initComponents();
-        
+        this.mainFrame = mainFrame;
     }
     
     public static ProductosView getProductosView(Main mainFrame){
@@ -44,7 +44,7 @@ public class ProductosView extends MenuP {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnNuevo = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
 
         setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Productos", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Bradley Hand ITC", 0, 24), new java.awt.Color(255, 255, 255))); // NOI18N
@@ -69,7 +69,12 @@ public class ProductosView extends MenuP {
 
         jButton1.setText("Menu");
 
-        jButton2.setText("Nuevo");
+        btnNuevo.setText("Nuevo");
+        btnNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNuevoActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Eliminar");
 
@@ -88,7 +93,7 @@ public class ProductosView extends MenuP {
                         .addGap(256, 256, 256)
                         .addComponent(jButton3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 269, Short.MAX_VALUE)
-                        .addComponent(jButton2))))
+                        .addComponent(btnNuevo))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -98,15 +103,20 @@ public class ProductosView extends MenuP {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
-                    .addComponent(jButton2)
+                    .addComponent(btnNuevo)
                     .addComponent(jButton3)))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
+        // TODO add your handling code here:
+        mainFrame.goProductosNuevoDialog();
+    }//GEN-LAST:event_btnNuevoActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnNuevo;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;

@@ -10,6 +10,7 @@ import gui.login.LoginView;
 import gui.menuPrincipal.MenuPrincipal;
 import gui.mesas.MesasNuevaDialog;
 import gui.mesas.MesasView;
+import gui.productos.ProductosNuevoDialog;
 import gui.productos.ProductosView;
 import gui.proveedores.ProveedoresNuevoDialog;
 import gui.proveedores.ProveedoresView;
@@ -29,6 +30,7 @@ public final class Main extends javax.swing.JFrame {
     private ProveedoresView proveedoresView;
     private ProveedoresNuevoDialog proveedoresNuevo;
     private ProductosView productosView;
+    private ProductosNuevoDialog productoNuevo;
     private ComandaFrame comandasView;
     private MesasView mesasView;
     private MesasNuevaDialog mesaNueva;
@@ -137,6 +139,19 @@ public final class Main extends javax.swing.JFrame {
             getContentPane().add(productosView);
         }else{
             productosView.setVisible(true);
+        }
+        revalidate();
+    }
+    
+    /**
+     * Muestra dialog de nuevo producto
+     */
+    public void goProductosNuevoDialog( ){
+        if(productoNuevo == null){
+            productoNuevo = new ProductosNuevoDialog(this, true);
+        }else{
+            productoNuevo.goProductosNuevoPanel();
+            productoNuevo.setVisible(true);
         }
         revalidate();
     }
@@ -346,6 +361,9 @@ public final class Main extends javax.swing.JFrame {
 
     private void mi_listarProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mi_listarProductosActionPerformed
         // TODO add your handling code here:
+        this.getContentPane().removeAll();
+        goProductosView();
+        this.repaint();
     }//GEN-LAST:event_mi_listarProductosActionPerformed
 
     private void mi_nuevoProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mi_nuevoProductoActionPerformed

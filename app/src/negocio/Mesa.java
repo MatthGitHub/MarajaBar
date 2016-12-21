@@ -14,28 +14,51 @@ package negocio;
 
 public class Mesa {
     
-    private int numeroMesa;
-    private boolean estadoMesa;
+    private Integer numeroMesa;
+    private Boolean estadoMesa;
+    private String descripcion;
+    private Integer fkSector;
 
-    public Mesa(Integer numMesa){
-        this.numeroMesa = numMesa;
+
+    public Mesa(Integer numeroMesa, Boolean estadoMesa, Integer fkSector) {
+        this.numeroMesa = numeroMesa;
+        this.estadoMesa = estadoMesa;
+        this.fkSector = fkSector;
     }
     
     
-    public int getNumeroMesa() {
+
+    public Integer getNumeroMesa() {
         return numeroMesa;
     }
 
-    public void setNumeroMesa(int numeroMesa) {
+    public void setNumeroMesa(Integer numeroMesa) {
         this.numeroMesa = numeroMesa;
     }
 
-    public boolean isEstadoMesa() {
+    public Boolean getEstadoMesa() {
         return estadoMesa;
     }
 
-    public void setEstadoMesa(boolean estadoMesa) {
+    public void setEstadoMesa(Boolean estadoMesa) {
         this.estadoMesa = estadoMesa;
     }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public Integer getFkSector() {
+        return fkSector;
+    }
+
+    public void setFkSector(Integer fkSector) {
+        this.fkSector = fkSector;
+    }
+
     
 }

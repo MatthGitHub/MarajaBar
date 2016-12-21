@@ -15,6 +15,7 @@ public class DtoMesa {
     private Integer idMesa;
     private String descripcion;
     private Integer sector;
+    private Boolean estadoMesa;
     
     
     public DtoMesa(){
@@ -23,15 +24,10 @@ public class DtoMesa {
     
     public DtoMesa cargarDto(Mesa mesaParaCargar)
     {
-        try
-        {
         this.setIdMesa(mesaParaCargar.getNumeroMesa());
-
-        }catch(NullPointerException e)
-        {
-            throw  e;
-        }
-           //seguir hasta el final
+        this.setSector(mesaParaCargar.getFkSector());
+        this.setDescripcion(mesaParaCargar.getDescripcion());
+        this.setEstadoMesa(mesaParaCargar.getEstadoMesa());
         return this;
     }
     
@@ -57,6 +53,14 @@ public class DtoMesa {
 
     public void setSector(Integer sector) {
         this.sector = sector;
+    }
+
+    public Boolean getEstadoMesa() {
+        return estadoMesa;
+    }
+
+    public void setEstadoMesa(Boolean estadoMesa) {
+        this.estadoMesa = estadoMesa;
     }
     
     

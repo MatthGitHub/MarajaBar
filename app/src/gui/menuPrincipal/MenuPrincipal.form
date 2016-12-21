@@ -84,6 +84,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Salon"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_salonActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btn_arriba">
       <Properties>
@@ -103,6 +106,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Afuera"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_afueraActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnAbajo">
       <Properties>
@@ -166,6 +172,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Movil"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_movilActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

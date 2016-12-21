@@ -8,9 +8,11 @@ package gui.comanda;
 import gui.resources.MenuP;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
 import negocio.FacadeNegocio;
-import negocio.Mesa;
 import servicios.dto.DtoMesa;
+import servicios.dto.DtoProducto;
 
 /**
  *
@@ -18,6 +20,14 @@ import servicios.dto.DtoMesa;
  */
 public class ComandaFrame extends javax.swing.JFrame {
     private static ComandaFrame esteFrame;
+    private DefaultTableModel modeloP;
+    private DefaultTableModel modeloC;
+    
+    /*
+    Despues de abrir la mesa, se genera un detalle de venta asociado con la mesa. PROBLEMA: como saber a que detalle de venta esta asociado la mesa, ya que va a haber muchos, 
+    podria ser el de la ultima fecha, pero podria ser inconsistente...
+    */
+    
     /* -------------------  Asigno icono de la comanda  ----------------------------- */  
     @Override
     public Image getIconImage() {
@@ -31,11 +41,13 @@ public class ComandaFrame extends javax.swing.JFrame {
      */
     private ComandaFrame() {
         initComponents();
+        modeloP = (DefaultTableModel) jtProductos.getModel();
+        modeloC = (DefaultTableModel) jtComanda.getModel();
         setResizable(false);
         setDefaultCloseOperation(0);
         setSize(500, 700);
         setVisible(true);
-
+        setTablaProductos();
     }
     
     public static ComandaFrame getComandaFrame(){
@@ -49,6 +61,23 @@ public class ComandaFrame extends javax.swing.JFrame {
         setTitle("Mesa: "+idMesa.toString());
         lbl_mesa.setText("Mesa: "+idMesa.toString());
         DtoMesa miMesa = FacadeNegocio.getFacadeNegocio().getMesa(idMesa);
+        if(miMesa.getEstadoMesa()){
+            btn_abrir.setEnabled(false);
+        }else{
+            btn_cerrar.setEnabled(false);
+        }
+    }
+    
+    public void setTablaProductos(){
+        List<DtoProducto> productos = FacadeNegocio.getFacadeNegocio().getTodosLosProductos();
+        String v[] = new String[2];
+        
+        for(int i = 0; i < productos.size();i++){
+            v[0] = productos.get(i).getNombreProducto();
+            v[1] = productos.get(i).getPrecio().toString();
+            modeloP.addRow(v);
+        }
+        
     }
 
   
@@ -64,9 +93,9 @@ public class ComandaFrame extends javax.swing.JFrame {
         jPanel1 = new MenuP();
         lbl_mesa = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jtComanda = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        jtProductos = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         btn_quitar = new javax.swing.JButton();
@@ -86,25 +115,41 @@ public class ComandaFrame extends javax.swing.JFrame {
         lbl_mesa.setForeground(java.awt.Color.white);
         lbl_mesa.setText("Mesa Nº ............");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jtComanda.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
                 "Producto", "Precio", "Cantidad"
             }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(jtComanda);
+
+        jtProductos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
                 "Producto", "Precio"
             }
-        ));
-        jScrollPane2.setViewportView(jTable2);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane2.setViewportView(jtProductos);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -126,8 +171,18 @@ public class ComandaFrame extends javax.swing.JFrame {
         btn_cerrar.setText("Cerrar mesa");
 
         btn_abrir.setText("Abrir mesa");
+        btn_abrir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_abrirActionPerformed(evt);
+            }
+        });
 
         btn_agregar.setText("Agregar producto");
+        btn_agregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_agregarActionPerformed(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
@@ -212,6 +267,18 @@ public class ComandaFrame extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_btn_esconderActionPerformed
 
+    private void btn_agregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_agregarActionPerformed
+        // TODO add your handling code here:
+        if(jtProductos.getSelectedRow() != -1){
+            
+        }
+    }//GEN-LAST:event_btn_agregarActionPerformed
+
+    private void btn_abrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_abrirActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_btn_abrirActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -259,9 +326,9 @@ public class ComandaFrame extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JTable jtComanda;
+    private javax.swing.JTable jtProductos;
     private javax.swing.JLabel lbl_mesa;
     // End of variables declaration//GEN-END:variables
 }

@@ -20,6 +20,19 @@ public class DtoProducto {
     public DtoProducto(){
         
     }
+    /**
+     * Carga el producto pasado por paramtro
+     * 
+     * @param aCargar
+     * @return DtoProducto
+     */
+    public DtoProducto cargarDtoProducto(Producto aCargar){
+        this.setIdProducto(aCargar.getIdProducto());
+        this.setNombreProducto(aCargar.getNombreProducto());
+        this.setDescripcion(aCargar.getDescripcion());
+        this.setPrecio(aCargar.getPrecio());
+        return this;
+    }
 
     public Integer getIdProducto() {
         return idProducto;
