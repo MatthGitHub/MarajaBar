@@ -9,10 +9,17 @@ import gui.resources.MenuP;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import negocio.BarController;
 import negocio.FacadeNegocio;
+import servicios.dto.DtoDetalleVenta;
 import servicios.dto.DtoMesa;
 import servicios.dto.DtoProducto;
+import servicios.dto.DtoVentas;
 
 /**
  *
@@ -22,6 +29,8 @@ public class ComandaFrame extends javax.swing.JFrame {
     private static ComandaFrame esteFrame;
     private DefaultTableModel modeloP;
     private DefaultTableModel modeloC;
+    private DtoMesa miMesa;
+    private Integer idVenta;
     
     /*
     Despues de abrir la mesa, se genera un detalle de venta asociado con la mesa. PROBLEMA: como saber a que detalle de venta esta asociado la mesa, ya que va a haber muchos, 
@@ -57,29 +66,91 @@ public class ComandaFrame extends javax.swing.JFrame {
         return esteFrame;
     }
     
+    /**
+     * Verifica si la comanda esta cerrada o abierta
+     * @return 
+     */
+    public boolean verificarEstadoMesa(){
+        FacadeNegocio.getFacadeNegocio().getUltimaVenta(miMesa);
+        
+        return false;
+    }
+    
+    
     public void setMesa(Integer idMesa){
         setTitle("Mesa: "+idMesa.toString());
         lbl_mesa.setText("Mesa: "+idMesa.toString());
-        DtoMesa miMesa = FacadeNegocio.getFacadeNegocio().getMesa(idMesa);
-        if(miMesa.getEstadoMesa()){
-            btn_abrir.setEnabled(false);
-        }else{
+        miMesa = FacadeNegocio.getFacadeNegocio().getMesa(idMesa);
+        DtoVentas ultimaVenta = FacadeNegocio.getFacadeNegocio().getUltimaVenta(miMesa);
+        
+        if((ultimaVenta == null)||(ultimaVenta.getFkEstado().getIdEstadoVenta() == 1)){
+            btn_abrir.setEnabled(true);
             btn_cerrar.setEnabled(false);
+        }else{
+            btn_cerrar.setEnabled(true);
+            btn_abrir.setEnabled(false);
+            List<DtoDetalleVenta> detalles = FacadeNegocio.getFacadeNegocio().getDetalleVenta(ultimaVenta);
+            idVenta = ultimaVenta.getIdVenta();
+            setTablaDetalle(detalles);
         }
     }
     
     public void setTablaProductos(){
         List<DtoProducto> productos = FacadeNegocio.getFacadeNegocio().getTodosLosProductos();
-        String v[] = new String[2];
+        String v[] = new String[3];
         
         for(int i = 0; i < productos.size();i++){
-            v[0] = productos.get(i).getNombreProducto();
-            v[1] = productos.get(i).getPrecio().toString();
+            v[0] = productos.get(i).getIdProducto().toString();
+            v[1] = productos.get(i).getNombreProducto();
+            v[2] = productos.get(i).getPrecio().toString();
             modeloP.addRow(v);
+        }
+    }
+    
+    public void setTablaDetalle(List<DtoDetalleVenta> detalle){
+        vaciarTabla(jtComanda);
+        String v[] = new String[3];
+        for(int i = 0; i < detalle.size();i++){
+            v[0] = detalle.get(i).getFkProducto().getNombreProducto();
+            v[1] = detalle.get(i).getFkProducto().getPrecio().toString();
+            v[2] = detalle.get(i).getCantidad().toString();
+            modeloC.addRow(v);
+        }
+    }
+    
+    private void vaciarTabla(JTable tabla) {
+        try {
+            DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
+            int filas = tabla.getRowCount();
+            for (int i = 0; filas > i; i++) {
+                modelo.removeRow(0);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al limpiar la tabla.");
+        }
+    }
+    
+    public void abrirMesa(){
+        try {
+            idVenta = FacadeNegocio.getFacadeNegocio().nuevaVenta(miMesa);
+        } catch (Exception ex) {
+            Logger.getLogger(ComandaFrame.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, "Error al crear venta - "+ex, "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    public void agregarProductoAComanda(){
+        DtoProducto producto = FacadeNegocio.getFacadeNegocio().getProducto(Integer.parseInt(jtProductos.getValueAt(jtProductos.getSelectedRow(), 0).toString()));
+        DtoVentas ultimaVenta = FacadeNegocio.getFacadeNegocio().getUltimaVenta(miMesa);
+        
+        if(FacadeNegocio.getFacadeNegocio().nuevoDetalleVenta(ultimaVenta, producto)){
+            List<DtoDetalleVenta> detalles = FacadeNegocio.getFacadeNegocio().getDetalleVenta(ultimaVenta);
+            setTablaDetalle(detalles);
+        }else{
+            JOptionPane.showMessageDialog(this, "Error al cargar producto", "Error", JOptionPane.ERROR_MESSAGE);
         }
         
     }
-
   
     /**
      * This method is called from within the constructor to initialize the form.
@@ -138,11 +209,11 @@ public class ComandaFrame extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Producto", "Precio"
+                "Id", "Producto", "Precio"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false
+                false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -270,13 +341,15 @@ public class ComandaFrame extends javax.swing.JFrame {
     private void btn_agregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_agregarActionPerformed
         // TODO add your handling code here:
         if(jtProductos.getSelectedRow() != -1){
-            
+            agregarProductoAComanda();
         }
     }//GEN-LAST:event_btn_agregarActionPerformed
 
     private void btn_abrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_abrirActionPerformed
         // TODO add your handling code here:
-        
+        btn_abrir.setEnabled(false);
+        btn_cerrar.setEnabled(true);
+        abrirMesa();
     }//GEN-LAST:event_btn_abrirActionPerformed
 
     /**

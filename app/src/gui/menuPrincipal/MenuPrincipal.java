@@ -210,21 +210,22 @@ public class MenuPrincipal extends MenuP {
 
     private void btn_arribaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_arribaActionPerformed
         // TODO add your handling code here:
-        llenarPanelMesas(2);
+        llenarPanelMesas(3);
     }//GEN-LAST:event_btn_arribaActionPerformed
 
     private void btnAbajoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAbajoActionPerformed
         // TODO add your handling code here:
-        llenarPanelMesas(1);
+        llenarPanelMesas(4);
     }//GEN-LAST:event_btnAbajoActionPerformed
 
     private void btn_salonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_salonActionPerformed
         // TODO add your handling code here:
-        llenarPanelMesas(3);
+        llenarPanelMesas(2);
     }//GEN-LAST:event_btn_salonActionPerformed
 
     private void btn_afueraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_afueraActionPerformed
         // TODO add your handling code here:
+        llenarPanelMesas(5);
     }//GEN-LAST:event_btn_afueraActionPerformed
 
     private void btn_movilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_movilActionPerformed

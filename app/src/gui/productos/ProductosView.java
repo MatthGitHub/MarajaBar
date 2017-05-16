@@ -7,21 +7,27 @@ package gui.productos;
 
 import gui.main.Main;
 import gui.resources.MenuP;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+import negocio.FacadeNegocio;
+import servicios.dto.DtoProducto;
 
 /**
  *
  * @author Matth
  */
 public class ProductosView extends MenuP {
-    Main mainFrame;
+    private Main mainFrame;
     private static ProductosView estePanel;
-    
+    private DefaultTableModel modelo;
     /**
      * Creates new form ProductosVieew
      */
     private ProductosView(Main mainFrame) {
         initComponents();
         this.mainFrame = mainFrame;
+        modelo = (DefaultTableModel) jtProductos.getModel();
+        setTablaProductos();
     }
     
     public static ProductosView getProductosView(Main mainFrame){
@@ -31,6 +37,18 @@ public class ProductosView extends MenuP {
         return estePanel;
     }
     
+    public void setTablaProductos(){
+        List<DtoProducto> miLista = FacadeNegocio.getFacadeNegocio().getTodosLosProductos();
+        String v[] = new String[3];
+        
+        for(int i = 0; i < miLista.size(); i ++){
+            v[0] = miLista.get(i).getNombreProducto();
+            v[1] = miLista.get(i).getDescripcion();
+            v[2] = miLista.get(i).getPrecio().toString();
+            modelo.addRow(v);
+        }
+        revalidate();
+    }
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -42,14 +60,14 @@ public class ProductosView extends MenuP {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jtProductos = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         btnNuevo = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
 
         setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Productos", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Bradley Hand ITC", 0, 24), new java.awt.Color(255, 255, 255))); // NOI18N
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jtProductos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -65,7 +83,7 @@ public class ProductosView extends MenuP {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(jtProductos);
 
         jButton1.setText("Menu");
 
@@ -119,6 +137,6 @@ public class ProductosView extends MenuP {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jtProductos;
     // End of variables declaration//GEN-END:variables
 }

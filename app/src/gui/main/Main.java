@@ -150,7 +150,6 @@ public final class Main extends javax.swing.JFrame {
         if(productoNuevo == null){
             productoNuevo = new ProductosNuevoDialog(this, true);
         }else{
-            productoNuevo.goProductosNuevoPanel();
             productoNuevo.setVisible(true);
         }
         revalidate();

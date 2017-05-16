@@ -9,17 +9,17 @@ package negocio;
  *
  * @author matth
  */
-public class Producto {
+public class ProductoN {
     private Integer idProducto;
     private String nombreProducto;
     private String descripcion;
     private Float precio;
     
-    public Producto(){
+    public ProductoN(){
         
     }
 
-    public Producto(Integer idProducto, String nombreProducto, String descripcion, Float precio) {
+    public ProductoN(Integer idProducto, String nombreProducto, String descripcion, Float precio) {
         this.idProducto = idProducto;
         this.nombreProducto = nombreProducto;
         this.descripcion = descripcion;

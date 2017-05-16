@@ -9,11 +9,11 @@ package negocio;
  *
  * @author Matth
  */
-public class Sector {
+public class SectorN {
     private Integer idSector;
     private String nombre;
     
-    public Sector(String nombre){
+    public SectorN(String nombre){
         this.nombre = nombre;
     }
     

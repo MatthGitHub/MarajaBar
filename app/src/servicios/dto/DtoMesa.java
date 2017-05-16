@@ -5,7 +5,8 @@
  */
 package servicios.dto;
 
-import negocio.Mesa;
+import negocio.entidades.Sectores;
+import negocio.entidades.Mesa;
 
 /**
  *
@@ -14,8 +15,7 @@ import negocio.Mesa;
 public class DtoMesa {
     private Integer idMesa;
     private String descripcion;
-    private Integer sector;
-    private Boolean estadoMesa;
+    private Sectores sector;
     
     
     public DtoMesa(){
@@ -24,10 +24,9 @@ public class DtoMesa {
     
     public DtoMesa cargarDto(Mesa mesaParaCargar)
     {
-        this.setIdMesa(mesaParaCargar.getNumeroMesa());
+        this.setIdMesa(mesaParaCargar.getIdMesa());
         this.setSector(mesaParaCargar.getFkSector());
         this.setDescripcion(mesaParaCargar.getDescripcion());
-        this.setEstadoMesa(mesaParaCargar.getEstadoMesa());
         return this;
     }
     
@@ -47,21 +46,12 @@ public class DtoMesa {
         this.descripcion = descripcion;
     }
 
-    public Integer getSector() {
+    public Sectores getSector() {
         return sector;
     }
 
-    public void setSector(Integer sector) {
+    public void setSector(Sectores sector) {
         this.sector = sector;
     }
-
-    public Boolean getEstadoMesa() {
-        return estadoMesa;
-    }
-
-    public void setEstadoMesa(Boolean estadoMesa) {
-        this.estadoMesa = estadoMesa;
-    }
-    
     
 }

@@ -7,6 +7,12 @@ package gui.mesas;
 
 import gui.main.Main;
 import gui.resources.MenuP;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import negocio.FacadeNegocio;
+import servicios.dto.DtoMesa;
 
 /**
  *
@@ -15,12 +21,17 @@ import gui.resources.MenuP;
 public class MesasView extends MenuP {
     private static MesasView estePanel;
     Main mainFrame;
+    private List<DtoMesa> mesas;
+    private DefaultTableModel modelo;
+    
     /**
      * Creates new form MesasView
      */
     private MesasView(Main mainFrame) {
         initComponents();
         this.mainFrame = mainFrame;
+        modelo = (DefaultTableModel) jtMesas.getModel();
+        setTablaMesas();
         setVisible(true);
     }
     
@@ -30,6 +41,34 @@ public class MesasView extends MenuP {
         }
         return estePanel;
     }
+    
+    public void setTablaMesas(){
+        vaciarTabla(jtMesas);
+       mesas = FacadeNegocio.getFacadeNegocio().getTodasLasMesas();
+       String v[] = new String[3];
+       
+       for(int i = 0; i < mesas.size(); i++){
+           v[0] = mesas.get(i).getIdMesa().toString();
+           v[1] = mesas.get(i).getDescripcion();
+           v[2] = mesas.get(i).getSector().getNombreSector();
+           modelo.addRow(v);
+       }
+       revalidate();
+       
+    }
+    
+    private void vaciarTabla(JTable tabla) {
+        try {
+            modelo = (DefaultTableModel) tabla.getModel();
+            int filas = tabla.getRowCount();
+            for (int i = 0; filas > i; i++) {
+                modelo.removeRow(0);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al limpiar la tabla.");
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -40,13 +79,13 @@ public class MesasView extends MenuP {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jtMesas = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
 
         setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Mesas", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Bradley Hand ITC", 0, 24), new java.awt.Color(255, 255, 255))); // NOI18N
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jtMesas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -62,7 +101,7 @@ public class MesasView extends MenuP {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(jtMesas);
 
         jButton1.setText("Nueva");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -121,6 +160,6 @@ public class MesasView extends MenuP {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jtMesas;
     // End of variables declaration//GEN-END:variables
 }

@@ -5,7 +5,8 @@
  */
 package servicios.dto;
 
-import negocio.Producto;
+import negocio.entidades.Productos;
+import negocio.entidades.Tipoproducto;
 
 /**
  *
@@ -15,7 +16,8 @@ public class DtoProducto {
     private Integer idProducto;
     private String nombreProducto;
     private String descripcion;
-    private Float precio;
+    private Integer precio;
+    private Tipoproducto fkTipo;
     
     public DtoProducto(){
         
@@ -26,11 +28,12 @@ public class DtoProducto {
      * @param aCargar
      * @return DtoProducto
      */
-    public DtoProducto cargarDtoProducto(Producto aCargar){
+    public DtoProducto cargarDtoProducto(Productos aCargar){
         this.setIdProducto(aCargar.getIdProducto());
         this.setNombreProducto(aCargar.getNombreProducto());
         this.setDescripcion(aCargar.getDescripcion());
         this.setPrecio(aCargar.getPrecio());
+        this.setFkTipo(aCargar.getFkTipo());
         return this;
     }
 
@@ -58,19 +61,28 @@ public class DtoProducto {
         this.descripcion = descripcion;
     }
 
-    public Float getPrecio() {
+    public Integer getPrecio() {
         return precio;
     }
 
-    public void setPrecio(Float precio) {
+    public void setPrecio(Integer precio) {
         this.precio = precio;
     }
     
-    public DtoProducto cargarDto(Producto aCargar){
+    public DtoProducto cargarDto(Productos aCargar){
+        this.setIdProducto(aCargar.getIdProducto());
         this.setNombreProducto(aCargar.getNombreProducto());
         this.setDescripcion(aCargar.getDescripcion());
         this.setPrecio(aCargar.getPrecio());
         return this;
+    }
+
+    public Tipoproducto getFkTipo() {
+        return fkTipo;
+    }
+
+    public void setFkTipo(Tipoproducto fkTipo) {
+        this.fkTipo = fkTipo;
     }
     
 }

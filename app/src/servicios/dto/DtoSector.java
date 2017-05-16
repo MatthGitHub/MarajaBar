@@ -5,6 +5,8 @@
  */
 package servicios.dto;
 
+import negocio.entidades.Sectores;
+
 /**
  *
  * @author Matth
@@ -16,7 +18,13 @@ public class DtoSector {
     public DtoSector(){
         
     }
-
+    
+    public DtoSector cargarDto(Sectores aCargar){
+        this.setIdSector(aCargar.getIdSector());
+        this.setNombreSector(aCargar.getNombreSector());
+        return this;
+    }
+    
     public Integer getIdSector() {
         return idSector;
     }
@@ -33,6 +41,10 @@ public class DtoSector {
         this.nombreSector = nombreSector;
     }
     
+    @Override
+    public String toString() {
+        return this.getNombreSector();
+    }
     
     
 }

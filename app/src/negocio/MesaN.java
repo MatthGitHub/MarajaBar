@@ -12,7 +12,7 @@ package negocio;
  * @author Matth
  */
 
-public class Mesa {
+public class MesaN {
     
     private Integer numeroMesa;
     private Boolean estadoMesa;
@@ -20,7 +20,7 @@ public class Mesa {
     private Integer fkSector;
 
 
-    public Mesa(Integer numeroMesa, Boolean estadoMesa, Integer fkSector) {
+    public MesaN(Integer numeroMesa, Boolean estadoMesa, Integer fkSector) {
         this.numeroMesa = numeroMesa;
         this.estadoMesa = estadoMesa;
         this.fkSector = fkSector;
