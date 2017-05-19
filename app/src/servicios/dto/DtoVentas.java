@@ -17,7 +17,7 @@ import negocio.entidades.Ventas;
 public class DtoVentas {
     private Integer idVenta;
     private Date fecha;
-    private int total;
+    private Integer total;
     private Mesa fkMesa;
     private Estadosventa fkEstado;
 
@@ -63,14 +63,14 @@ public class DtoVentas {
     /**
      * @return the total
      */
-    public int getTotal() {
+    public Integer getTotal() {
         return total;
     }
 
     /**
      * @param total the total to set
      */
-    public void setTotal(int total) {
+    public void setTotal(Integer total) {
         this.total = total;
     }
 

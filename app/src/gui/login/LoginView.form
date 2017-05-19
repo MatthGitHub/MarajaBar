@@ -34,10 +34,10 @@
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="jLabel1" min="-2" pref="186" max="-2" attributes="0"/>
                       <Component id="jTextField1" min="-2" pref="186" max="-2" attributes="0"/>
-                      <Group type="102" attributes="0">
-                          <Component id="btn_salir" min="-2" max="-2" attributes="0"/>
+                      <Group type="102" alignment="1" attributes="0">
+                          <Component id="btn_salir" min="-2" pref="79" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
-                          <Component id="btn_ingresar" min="-2" max="-2" attributes="0"/>
+                          <Component id="btn_ingresar" min="-2" pref="80" max="-2" attributes="0"/>
                       </Group>
                       <Component id="jPasswordField1" alignment="0" min="-2" pref="186" max="-2" attributes="0"/>
                   </Group>
@@ -59,10 +59,10 @@
               <Component id="jPasswordField1" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
               <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="btn_salir" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="btn_ingresar" alignment="3" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Component id="btn_salir" pref="43" max="32767" attributes="0"/>
+                  <Component id="btn_ingresar" max="32767" attributes="0"/>
               </Group>
               <EmptySpace pref="45" max="32767" attributes="0"/>
           </Group>
@@ -72,6 +72,9 @@
   <SubComponents>
     <Component class="javax.swing.JButton" name="btn_salir">
       <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="85" green="85" red="e8" type="rgb"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Salir"/>
       </Properties>
       <Events>
@@ -80,6 +83,9 @@
     </Component>
     <Component class="javax.swing.JButton" name="btn_ingresar">
       <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="a8" green="e6" red="9e" type="rgb"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Ingresar"/>
       </Properties>
       <Events>

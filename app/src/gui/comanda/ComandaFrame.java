@@ -14,7 +14,6 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import negocio.BarController;
 import negocio.FacadeNegocio;
 import servicios.dto.DtoDetalleVenta;
 import servicios.dto.DtoMesa;
@@ -30,7 +29,7 @@ public class ComandaFrame extends javax.swing.JFrame {
     private DefaultTableModel modeloP;
     private DefaultTableModel modeloC;
     private DtoMesa miMesa;
-    private Integer idVenta;
+    private DtoVentas laVenta;
     
     /*
     Despues de abrir la mesa, se genera un detalle de venta asociado con la mesa. PROBLEMA: como saber a que detalle de venta esta asociado la mesa, ya que va a haber muchos, 
@@ -56,6 +55,7 @@ public class ComandaFrame extends javax.swing.JFrame {
         setDefaultCloseOperation(0);
         setSize(500, 700);
         setVisible(true);
+        lbl_descripcionMesa.setVisible(false);
         setTablaProductos();
     }
     
@@ -70,30 +70,46 @@ public class ComandaFrame extends javax.swing.JFrame {
      * Verifica si la comanda esta cerrada o abierta
      * @return 
      */
-    public boolean verificarEstadoMesa(){
-        FacadeNegocio.getFacadeNegocio().getUltimaVenta(miMesa);
-        
-        return false;
-    }
-    
     
     public void setMesa(Integer idMesa){
         setTitle("Mesa: "+idMesa.toString());
         lbl_mesa.setText("Mesa: "+idMesa.toString());
         miMesa = FacadeNegocio.getFacadeNegocio().getMesa(idMesa);
         DtoVentas ultimaVenta = FacadeNegocio.getFacadeNegocio().getUltimaVenta(miMesa);
-        
-        if((ultimaVenta == null)||(ultimaVenta.getFkEstado().getIdEstadoVenta() == 1)){
+        if(esMovil()){
+            lbl_descripcionMesa.setVisible(true);
+        }
+        if(ultimaVenta != null){
+            if(ultimaVenta.getFkEstado().getIdEstadoVenta() == 1){
+                btn_abrir.setEnabled(true);
+                btn_cerrar.setEnabled(false);
+                btn_agregar.setEnabled(false);
+                btn_quitar.setEnabled(false);
+            }else{
+                btn_cerrar.setEnabled(true);
+                btn_abrir.setEnabled(false);
+                btn_agregar.setEnabled(true);
+                btn_quitar.setEnabled(true);
+                List<DtoDetalleVenta> detalles = FacadeNegocio.getFacadeNegocio().getDetalleVenta(ultimaVenta);
+                laVenta = ultimaVenta;
+                setTablaDetalle(detalles);
+            }
+        }else{
             btn_abrir.setEnabled(true);
             btn_cerrar.setEnabled(false);
-        }else{
-            btn_cerrar.setEnabled(true);
-            btn_abrir.setEnabled(false);
-            List<DtoDetalleVenta> detalles = FacadeNegocio.getFacadeNegocio().getDetalleVenta(ultimaVenta);
-            idVenta = ultimaVenta.getIdVenta();
-            setTablaDetalle(detalles);
+            btn_agregar.setEnabled(false);
+            btn_quitar.setEnabled(false);
         }
     }
+    
+    public Boolean esMovil(){
+        if(miMesa.getSector().getIdSector() == 99){
+                return true;
+            }else{
+            return false;
+        }
+    }
+    
     
     public void setTablaProductos(){
         List<DtoProducto> productos = FacadeNegocio.getFacadeNegocio().getTodosLosProductos();
@@ -109,13 +125,15 @@ public class ComandaFrame extends javax.swing.JFrame {
     
     public void setTablaDetalle(List<DtoDetalleVenta> detalle){
         vaciarTabla(jtComanda);
-        String v[] = new String[3];
+        String v[] = new String[4];
         for(int i = 0; i < detalle.size();i++){
-            v[0] = detalle.get(i).getFkProducto().getNombreProducto();
-            v[1] = detalle.get(i).getFkProducto().getPrecio().toString();
-            v[2] = detalle.get(i).getCantidad().toString();
+            v[0] = detalle.get(i).getFkProducto().getIdProducto().toString();
+            v[1] = detalle.get(i).getFkProducto().getNombreProducto();
+            v[2] = detalle.get(i).getFkProducto().getPrecio().toString();
+            v[3] = detalle.get(i).getCantidad().toString();
             modeloC.addRow(v);
         }
+        txtTotal.setText(FacadeNegocio.getFacadeNegocio().getUltimaVenta(miMesa).getTotal().toString());
     }
     
     private void vaciarTabla(JTable tabla) {
@@ -130,12 +148,39 @@ public class ComandaFrame extends javax.swing.JFrame {
         }
     }
     
+    private void setearDescripcion(DtoMesa miMesa){
+        setDescripcionMesaMovil descDialog = new setDescripcionMesaMovil(this, true,miMesa);
+        lbl_descripcionMesa.setText(miMesa.getDescripcion());
+        lbl_descripcionMesa.setVisible(true);
+    }
+    
     public void abrirMesa(){
         try {
-            idVenta = FacadeNegocio.getFacadeNegocio().nuevaVenta(miMesa);
+            laVenta = FacadeNegocio.getFacadeNegocio().nuevaVenta(miMesa);
+            if(esMovil()){
+                setearDescripcion(miMesa);
+            }
+            btn_agregar.setEnabled(true);
+            btn_quitar.setEnabled(true);
         } catch (Exception ex) {
             Logger.getLogger(ComandaFrame.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(this, "Error al crear venta - "+ex, "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    public void cerrarMesa(){
+        if(FacadeNegocio.getFacadeNegocio().cerrarVenta(laVenta)){
+            JOptionPane.showMessageDialog(this, "Venta cerrada", "Venta", JOptionPane.PLAIN_MESSAGE);
+            vaciarTabla(jtComanda);
+            if(esMovil()){
+                miMesa.setDescripcion("");
+                FacadeNegocio.getFacadeNegocio().modificarMesa(miMesa);
+                lbl_descripcionMesa.setText("");
+            }
+            txtTotal.setText("0");
+            setMesa(miMesa.getIdMesa());
+        }else{
+            JOptionPane.showMessageDialog(this, "Error al cerrar venta", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
     
@@ -148,6 +193,18 @@ public class ComandaFrame extends javax.swing.JFrame {
             setTablaDetalle(detalles);
         }else{
             JOptionPane.showMessageDialog(this, "Error al cargar producto", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        
+    }
+    
+    public void quitarProductoAComanda(){
+        DtoProducto producto = FacadeNegocio.getFacadeNegocio().getProducto(Integer.parseInt(jtComanda.getValueAt(jtComanda.getSelectedRow(), 0).toString()));
+        DtoVentas ultimaVenta = FacadeNegocio.getFacadeNegocio().getUltimaVenta(miMesa);
+        if(FacadeNegocio.getFacadeNegocio().eliminarDetalleVenta(ultimaVenta, producto)){
+             vaciarTabla(jtComanda);
+             setTablaDetalle(FacadeNegocio.getFacadeNegocio().getDetalleVenta(ultimaVenta));
+        }else{
+            JOptionPane.showMessageDialog(this, "Error al quitar producto", "Error", JOptionPane.ERROR_MESSAGE);
         }
         
     }
@@ -175,7 +232,8 @@ public class ComandaFrame extends javax.swing.JFrame {
         btn_abrir = new javax.swing.JButton();
         btn_agregar = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtTotal = new javax.swing.JTextField();
+        lbl_descripcionMesa = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setIconImage(getIconImage());
@@ -191,11 +249,11 @@ public class ComandaFrame extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Producto", "Precio", "Cantidad"
+                "Id", "Producto", "Precio", "Cantidad"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -230,8 +288,16 @@ public class ComandaFrame extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Productos:");
 
+        btn_quitar.setBackground(new java.awt.Color(232, 133, 133));
+        btn_quitar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/quitar.png"))); // NOI18N
         btn_quitar.setText("Quitar");
+        btn_quitar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_quitarActionPerformed(evt);
+            }
+        });
 
+        btn_esconder.setBackground(new java.awt.Color(189, 154, 109));
         btn_esconder.setText("Esconder comanda");
         btn_esconder.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -239,8 +305,15 @@ public class ComandaFrame extends javax.swing.JFrame {
             }
         });
 
+        btn_cerrar.setBackground(new java.awt.Color(232, 133, 133));
         btn_cerrar.setText("Cerrar mesa");
+        btn_cerrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_cerrarActionPerformed(evt);
+            }
+        });
 
+        btn_abrir.setBackground(new java.awt.Color(158, 230, 168));
         btn_abrir.setText("Abrir mesa");
         btn_abrir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -248,6 +321,8 @@ public class ComandaFrame extends javax.swing.JFrame {
             }
         });
 
+        btn_agregar.setBackground(new java.awt.Color(158, 230, 168));
+        btn_agregar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/agregar.png"))); // NOI18N
         btn_agregar.setText("Agregar producto");
         btn_agregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -259,7 +334,10 @@ public class ComandaFrame extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Total:");
 
-        jTextField1.setText("$###");
+        txtTotal.setText("$###");
+
+        lbl_descripcionMesa.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+        lbl_descripcionMesa.setForeground(java.awt.Color.white);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -279,23 +357,22 @@ public class ComandaFrame extends javax.swing.JFrame {
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(btn_quitar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 460, Short.MAX_VALUE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane1)
+                            .addComponent(lbl_descripcionMesa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jScrollPane2)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel1)
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(btn_agregar)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btn_esconder)))
+                                .addComponent(btn_esconder))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(btn_quitar)
+                                .addGap(297, 297, 297)
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtTotal)))
                         .addContainerGap())))
         );
         jPanel1Layout.setVerticalGroup(
@@ -317,16 +394,21 @@ public class ComandaFrame extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_quitar)
                     .addComponent(jLabel3)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
+                    .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lbl_descripcionMesa, javax.swing.GroupLayout.DEFAULT_SIZE, 22, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
                 .addGap(14, 14, 14)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btn_esconder)
-                    .addComponent(btn_agregar)))
+                    .addComponent(btn_agregar))
+                .addGap(6, 6, 6))
         );
+
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btn_agregar, btn_esconder, btn_quitar});
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
 
@@ -336,6 +418,11 @@ public class ComandaFrame extends javax.swing.JFrame {
     private void btn_esconderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_esconderActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
+        vaciarTabla(jtComanda);
+        txtTotal.setText("0");
+        if(esMovil()){
+            lbl_descripcionMesa.setVisible(false);
+        }
     }//GEN-LAST:event_btn_esconderActionPerformed
 
     private void btn_agregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_agregarActionPerformed
@@ -351,6 +438,18 @@ public class ComandaFrame extends javax.swing.JFrame {
         btn_cerrar.setEnabled(true);
         abrirMesa();
     }//GEN-LAST:event_btn_abrirActionPerformed
+
+    private void btn_cerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cerrarActionPerformed
+        // TODO add your handling code here:
+        cerrarMesa();
+    }//GEN-LAST:event_btn_cerrarActionPerformed
+
+    private void btn_quitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_quitarActionPerformed
+        // TODO add your handling code here:
+        if(jtComanda.getSelectedRow() != -1){
+            quitarProductoAComanda();
+        }
+    }//GEN-LAST:event_btn_quitarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -399,9 +498,10 @@ public class ComandaFrame extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTable jtComanda;
     private javax.swing.JTable jtProductos;
+    private javax.swing.JLabel lbl_descripcionMesa;
     private javax.swing.JLabel lbl_mesa;
+    private javax.swing.JTextField txtTotal;
     // End of variables declaration//GEN-END:variables
 }

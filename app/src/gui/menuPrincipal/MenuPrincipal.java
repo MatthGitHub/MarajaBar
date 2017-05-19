@@ -9,11 +9,14 @@ import gui.main.Main;
 import gui.resources.MenuP;
 import gui.resources.PanelMesas;
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.List;
+import javax.swing.Icon;
 import javax.swing.JButton;
 import negocio.FacadeNegocio;
 import servicios.dto.DtoMesa;
@@ -41,12 +44,26 @@ public class MenuPrincipal extends MenuP {
         return estePanel;
     }
     
+    public Boolean esMovil(DtoMesa miMesa){
+        if(miMesa.getSector().getIdSector() == 99){
+                return true;
+            }else{
+            return false;
+        }
+    }
+    
     public void llenarPanelMesas(Integer idSector){
         jpMesas.removeAll();
         List<DtoMesa> mesas = FacadeNegocio.getFacadeNegocio().getTodasLasMesas(idSector);
         for(int i = 0; i < mesas.size(); i++){
-            JButton boton = new JButton("Mesa "+mesas.get(i).getIdMesa().toString());
             final int idMesa = mesas.get(i).getIdMesa();
+            JButton boton = new JButton();
+            if(esMovil(mesas.get(i))){
+                boton.setText(mesas.get(i).getDescripcion());
+            }else{
+                boton.setText("Mesa "+mesas.get(i).getIdMesa().toString());
+            }
+                        
             boton.setSize(120,100);
             boton.addActionListener(new ActionListener() {
 
@@ -147,6 +164,7 @@ public class MenuPrincipal extends MenuP {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Sectores");
 
+        jButton2.setBackground(new java.awt.Color(232, 133, 133));
         jButton2.setText("Cerrar sesion");
 
         jifMesas.setTitle("Mesas");
@@ -168,8 +186,8 @@ public class MenuPrincipal extends MenuP {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jButton2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -179,9 +197,9 @@ public class MenuPrincipal extends MenuP {
                             .addComponent(btn_arriba, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btn_afuera, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btn_movil, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jifMesas, javax.swing.GroupLayout.DEFAULT_SIZE, 625, Short.MAX_VALUE)))
+                            .addComponent(btn_movil, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jifMesas, javax.swing.GroupLayout.DEFAULT_SIZE, 625, Short.MAX_VALUE)
                 .addGap(12, 12, 12))
         );
         layout.setVerticalGroup(
@@ -202,9 +220,9 @@ public class MenuPrincipal extends MenuP {
                         .addGap(18, 18, 18)
                         .addComponent(btn_movil, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jifMesas, javax.swing.GroupLayout.DEFAULT_SIZE, 512, Short.MAX_VALUE))
+                    .addComponent(jifMesas, javax.swing.GroupLayout.DEFAULT_SIZE, 498, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2))
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -230,6 +248,7 @@ public class MenuPrincipal extends MenuP {
 
     private void btn_movilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_movilActionPerformed
         // TODO add your handling code here:
+        llenarPanelMesas(99);
     }//GEN-LAST:event_btn_movilActionPerformed
 
 

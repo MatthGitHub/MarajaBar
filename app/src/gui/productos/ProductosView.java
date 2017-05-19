@@ -8,6 +8,8 @@ package gui.productos;
 import gui.main.Main;
 import gui.resources.MenuP;
 import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import negocio.FacadeNegocio;
 import servicios.dto.DtoProducto;
@@ -38,16 +40,38 @@ public class ProductosView extends MenuP {
     }
     
     public void setTablaProductos(){
+        vaciarTabla(jtProductos);
         List<DtoProducto> miLista = FacadeNegocio.getFacadeNegocio().getTodosLosProductos();
-        String v[] = new String[3];
+        String v[] = new String[4];
         
         for(int i = 0; i < miLista.size(); i ++){
-            v[0] = miLista.get(i).getNombreProducto();
-            v[1] = miLista.get(i).getDescripcion();
-            v[2] = miLista.get(i).getPrecio().toString();
+            v[0] = miLista.get(i).getIdProducto().toString();
+            v[1] = miLista.get(i).getNombreProducto();
+            v[2] = miLista.get(i).getDescripcion();
+            v[3] = miLista.get(i).getPrecio().toString();
             modelo.addRow(v);
         }
         revalidate();
+    }
+    
+    private void vaciarTabla(JTable tabla) {
+        try {
+            DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
+            int filas = tabla.getRowCount();
+            for (int i = 0; filas > i; i++) {
+                modelo.removeRow(0);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al limpiar la tabla.");
+        }
+    }
+    
+    private void eliminarProducto(){
+        if(FacadeNegocio.getFacadeNegocio().eliminarProducto(Integer.parseInt(modelo.getValueAt(jtProductos.getSelectedRow(), 0).toString()))){
+            setTablaProductos();
+        }else{
+            JOptionPane.showMessageDialog(this, "Para eliminar un producto este no debe haber sido usado nunca", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
     
     /**
@@ -61,9 +85,9 @@ public class ProductosView extends MenuP {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jtProductos = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
+        btnMenu = new javax.swing.JButton();
         btnNuevo = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
 
         setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Productos", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Bradley Hand ITC", 0, 24), new java.awt.Color(255, 255, 255))); // NOI18N
 
@@ -72,11 +96,11 @@ public class ProductosView extends MenuP {
 
             },
             new String [] {
-                "Nombre", "Descripcion", "Precio"
+                "ID", "Nombre", "Descripcion", "Precio"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -84,9 +108,21 @@ public class ProductosView extends MenuP {
             }
         });
         jScrollPane1.setViewportView(jtProductos);
+        if (jtProductos.getColumnModel().getColumnCount() > 0) {
+            jtProductos.getColumnModel().getColumn(0).setResizable(false);
+        }
 
-        jButton1.setText("Menu");
+        btnMenu.setBackground(new java.awt.Color(189, 154, 109));
+        btnMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/volver.png"))); // NOI18N
+        btnMenu.setText("Menu");
+        btnMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMenuActionPerformed(evt);
+            }
+        });
 
+        btnNuevo.setBackground(new java.awt.Color(158, 230, 168));
+        btnNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/package_add.png"))); // NOI18N
         btnNuevo.setText("Nuevo");
         btnNuevo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -94,7 +130,14 @@ public class ProductosView extends MenuP {
             }
         });
 
-        jButton3.setText("Eliminar");
+        btnEliminar.setBackground(new java.awt.Color(232, 133, 133));
+        btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/package_warning.png"))); // NOI18N
+        btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -103,27 +146,35 @@ public class ProductosView extends MenuP {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 662, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1)
-                        .addContainerGap())
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addGap(256, 256, 256)
-                        .addComponent(jButton3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 269, Short.MAX_VALUE)
-                        .addComponent(btnNuevo))))
+                        .addComponent(btnMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnEliminar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnNuevo)))
+                .addContainerGap())
         );
+
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnEliminar, btnMenu, btnNuevo});
+
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 497, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(btnNuevo)
-                    .addComponent(jButton3)))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 481, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnNuevo)
+                        .addComponent(btnEliminar))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btnMenu)
+                        .addContainerGap())))
         );
+
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnEliminar, btnMenu, btnNuevo});
+
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
@@ -131,11 +182,24 @@ public class ProductosView extends MenuP {
         mainFrame.goProductosNuevoDialog();
     }//GEN-LAST:event_btnNuevoActionPerformed
 
+    private void btnMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenuActionPerformed
+        // TODO add your handling code here:
+        this.setVisible(false);
+        mainFrame.goMenuPrincipal();
+    }//GEN-LAST:event_btnMenuActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        // TODO add your handling code here:
+        if(jtProductos.getSelectedRow() != -1){
+            eliminarProducto();
+        }
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnMenu;
     private javax.swing.JButton btnNuevo;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jtProductos;
     // End of variables declaration//GEN-END:variables

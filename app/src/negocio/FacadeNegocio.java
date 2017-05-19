@@ -10,6 +10,8 @@ import gui.main.Main;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.swing.JOptionPane;
@@ -97,6 +99,21 @@ public class FacadeNegocio {
            return false;
        }
    }
+   
+   public boolean modificarMesa(DtoMesa aModif){
+       BarController barController = BarController.getBarController();
+       Mesa modif = new Mesa();
+       modif.cargarMesa(aModif);
+        try {
+            barController.modificarMesa(modif);
+            return true;
+        } catch (Exception ex) {
+            Logger.getLogger(FacadeNegocio.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+       
+   }
+   
    // ******************************** Metodos mesas **********************************************//
    // ******************************** Metodos productos ******************************************//
    public List<DtoProducto> getTodosLosProductos(){
@@ -125,6 +142,10 @@ public class FacadeNegocio {
        barController.nuevoProducto(producto);
    }
    
+   public boolean eliminarProducto(Integer id){
+       return BarController.getBarController().eliminarProducto(id);
+   }
+   
    
    
    // ******************************** Metodos productos ******************************************//
@@ -149,21 +170,36 @@ public class FacadeNegocio {
      * @return Id generado de venta
      * @throws java.lang.Exception
      */
-    public Integer nuevaVenta(DtoMesa mesa) throws Exception{
+    public DtoVentas nuevaVenta(DtoMesa mesa) throws Exception{
        BarController barController = BarController.getBarController();
        Mesa laMesa = new Mesa();
        laMesa = laMesa.cargarMesa(mesa);
-       return barController.nuevaVenta(laMesa);
+       DtoVentas venta = new DtoVentas();
+       venta.cargarDto(barController.nuevaVenta(laMesa));
+       return venta;
    }
-   
+   /**
+    * Trae la ultima venta de la mesa
+    * @param mesa
+    * @return 
+    */
     public DtoVentas getUltimaVenta(DtoMesa mesa){
         BarController barController = BarController.getBarController();
         DtoVentas ultimaVenta = new DtoVentas();
         Mesa laMesa = new Mesa();
         laMesa.cargarMesa(mesa);
+        if(barController.getUltimaVenta(laMesa) == null){
+            return null;
+        }
         return ultimaVenta.cargarDto(barController.getUltimaVenta(laMesa));
     }
     
+    public boolean cerrarVenta(DtoVentas aCerrar){
+        BarController barController = BarController.getBarController();
+        Ventas venta = new Ventas();
+        venta.cargarVentas(aCerrar);
+        return barController.cerrarVenta(venta);
+    }
     // --------------------------------- Metodos Venta ---------------------------------------------//
     // --------------------------------- Metodos DetalleVenta ---------------------------------------------//
     public List<DtoDetalleVenta> getDetalleVenta(DtoVentas venta){
@@ -199,9 +235,26 @@ public class FacadeNegocio {
         
     }
     
+    public boolean eliminarDetalleVenta(DtoVentas venta, DtoProducto producto){
+        BarController barController = BarController.getBarController();
+        Ventas miVenta = new Ventas();
+        miVenta.cargarVentas(venta);
+        Productos miProducto = new Productos();
+        miProducto.cargarProducto(producto);
+        if(barController.eliminarDetalleVenta(miVenta, miProducto)){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    
     
     
     // --------------------------------- Metodos DetalleVenta ---------------------------------------------//
+    // --------------------------------- Metodos Productos ---------------------------------------------//
+    
+    
+    // --------------------------------- Metodos Productos ---------------------------------------------//
     // --------------------------------- Metodos Productos ---------------------------------------------//
     
     

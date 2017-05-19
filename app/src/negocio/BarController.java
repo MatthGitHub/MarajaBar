@@ -8,6 +8,8 @@ package negocio;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import negocio.controladores.DetalleventasJpaController;
@@ -17,6 +19,7 @@ import negocio.controladores.ProductosJpaController;
 import negocio.controladores.SectoresJpaController;
 import negocio.controladores.TipoproductoJpaController;
 import negocio.controladores.VentasJpaController;
+import negocio.controladores.exceptions.IllegalOrphanException;
 import negocio.controladores.exceptions.NonexistentEntityException;
 import negocio.entidades.Detalleventas;
 import negocio.entidades.DetalleventasPK;
@@ -95,7 +98,10 @@ public class BarController {
     public void modificarMesa(Mesa mesa) throws NonexistentEntityException, Exception{
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("appPU");
         MesaJpaController jpa = new MesaJpaController(emf);
-        jpa.edit(mesa);
+        Mesa mesaAux = new Mesa();
+        mesaAux = jpa.findMesa(mesa.getIdMesa());
+        mesaAux.setDescripcion(mesa.getDescripcion());
+        jpa.edit(mesaAux);
     }
     
 // ------------------------  Metodos Mesas ----------------------------------------------//
@@ -148,6 +154,24 @@ public class BarController {
         TipoproductoJpaController jpa = new TipoproductoJpaController(emf);
         return jpa.findTipoproducto(id);
     }
+    
+    public boolean eliminarProducto(Integer id){
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("appPU");
+        ProductosJpaController jpa = new ProductosJpaController(emf);
+        try {
+            jpa.destroy(id);
+            return true;
+        } catch (IllegalOrphanException ex) {
+            Logger.getLogger(BarController.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Error al eliminar producto -"+ex);
+            return false;
+        } catch (NonexistentEntityException ex) {
+            Logger.getLogger(BarController.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Error al eliminar producto -"+ex);
+            return false;
+        }
+    }
+    
 // ------------------------  Metodos Productos -------------------------------------------//    
 // ------------------------  Metodos Venta -----------------------------------------------//
     /**
@@ -156,18 +180,23 @@ public class BarController {
      * @return Id generado
      * @throws negocio.controladores.exceptions.NonexistentEntityException
      */
-    public Integer nuevaVenta(Mesa mesa) throws NonexistentEntityException, Exception{
+    public Ventas nuevaVenta(Mesa mesa) throws NonexistentEntityException, Exception{
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("appPU");
         VentasJpaController jpa = new VentasJpaController(emf);
         Date fecha = new Date();
         Ventas venta = new Ventas();
+        venta.setTotal(0);
         venta.setFecha(fecha);
         venta.setFkMesa(mesa);
         venta.setFkEstado(getEstadoventa(2));
         jpa.create(venta);
-        return venta.getIdVenta();
+        return venta;
     }
-
+    /**
+     * Trae la ultima venta de esa mesa
+     * @param mesa
+     * @return 
+     */
     public Ventas getUltimaVenta(Mesa mesa){
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("appPU");
         VentasJpaController jpa = new VentasJpaController(emf);
@@ -186,7 +215,31 @@ public class BarController {
                 ultimo = aux.get(i);
             }
         }
+        if(ultimo.getIdVenta() == null){
+            return null;
+        }
         return ultimo;
+    }
+    
+    public boolean cerrarVenta(Ventas venta){
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("appPU");
+        VentasJpaController jpa = new VentasJpaController(emf);
+        venta = jpa.findVentas(venta.getIdVenta());
+        
+        venta.setFkEstado(getEstadoventa(1));
+        
+        try {
+            
+            jpa.edit(venta);
+            return true;
+        } catch (NonexistentEntityException ex) {
+            Logger.getLogger(BarController.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        } catch (Exception ex) {
+            Logger.getLogger(BarController.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+        
     }
 
     /************************* Estados venta *********************************************/
@@ -234,9 +287,11 @@ public class BarController {
     public boolean nuevoDetalleVenta(Ventas venta, Productos producto){
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("appPU");
         DetalleventasJpaController jpa = new DetalleventasJpaController(emf);
+        VentasJpaController jpa2 = new VentasJpaController(emf);
         
         DetalleventasPK clave = new DetalleventasPK();
         Detalleventas detalle = new Detalleventas();
+        
         
         clave.setFkVenta(venta.getIdVenta());
         clave.setFkProducto(producto.getIdProducto());
@@ -247,14 +302,39 @@ public class BarController {
         detalle.setCantidad(1);
         
         try {
+            //Crea un nuevo detalle si no existe la combinacion de claves primarias
             jpa.create(detalle);
+            System.out.println("Se crea detalle");
+            //Modifica la venta para sumarle el neuvo producto al total
+            try {
+                venta = jpa2.findVentas(venta.getIdVenta());
+                venta.setTotal(venta.getTotal()+producto.getPrecio());
+                jpa2.edit(venta);
+            } catch (NonexistentEntityException ex) {
+                Logger.getLogger(BarController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (Exception ex) {
+                Logger.getLogger(BarController.class.getName()).log(Level.SEVERE, null, ex);
+            }
             return true;
         } catch (Exception e) {
             System.out.println("Error al crear nuevo detalle venta "+e);
             System.out.println("Se trata de modificar");
+            //Si no se creo porque ya existia la combinacion de claves primarias se trata de modificar para sumarle 1 a la cantidad del detalle
             try {
-                detalle.setCantidad(jpa.findDetalleventas(clave).getCantidad()+1);
+                detalle = jpa.findDetalleventas(clave);
+                detalle.setCantidad(detalle.getCantidad()+1);
                 jpa.edit(detalle);
+                System.out.println("Se modifica detalle");
+                //Modifica la venta para sumarle el nuevo producto al total
+                try {
+                    venta = jpa2.findVentas(venta.getIdVenta());
+                    venta.setTotal(venta.getTotal()+producto.getPrecio());
+                    jpa2.edit(venta);
+                } catch (NonexistentEntityException ex) {
+                    Logger.getLogger(BarController.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (Exception ex) {
+                    Logger.getLogger(BarController.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 return true;
             } catch (Exception e2) {
                 System.out.println("Error al editar detalle venta "+e2);
@@ -262,10 +342,52 @@ public class BarController {
             }
         }
         
-  
     }
            
-    
+    public boolean eliminarDetalleVenta(Ventas venta, Productos producto){
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("appPU");
+        DetalleventasJpaController jpa = new DetalleventasJpaController(emf);
+        VentasJpaController jpa2 = new VentasJpaController(emf);
+        
+        DetalleventasPK clave = new DetalleventasPK();
+        
+        clave.setFkVenta(venta.getIdVenta());
+        clave.setFkProducto(producto.getIdProducto());
+        
+        
+        Detalleventas detalle = jpa.findDetalleventas(clave);
+        
+        if(detalle.getCantidad() > 1){
+            detalle.setCantidad(detalle.getCantidad()-1);
+            try {
+                jpa.edit(detalle);
+                venta = jpa2.findVentas(venta.getIdVenta());
+                venta.setTotal(venta.getTotal()-producto.getPrecio());
+                jpa2.edit(venta);
+                return true;
+            } catch (Exception ex) {
+                Logger.getLogger(BarController.class.getName()).log(Level.SEVERE, null, ex);
+                return false;
+            }
+        }else{
+            try {
+                jpa.destroy(clave);
+                venta = jpa2.findVentas(venta.getIdVenta());
+                venta.setTotal(venta.getTotal()-producto.getPrecio());
+                jpa2.edit(venta);
+                return true;
+            } catch (NonexistentEntityException ex) {
+                Logger.getLogger(BarController.class.getName()).log(Level.SEVERE, null, ex);
+                return false;
+            } catch (Exception ex) {
+                Logger.getLogger(BarController.class.getName()).log(Level.SEVERE, null, ex);
+                return false;
+            }
+        }
+        
+        //return false;
+        
+    }
     
 // ------------------------  Metodos DetalleVenta ----------------------------------------//
 }

@@ -220,17 +220,11 @@ public final class Main extends javax.swing.JFrame {
         mi_compras = new javax.swing.JMenuItem();
         jm_configuracion = new javax.swing.JMenu();
         jm_productos = new javax.swing.JMenu();
-        mi_nuevoProducto = new javax.swing.JMenuItem();
         mi_listarProductos = new javax.swing.JMenuItem();
-        jm_proveedores = new javax.swing.JMenu();
-        mi_nuevoProveedor = new javax.swing.JMenuItem();
-        mi_listarProveedores = new javax.swing.JMenuItem();
-        jm_mesas = new javax.swing.JMenu();
-        mi_nuevaMesa = new javax.swing.JMenuItem();
-        mi_listarMesas = new javax.swing.JMenuItem();
-        jm_usuarios = new javax.swing.JMenu();
-        mi_nuevoUsuario = new javax.swing.JMenuItem();
-        mi_listarUsuarios = new javax.swing.JMenuItem();
+        mi_nuevoProducto = new javax.swing.JMenuItem();
+        mi_proveedores = new javax.swing.JMenuItem();
+        mi_mesas = new javax.swing.JMenuItem();
+        mi_usuarios = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setIconImage(getIconImage());
@@ -245,6 +239,7 @@ public final class Main extends javax.swing.JFrame {
         });
         jm_archivo.add(mi_menuPrincipal);
 
+        mi_salir.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Q, java.awt.event.InputEvent.CTRL_MASK));
         mi_salir.setText("Salir");
         mi_salir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -278,6 +273,14 @@ public final class Main extends javax.swing.JFrame {
 
         jm_productos.setText("Productos");
 
+        mi_listarProductos.setText("Listar");
+        mi_listarProductos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mi_listarProductosActionPerformed(evt);
+            }
+        });
+        jm_productos.add(mi_listarProductos);
+
         mi_nuevoProducto.setText("Nuevo");
         mi_nuevoProducto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -286,70 +289,29 @@ public final class Main extends javax.swing.JFrame {
         });
         jm_productos.add(mi_nuevoProducto);
 
-        mi_listarProductos.setText("Ver todos");
-        mi_listarProductos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mi_listarProductosActionPerformed(evt);
-            }
-        });
-        jm_productos.add(mi_listarProductos);
-
         jm_configuracion.add(jm_productos);
 
-        jm_proveedores.setText("Proveedores");
-
-        mi_nuevoProveedor.setText("Nuevo");
-        mi_nuevoProveedor.addActionListener(new java.awt.event.ActionListener() {
+        mi_proveedores.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.CTRL_MASK));
+        mi_proveedores.setText("Proveedores");
+        mi_proveedores.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mi_nuevoProveedorActionPerformed(evt);
+                mi_proveedoresActionPerformed(evt);
             }
         });
-        jm_proveedores.add(mi_nuevoProveedor);
+        jm_configuracion.add(mi_proveedores);
 
-        mi_listarProveedores.setText("Ver todos");
-        mi_listarProveedores.addActionListener(new java.awt.event.ActionListener() {
+        mi_mesas.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_M, java.awt.event.InputEvent.CTRL_MASK));
+        mi_mesas.setText("Mesas");
+        mi_mesas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mi_listarProveedoresActionPerformed(evt);
+                mi_mesasActionPerformed(evt);
             }
         });
-        jm_proveedores.add(mi_listarProveedores);
+        jm_configuracion.add(mi_mesas);
 
-        jm_configuracion.add(jm_proveedores);
-
-        jm_mesas.setText("Mesas");
-
-        mi_nuevaMesa.setText("Nueva");
-        mi_nuevaMesa.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mi_nuevaMesaActionPerformed(evt);
-            }
-        });
-        jm_mesas.add(mi_nuevaMesa);
-
-        mi_listarMesas.setText("Ver todas");
-        mi_listarMesas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mi_listarMesasActionPerformed(evt);
-            }
-        });
-        jm_mesas.add(mi_listarMesas);
-
-        jm_configuracion.add(jm_mesas);
-
-        jm_usuarios.setText("Usuarios");
-
-        mi_nuevoUsuario.setText("Nuevo");
-        mi_nuevoUsuario.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mi_nuevoUsuarioActionPerformed(evt);
-            }
-        });
-        jm_usuarios.add(mi_nuevoUsuario);
-
-        mi_listarUsuarios.setText("Ver todos");
-        jm_usuarios.add(mi_listarUsuarios);
-
-        jm_configuracion.add(jm_usuarios);
+        mi_usuarios.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_U, java.awt.event.InputEvent.CTRL_MASK));
+        mi_usuarios.setText("Usuarios");
+        jm_configuracion.add(mi_usuarios);
 
         jmb_menu.add(jm_configuracion);
 
@@ -369,18 +331,6 @@ public final class Main extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_mi_nuevoProductoActionPerformed
 
-    private void mi_nuevoProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mi_nuevoProveedorActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_mi_nuevoProveedorActionPerformed
-
-    private void mi_nuevaMesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mi_nuevaMesaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_mi_nuevaMesaActionPerformed
-
-    private void mi_nuevoUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mi_nuevoUsuarioActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_mi_nuevoUsuarioActionPerformed
-
     private void mi_comprasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mi_comprasActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_mi_comprasActionPerformed
@@ -392,12 +342,12 @@ public final class Main extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_mi_salirActionPerformed
 
-    private void mi_listarProveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mi_listarProveedoresActionPerformed
+    private void mi_proveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mi_proveedoresActionPerformed
         // TODO add your handling code here:
         this.getContentPane().removeAll();
         goProveedoresView();
         this.repaint();
-    }//GEN-LAST:event_mi_listarProveedoresActionPerformed
+    }//GEN-LAST:event_mi_proveedoresActionPerformed
 
     private void mi_menuPrincipalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mi_menuPrincipalActionPerformed
         // TODO add your handling code here:
@@ -406,12 +356,12 @@ public final class Main extends javax.swing.JFrame {
         this.repaint();
     }//GEN-LAST:event_mi_menuPrincipalActionPerformed
 
-    private void mi_listarMesasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mi_listarMesasActionPerformed
+    private void mi_mesasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mi_mesasActionPerformed
         // TODO add your handling code here:
         this.getContentPane().removeAll();
         goMesasView();
         this.repaint();
-    }//GEN-LAST:event_mi_listarMesasActionPerformed
+    }//GEN-LAST:event_mi_mesasActionPerformed
 
     /**
      * @param args the command line arguments
@@ -453,22 +403,16 @@ public final class Main extends javax.swing.JFrame {
     private javax.swing.JMenu jm_archivo;
     private javax.swing.JMenu jm_configuracion;
     private javax.swing.JMenu jm_estadisticas;
-    private javax.swing.JMenu jm_mesas;
     private javax.swing.JMenu jm_productos;
-    private javax.swing.JMenu jm_proveedores;
-    private javax.swing.JMenu jm_usuarios;
     private javax.swing.JMenuBar jmb_menu;
     private javax.swing.JMenuItem mi_compras;
-    private javax.swing.JMenuItem mi_listarMesas;
     private javax.swing.JMenuItem mi_listarProductos;
-    private javax.swing.JMenuItem mi_listarProveedores;
-    private javax.swing.JMenuItem mi_listarUsuarios;
     private javax.swing.JMenuItem mi_menuPrincipal;
-    private javax.swing.JMenuItem mi_nuevaMesa;
+    private javax.swing.JMenuItem mi_mesas;
     private javax.swing.JMenuItem mi_nuevoProducto;
-    private javax.swing.JMenuItem mi_nuevoProveedor;
-    private javax.swing.JMenuItem mi_nuevoUsuario;
+    private javax.swing.JMenuItem mi_proveedores;
     private javax.swing.JMenuItem mi_salir;
+    private javax.swing.JMenuItem mi_usuarios;
     private javax.swing.JMenuItem mi_ventas;
     // End of variables declaration//GEN-END:variables
 }
