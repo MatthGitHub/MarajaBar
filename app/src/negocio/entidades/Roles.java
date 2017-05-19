@@ -21,6 +21,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import servicios.dto.DtoRoles;
 
 /**
  *
@@ -60,7 +61,13 @@ public class Roles implements Serializable {
         this.idRol = idRol;
         this.descripcion = descripcion;
     }
-
+    
+    public Roles cargarRol(DtoRoles aCargar){
+        this.setIdRol(aCargar.getIdRol());
+        this.setDescripcion(aCargar.getDescripcion());
+        return this;
+    }
+    
     public Integer getIdRol() {
         return idRol;
     }
@@ -117,7 +124,7 @@ public class Roles implements Serializable {
 
     @Override
     public String toString() {
-        return "negocio.entidades.Roles[ idRol=" + idRol + " ]";
+        return this.descripcion;
     }
     
 }

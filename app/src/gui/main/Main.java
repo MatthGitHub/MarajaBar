@@ -14,6 +14,8 @@ import gui.productos.ProductosNuevoDialog;
 import gui.productos.ProductosView;
 import gui.proveedores.ProveedoresNuevoDialog;
 import gui.proveedores.ProveedoresView;
+import gui.usuarios.UsuarioNuevoDialog;
+import gui.usuarios.UsuariosView;
 import java.awt.Image;
 import java.awt.Toolkit;
 import javax.swing.JFrame;
@@ -34,6 +36,8 @@ public final class Main extends javax.swing.JFrame {
     private ComandaFrame comandasView;
     private MesasView mesasView;
     private MesasNuevaDialog mesaNueva;
+    private UsuariosView usuariosView;
+    private UsuarioNuevoDialog usuarioNuevo;
 /* -------------------  Variables views  ------------------------------------------- */    
 /* -------------------  Asigno icono de la aplicacion  ----------------------------- */  
     @Override
@@ -175,7 +179,7 @@ public final class Main extends javax.swing.JFrame {
        
     
     /**
-     * Ingreso a la vista de todos los productos
+     * Ingreso a la vista de todas las mesas
      */
     public void goMesasView(){
         mesasView = MesasView.getMesasView(this);
@@ -186,6 +190,7 @@ public final class Main extends javax.swing.JFrame {
         }
         revalidate();
     }
+    
     
     /**
      * Ingreso a la vista de nueva mesa
@@ -199,6 +204,30 @@ public final class Main extends javax.swing.JFrame {
         revalidate();
     }
     
+    /**
+     * Ingreso a la vista de todos los usuarios
+     */
+    public void goUsuariosView(){
+        usuariosView = UsuariosView.getUsuariosView(this);
+        if(!usuariosView.isVisible() == false){
+            getContentPane().add(usuariosView);
+        }else{
+            usuariosView.setVisible(true);
+        }
+        revalidate();
+    }
+    
+    /**
+     * Ingreso a la vista de nuevo usuario
+     */
+    public void goUsuarioNuevoDialog(){
+        if(usuarioNuevo == null){
+            usuarioNuevo = new UsuarioNuevoDialog(this, true);
+        }else{
+            usuarioNuevo.setVisible(true);
+        }
+        revalidate();
+    }
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -310,6 +339,11 @@ public final class Main extends javax.swing.JFrame {
 
         mi_usuarios.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_U, java.awt.event.InputEvent.CTRL_MASK));
         mi_usuarios.setText("Usuarios");
+        mi_usuarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mi_usuariosActionPerformed(evt);
+            }
+        });
         jm_configuracion.add(mi_usuarios);
 
         jmb_menu.add(jm_configuracion);
@@ -328,6 +362,8 @@ public final class Main extends javax.swing.JFrame {
 
     private void mi_nuevoProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mi_nuevoProductoActionPerformed
         // TODO add your handling code here:
+        goProductosNuevoDialog();
+        this.repaint();
     }//GEN-LAST:event_mi_nuevoProductoActionPerformed
 
     private void mi_comprasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mi_comprasActionPerformed
@@ -361,6 +397,13 @@ public final class Main extends javax.swing.JFrame {
         goMesasView();
         this.repaint();
     }//GEN-LAST:event_mi_mesasActionPerformed
+
+    private void mi_usuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mi_usuariosActionPerformed
+        // TODO add your handling code here:
+        this.getContentPane().removeAll();
+        goUsuariosView();
+        this.repaint();
+    }//GEN-LAST:event_mi_usuariosActionPerformed
 
     /**
      * @param args the command line arguments

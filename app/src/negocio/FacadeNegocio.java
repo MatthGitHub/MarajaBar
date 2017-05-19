@@ -21,13 +21,17 @@ import negocio.entidades.Detalleventas;
 import negocio.entidades.Mesa;
 import negocio.entidades.Productos;
 import negocio.entidades.Proveedores;
+import negocio.entidades.Roles;
 import negocio.entidades.Sectores;
+import negocio.entidades.Usuarios;
 import negocio.entidades.Ventas;
 import servicios.dto.DtoDetalleVenta;
 import servicios.dto.DtoMesa;
 import servicios.dto.DtoProducto;
 import servicios.dto.DtoProveedor;
+import servicios.dto.DtoRoles;
 import servicios.dto.DtoSector;
+import servicios.dto.DtoUsuario;
 import servicios.dto.DtoVentas;
 
 /**
@@ -292,4 +296,52 @@ public class FacadeNegocio {
         BarController.getBarController().eliminarProveedor(id);
     }
  // --------------------------------- Metodos Proveedores ---------------------------------------------//
+// --------------------------------- Metodos Usuarios ---------------------------------------------//
+    /**
+     * 
+     * @return 
+     */
+    public List<DtoUsuario> getTodosLosUsuarios(){
+        BarController barController = BarController.getBarController();
+        List<DtoUsuario> usuarios = new ArrayList<>();
+        Iterator<Usuarios> iteradorUsuarios = barController.getTodosLosUsuarios().iterator();
+        while(iteradorUsuarios.hasNext()){
+           DtoUsuario nuevodto = new DtoUsuario();
+           nuevodto.cargarDto(iteradorUsuarios.next());
+           usuarios.add(nuevodto);
+        }
+        return usuarios;
+    }
+    
+    public boolean nuevoUsuario(DtoRoles rol,DtoUsuario nuevo){
+        Usuarios usu = new Usuarios();
+        Roles role;
+        role = BarController.getBarController().buscarRol(rol.getIdRol());
+        nuevo.setRol(role);
+        usu.cargarUsuario(nuevo);
+        if(BarController.getBarController().nuevoUsuario(usu)){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    
+    public void eliminarUsuario(Integer id) throws NonexistentEntityException{
+        BarController.getBarController().eliminarUsuario(id);
+    }
+// --------------------------------- Metodos Usuarios ---------------------------------------------//
+// --------------------------------- Metodos Roles ---------------------------------------------//
+    
+    public List<DtoRoles> getTodosLosRoles(){
+        BarController barController = BarController.getBarController();
+        List<DtoRoles> roles = new ArrayList<>();
+        Iterator<Roles> iteradorRoles = barController.getTodosLosRoles().iterator();
+        while(iteradorRoles.hasNext()){
+           DtoRoles nuevodto = new DtoRoles();
+           nuevodto.cargarDto(iteradorRoles.next());
+           roles.add(nuevodto);
+        }
+        return roles;
+    }
+// --------------------------------- Metodos Roles ---------------------------------------------//
 }

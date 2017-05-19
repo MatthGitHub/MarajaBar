@@ -10,15 +10,19 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.swing.JOptionPane;
 import negocio.controladores.DetalleventasJpaController;
 import negocio.controladores.EstadosventaJpaController;
 import negocio.controladores.MesaJpaController;
 import negocio.controladores.ProductosJpaController;
 import negocio.controladores.ProveedoresJpaController;
+import negocio.controladores.RolesJpaController;
 import negocio.controladores.SectoresJpaController;
 import negocio.controladores.TipoproductoJpaController;
+import negocio.controladores.UsuariosJpaController;
 import negocio.controladores.VentasJpaController;
 import negocio.controladores.exceptions.IllegalOrphanException;
 import negocio.controladores.exceptions.NonexistentEntityException;
@@ -28,8 +32,10 @@ import negocio.entidades.Estadosventa;
 import negocio.entidades.Mesa;
 import negocio.entidades.Productos;
 import negocio.entidades.Proveedores;
+import negocio.entidades.Roles;
 import negocio.entidades.Sectores;
 import negocio.entidades.Tipoproducto;
+import negocio.entidades.Usuarios;
 import negocio.entidades.Ventas;
 import servicios.dto.DtoProveedor;
 
@@ -451,4 +457,55 @@ public class BarController {
         jpa.destroy(id);
     }
 // ------------------------  Metodos Proveedores ----------------------------------------//
+// ------------------------  Metodos Usuarios ----------------------------------------//
+    
+    public List<Usuarios>  getTodosLosUsuarios(){
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("appPU");
+        UsuariosJpaController jpa = new UsuariosJpaController(emf);
+        
+        return jpa.findUsuariosEntities();
+    }
+    
+    /**
+     * 
+     * @param nuevo
+     * @return 
+     */
+    public boolean nuevoUsuario(Usuarios nuevo){
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("appPU");
+        UsuariosJpaController jpa = new UsuariosJpaController(emf);
+        
+        try {
+            jpa.create(nuevo);
+            return true;
+        } catch (Exception e) {
+            System.out.println("Error nuevo usuario "+e);
+            return false;
+        }
+    }
+    
+    public void eliminarUsuario(Integer id) throws NonexistentEntityException{
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("appPU");
+        UsuariosJpaController jpa = new UsuariosJpaController(emf);
+        
+        jpa.destroy(id);
+    }
+// ------------------------  Metodos Usuarios ----------------------------------------//
+// ------------------------  Metodos Roles ----------------------------------------//
+    
+    public List<Roles> getTodosLosRoles(){
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("appPU");
+        RolesJpaController jpa = new RolesJpaController(emf);
+        
+        return jpa.findRolesEntities();
+    }
+    
+    public Roles buscarRol(Integer id){
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("appPU");
+        RolesJpaController jpa = new RolesJpaController(emf);
+        
+        return jpa.findRoles(id);
+    }
+    
+// ------------------------  Metodos Roles ----------------------------------------//
 }

@@ -8,7 +8,7 @@ package gui.login;
 import gui.main.Main;
 import gui.resources.MenuP;
 import java.awt.Frame;
-import javax.swing.JFrame;
+import static java.awt.Frame.ICONIFIED;
 import javax.swing.JOptionPane;
 
 /** 
@@ -24,6 +24,7 @@ public class LoginView extends MenuP {
      */
     public LoginView(Main mainFrame) {
         initComponents();
+        mainFrame.setResizable(false);
         setVisible(true);
         this.mainFrame = mainFrame;
     }
@@ -131,7 +132,10 @@ public class LoginView extends MenuP {
 
     private void btn_ingresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ingresarActionPerformed
         // TODO add your handling code here:
+        mainFrame.setResizable(true);
         mainFrame.goMenuPrincipalPrimera();
+        mainFrame.setExtendedState(Frame.NORMAL);
+        mainFrame.setLocationRelativeTo(null);
         setVisible(false);
     }//GEN-LAST:event_btn_ingresarActionPerformed
 

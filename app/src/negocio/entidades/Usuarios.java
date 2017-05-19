@@ -18,6 +18,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import servicios.dto.DtoUsuario;
 
 /**
  *
@@ -55,13 +56,21 @@ public class Usuarios implements Serializable {
     public Usuarios(Integer idUsuario) {
         this.idUsuario = idUsuario;
     }
-
+    
     public Usuarios(Integer idUsuario, String nombreUsuario, String clave) {
         this.idUsuario = idUsuario;
         this.nombreUsuario = nombreUsuario;
         this.clave = clave;
     }
-
+    
+    public Usuarios cargarUsuario(DtoUsuario aCargar){
+        this.setIdUsuario(aCargar.getIdUsuario());
+        this.setNombreUsuario(aCargar.getNombreUsuario());
+        this.setClave(aCargar.getClave());
+        this.setFkRol(aCargar.getRol());
+        return this;
+    }
+    
     public Integer getIdUsuario() {
         return idUsuario;
     }

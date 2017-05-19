@@ -5,6 +5,9 @@
  */
 package servicios.dto;
 
+import negocio.entidades.Roles;
+import negocio.entidades.Usuarios;
+
 /**
  *
  * @author matth
@@ -13,12 +16,20 @@ public class DtoUsuario {
     private Integer idUsuario;
     private String nombreUsuario;
     private String clave;
-    private Integer rol;
+    private Roles rol;
     
     public DtoUsuario(){
         
     }
-
+    
+    public DtoUsuario cargarDto(Usuarios aCargar){
+        this.setIdUsuario(aCargar.getIdUsuario());
+        this.setNombreUsuario(aCargar.getNombreUsuario());
+        this.setClave(aCargar.getClave());
+        this.setRol(aCargar.getFkRol());
+        return this;
+    }
+    
     public Integer getIdUsuario() {
         return idUsuario;
     }
@@ -43,11 +54,11 @@ public class DtoUsuario {
         this.clave = clave;
     }
 
-    public Integer getRol() {
+    public Roles getRol() {
         return rol;
     }
 
-    public void setRol(Integer rol) {
+    public void setRol(Roles rol) {
         this.rol = rol;
     }
     
