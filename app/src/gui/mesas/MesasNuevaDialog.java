@@ -26,10 +26,12 @@ public class MesasNuevaDialog extends javax.swing.JDialog {
     public MesasNuevaDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        setLocationRelativeTo(parent);
         setResizable(false);
         cargarSectores();
         setDefaultCloseOperation(0);
         mView = MesasView.getMesasView((Main) parent);
+        setVisible(true);
     }
     
     private void cargarSectores(){
@@ -73,6 +75,8 @@ public class MesasNuevaDialog extends javax.swing.JDialog {
         txtDescripcion.setRows(5);
         jScrollPane1.setViewportView(txtDescripcion);
 
+        btnGuardar.setBackground(new java.awt.Color(158, 230, 168));
+        btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/guardar.png"))); // NOI18N
         btnGuardar.setText("Guardar");
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -80,6 +84,8 @@ public class MesasNuevaDialog extends javax.swing.JDialog {
             }
         });
 
+        jButton2.setBackground(new java.awt.Color(232, 133, 133));
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/cancelar.png"))); // NOI18N
         jButton2.setText("Cancelar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -103,13 +109,13 @@ public class MesasNuevaDialog extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton2)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(btnGuardar))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 346, Short.MAX_VALUE)))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 281, Short.MAX_VALUE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel1)
@@ -134,12 +140,10 @@ public class MesasNuevaDialog extends javax.swing.JDialog {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
                             .addComponent(cmbxSectores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(51, 51, 51))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnGuardar)
-                            .addComponent(jButton2))
-                        .addContainerGap())))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnGuardar))
+                    .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addContainerGap())
         );
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
@@ -163,6 +167,8 @@ public class MesasNuevaDialog extends javax.swing.JDialog {
         if(JOptionPane.showConfirmDialog(this, "Confirmar") == 0){
             if(FacadeNegocio.getFacadeNegocio().nuevaMesa((DtoSector) cmbxSectores.getSelectedItem(),txtDescripcion.getText())){
                 mView.setTablaMesas();
+                setVisible(false);
+                this.dispose();
             }else{
                 JOptionPane.showMessageDialog(this, "Error al crear mesa", "Error", JOptionPane.ERROR_MESSAGE);
             }

@@ -25,6 +25,7 @@ public class ProductosNuevoDialog extends javax.swing.JDialog {
     public ProductosNuevoDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        setLocationRelativeTo(parent);
         pView = ProductosView.getProductosView((Main) parent);
         setResizable(false);
         setDefaultCloseOperation(0);

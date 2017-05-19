@@ -123,7 +123,6 @@ public final class Main extends javax.swing.JFrame {
         if(proveedoresNuevo == null){
             proveedoresNuevo = new ProveedoresNuevoDialog(this,true);
         }else{
-            proveedoresNuevo.goProveedoresNuevoPanel();
             proveedoresNuevo.setVisible(true);
         }
         revalidate();

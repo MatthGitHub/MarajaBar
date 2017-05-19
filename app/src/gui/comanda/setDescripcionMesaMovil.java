@@ -23,6 +23,7 @@ public class setDescripcionMesaMovil extends javax.swing.JDialog {
     public setDescripcionMesaMovil(java.awt.Frame parent, boolean modal,DtoMesa laMesa) {
         super(parent, modal);
         initComponents();
+        setLocationRelativeTo(parent);
         this.miMesa = laMesa;
         setResizable(false);
         setDefaultCloseOperation(0);

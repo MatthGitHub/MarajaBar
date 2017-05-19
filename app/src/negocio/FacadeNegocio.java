@@ -15,14 +15,18 @@ import java.util.logging.Logger;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.swing.JOptionPane;
+import negocio.controladores.exceptions.IllegalOrphanException;
+import negocio.controladores.exceptions.NonexistentEntityException;
 import negocio.entidades.Detalleventas;
 import negocio.entidades.Mesa;
 import negocio.entidades.Productos;
+import negocio.entidades.Proveedores;
 import negocio.entidades.Sectores;
 import negocio.entidades.Ventas;
 import servicios.dto.DtoDetalleVenta;
 import servicios.dto.DtoMesa;
 import servicios.dto.DtoProducto;
+import servicios.dto.DtoProveedor;
 import servicios.dto.DtoSector;
 import servicios.dto.DtoVentas;
 
@@ -112,6 +116,10 @@ public class FacadeNegocio {
             return false;
         }
        
+   }
+   
+   public void eliminarMesa(Integer id) throws IllegalOrphanException, NonexistentEntityException{
+       BarController.getBarController().eliminarMesa(id);
    }
    
    // ******************************** Metodos mesas **********************************************//
@@ -250,13 +258,38 @@ public class FacadeNegocio {
     
     
     
-    // --------------------------------- Metodos DetalleVenta ---------------------------------------------//
-    // --------------------------------- Metodos Productos ---------------------------------------------//
+ // --------------------------------- Metodos DetalleVenta ---------------------------------------------//
+ // --------------------------------- Metodos Proveedores ---------------------------------------------//
+ 
+    public List<DtoProveedor> getTodosLosProveedores(){
+        BarController barController = BarController.getBarController();
+        List<DtoProveedor> proveedores = new ArrayList<>();
+        Iterator<Proveedores> iteradorProveedores = barController.getTodosLosProveedores().iterator();
+        while(iteradorProveedores.hasNext()){
+           DtoProveedor nuevodto = new DtoProveedor();
+           nuevodto.cargarDto(iteradorProveedores.next());
+           proveedores.add(nuevodto);
+        }
+        return proveedores;
+    }
     
+    /**
+     * 
+     * @param nuevo
+     * @return 
+     */
+    public boolean nuevoProveedor(DtoProveedor nuevo){
+        Proveedores prov = new Proveedores();
+        prov.cargarProveedor(nuevo);
+        if(BarController.getBarController().nuevoProveedor(prov)){
+            return true;
+        }else{
+            return false;
+        }
+    }
     
-    // --------------------------------- Metodos Productos ---------------------------------------------//
-    // --------------------------------- Metodos Productos ---------------------------------------------//
-    
-    
-    // --------------------------------- Metodos Productos ---------------------------------------------//
+    public void eliminarProveedor(Integer id) throws NonexistentEntityException{
+        BarController.getBarController().eliminarProveedor(id);
+    }
+ // --------------------------------- Metodos Proveedores ---------------------------------------------//
 }

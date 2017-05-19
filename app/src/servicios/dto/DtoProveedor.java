@@ -5,6 +5,8 @@
  */
 package servicios.dto;
 
+import negocio.entidades.Proveedores;
+
 /**
  *
  * @author matth
@@ -18,6 +20,15 @@ public class DtoProveedor {
     
     public DtoProveedor(){
         
+    }
+    
+    public DtoProveedor cargarDto(Proveedores aCargar){
+        this.setIdProveedor(aCargar.getIdProveedor());
+        this.setNombreProveedor(aCargar.getNombreProveedor());
+        this.setCuit(aCargar.getCuit());
+        this.setTelefono(aCargar.getTelefono());
+        this.setCorreo(aCargar.getEmail());
+        return this;
     }
 
     public Integer getIdProveedor() {

@@ -16,6 +16,7 @@ import negocio.controladores.DetalleventasJpaController;
 import negocio.controladores.EstadosventaJpaController;
 import negocio.controladores.MesaJpaController;
 import negocio.controladores.ProductosJpaController;
+import negocio.controladores.ProveedoresJpaController;
 import negocio.controladores.SectoresJpaController;
 import negocio.controladores.TipoproductoJpaController;
 import negocio.controladores.VentasJpaController;
@@ -26,9 +27,11 @@ import negocio.entidades.DetalleventasPK;
 import negocio.entidades.Estadosventa;
 import negocio.entidades.Mesa;
 import negocio.entidades.Productos;
+import negocio.entidades.Proveedores;
 import negocio.entidades.Sectores;
 import negocio.entidades.Tipoproducto;
 import negocio.entidades.Ventas;
+import servicios.dto.DtoProveedor;
 
 /**
  *
@@ -89,12 +92,23 @@ public class BarController {
         return jpa.findMesa(idMesa);
     }
     
+    /**
+     * 
+     * @param nueva
+     * @throws Exception 
+     */
     public void nuevaMesa(Mesa nueva) throws Exception{
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("appPU");
         MesaJpaController jpa = new MesaJpaController(emf);
         jpa.create(nueva);
     }
     
+    /**
+     * 
+     * @param mesa
+     * @throws NonexistentEntityException
+     * @throws Exception 
+     */
     public void modificarMesa(Mesa mesa) throws NonexistentEntityException, Exception{
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("appPU");
         MesaJpaController jpa = new MesaJpaController(emf);
@@ -103,6 +117,20 @@ public class BarController {
         mesaAux.setDescripcion(mesa.getDescripcion());
         jpa.edit(mesaAux);
     }
+    
+    /**
+     * 
+     * @param id
+     * @throws IllegalOrphanException
+     * @throws NonexistentEntityException 
+     */
+    public void eliminarMesa(Integer id) throws IllegalOrphanException, NonexistentEntityException{
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("appPU");
+        MesaJpaController jpa = new MesaJpaController(emf);
+        
+        jpa.destroy(id);
+    }
+    
     
 // ------------------------  Metodos Mesas ----------------------------------------------//
 // ------------------------  Metodos Sectores -------------------------------------------//      
@@ -390,4 +418,37 @@ public class BarController {
     }
     
 // ------------------------  Metodos DetalleVenta ----------------------------------------//
+// ------------------------  Metodos Proveedores ----------------------------------------//
+    /**
+     * Busca todos los proveedores
+     * @return 
+     */
+    public List<Proveedores> getTodosLosProveedores(){
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("appPU");
+        ProveedoresJpaController jpa = new ProveedoresJpaController(emf);
+        
+        return jpa.findProveedoresEntities();
+    }
+    
+    public boolean nuevoProveedor(Proveedores nuevo){
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("appPU");
+        ProveedoresJpaController jpa = new ProveedoresJpaController(emf);
+        
+        try {
+            jpa.create(nuevo);
+            return true;
+        } catch (Exception e) {
+            System.out.println("Erro nuevo proveedor "+e);
+            return false;
+        }
+        
+    }
+    
+    public void eliminarProveedor(Integer id) throws NonexistentEntityException{
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("appPU");
+        ProveedoresJpaController jpa = new ProveedoresJpaController(emf);
+        
+        jpa.destroy(id);
+    }
+// ------------------------  Metodos Proveedores ----------------------------------------//
 }

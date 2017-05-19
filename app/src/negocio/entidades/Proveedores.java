@@ -16,6 +16,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import servicios.dto.DtoProveedor;
 
 /**
  *
@@ -51,7 +52,16 @@ public class Proveedores implements Serializable {
 
     public Proveedores() {
     }
-
+    
+    public Proveedores cargarProveedor(DtoProveedor aCargar){
+        this.setIdProveedor(aCargar.getIdProveedor());
+        this.setNombreProveedor(aCargar.getNombreProveedor());
+        this.setCuit(aCargar.getCuit());
+        this.setEmail(aCargar.getCorreo());
+        this.setTelefono(aCargar.getTelefono());
+        return this;
+    }
+    
     public Proveedores(Integer idProveedor) {
         this.idProveedor = idProveedor;
     }

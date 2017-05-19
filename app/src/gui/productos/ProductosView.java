@@ -29,6 +29,7 @@ public class ProductosView extends MenuP {
         initComponents();
         this.mainFrame = mainFrame;
         modelo = (DefaultTableModel) jtProductos.getModel();
+        esconderColumna();
         setTablaProductos();
     }
     
@@ -38,6 +39,13 @@ public class ProductosView extends MenuP {
         }
         return estePanel;
     }
+    
+    public void esconderColumna(){
+        jtProductos.getColumnModel().getColumn(0).setMaxWidth(0);
+        jtProductos.getColumnModel().getColumn(0).setMinWidth(0);
+        jtProductos.getColumnModel().getColumn(0).setPreferredWidth(0);
+    }
+    
     
     public void setTablaProductos(){
         vaciarTabla(jtProductos);
