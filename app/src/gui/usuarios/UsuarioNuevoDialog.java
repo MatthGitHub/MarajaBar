@@ -11,6 +11,7 @@ import gui.resources.MenuP;
 import java.util.List;
 import javax.swing.JOptionPane;
 import negocio.FacadeNegocio;
+import negocio.MD5;
 import negocio.entidades.Roles;
 import negocio.entidades.Sectores;
 import servicios.dto.DtoMesa;
@@ -46,9 +47,10 @@ public class UsuarioNuevoDialog extends javax.swing.JDialog {
     }
     
     public void guardarUsuario(){
+        MD5 md5 = MD5.getMD5();
         DtoUsuario nuevo = new DtoUsuario();
         nuevo.setNombreUsuario(txtNombre.getText());
-        nuevo.setClave(txtClave.getText());
+        nuevo.setClave(md5.md5(txtClave.getText()));
         
         if(FacadeNegocio.getFacadeNegocio().nuevoUsuario((DtoRoles) cmbxRoles.getSelectedItem(),nuevo)){
            uView.setTablaUsuarios();
@@ -180,6 +182,7 @@ public class UsuarioNuevoDialog extends javax.swing.JDialog {
         // TODO add your handling code here:
         setVisible(false);
         this.dispose();
+        System.gc();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void cmbxRolesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbxRolesActionPerformed
@@ -197,6 +200,12 @@ public class UsuarioNuevoDialog extends javax.swing.JDialog {
                     JOptionPane.showMessageDialog(this, "Debe ingresar una clave", "Error", JOptionPane.ERROR_MESSAGE);
                 }else{
                     guardarUsuario();
+                    txtNombre.setText("");
+                    txtClave.setText("");
+                    cmbxRoles.setSelectedIndex(0);
+                    setVisible(false);
+                    this.dispose();
+                    System.gc();
                 }
             }
         }

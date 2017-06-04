@@ -12,9 +12,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.swing.JOptionPane;
 import negocio.controladores.exceptions.IllegalOrphanException;
 import negocio.controladores.exceptions.NonexistentEntityException;
 import negocio.entidades.Detalleventas;
@@ -41,6 +38,8 @@ import servicios.dto.DtoVentas;
 public class FacadeNegocio {
     private static FacadeNegocio estaClase;
     private Main mainFrame;
+    public static Usuarios usuario;
+    public static String mensaje;
     
     private FacadeNegocio(){
     }
@@ -297,6 +296,25 @@ public class FacadeNegocio {
     }
  // --------------------------------- Metodos Proveedores ---------------------------------------------//
 // --------------------------------- Metodos Usuarios ---------------------------------------------//
+    public boolean login(String nombre, String clave){
+        MD5 md5 = MD5.getMD5();
+        clave = md5.md5(clave);
+        
+        usuario = BarController.getBarController().login(nombre);
+        
+        if(!usuario.getNombreUsuario().equals("No")){
+            if(usuario.getClave().equals(clave)){
+                return true;
+            }else{
+                 mensaje = "Clave incorrecta";
+                 return false;
+            }
+        }else{
+             mensaje = "Usuario inexistente";
+             return false;
+        }
+    }
+    
     /**
      * 
      * @return 

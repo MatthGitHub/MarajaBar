@@ -242,10 +242,10 @@ public final class Main extends javax.swing.JFrame {
         jm_archivo = new javax.swing.JMenu();
         mi_menuPrincipal = new javax.swing.JMenuItem();
         mi_salir = new javax.swing.JMenuItem();
-        jm_administracion = new javax.swing.JMenu();
         jm_estadisticas = new javax.swing.JMenu();
         mi_ventas = new javax.swing.JMenuItem();
         mi_compras = new javax.swing.JMenuItem();
+        jm_administacion = new javax.swing.JMenu();
         jm_configuracion = new javax.swing.JMenu();
         jm_productos = new javax.swing.JMenu();
         mi_listarProductos = new javax.swing.JMenuItem();
@@ -278,8 +278,6 @@ public final class Main extends javax.swing.JFrame {
 
         jmb_menu.add(jm_archivo);
 
-        jm_administracion.setText("Administracion");
-
         jm_estadisticas.setText("Estadisticas");
 
         mi_ventas.setText("Ventas");
@@ -293,9 +291,10 @@ public final class Main extends javax.swing.JFrame {
         });
         jm_estadisticas.add(mi_compras);
 
-        jm_administracion.add(jm_estadisticas);
+        jmb_menu.add(jm_estadisticas);
 
-        jmb_menu.add(jm_administracion);
+        jm_administacion.setText("Administracion");
+        jmb_menu.add(jm_administacion);
 
         jm_configuracion.setText("Configuracion");
 
@@ -441,7 +440,7 @@ public final class Main extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenu jm_administracion;
+    private javax.swing.JMenu jm_administacion;
     private javax.swing.JMenu jm_archivo;
     private javax.swing.JMenu jm_configuracion;
     private javax.swing.JMenu jm_estadisticas;

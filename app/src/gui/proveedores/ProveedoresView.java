@@ -200,8 +200,9 @@ public class ProveedoresView extends MenuP {
     private void btn_eliminar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_eliminar1ActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
-        System.gc();
         mainFrame.goMenuPrincipal();
+        estePanel = null;
+        System.gc();
     }//GEN-LAST:event_btn_eliminar1ActionPerformed
 
     private void btn_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_eliminarActionPerformed

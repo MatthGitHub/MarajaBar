@@ -57,7 +57,7 @@ public class MenuPrincipal extends MenuP {
         List<DtoMesa> mesas = FacadeNegocio.getFacadeNegocio().getTodasLasMesas(idSector);
         for(int i = 0; i < mesas.size(); i++){
             final int idMesa = mesas.get(i).getIdMesa();
-            JButton boton = new JButton();
+            final JButton boton = new JButton();
             if(esMovil(mesas.get(i))){
                 boton.setText(mesas.get(i).getDescripcion());
             }else{

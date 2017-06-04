@@ -48,6 +48,7 @@ public class BarController {
     private static List<Mesa> listMesas;
     private List<Sectores> sectores;
     
+    
     private BarController(){
         listMesas = new ArrayList<>();
     }
@@ -58,7 +59,7 @@ public class BarController {
         }
         return esteBar;
     }
-    
+   
 // ------------------------  Metodos Mesas -------------------------------------------// 
     
     /**
@@ -458,7 +459,15 @@ public class BarController {
     }
 // ------------------------  Metodos Proveedores ----------------------------------------//
 // ------------------------  Metodos Usuarios ----------------------------------------//
-    
+    // -------------------------- Login -------------------//
+    public Usuarios login(String nombre) {
+        
+        Usuarios miUsuario = getUsuarioPorNombre(nombre);
+        
+        return miUsuario;
+      
+    }
+// -------------------------- Login ---------------------// 
     public List<Usuarios>  getTodosLosUsuarios(){
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("appPU");
         UsuariosJpaController jpa = new UsuariosJpaController(emf);
@@ -489,6 +498,20 @@ public class BarController {
         UsuariosJpaController jpa = new UsuariosJpaController(emf);
         
         jpa.destroy(id);
+    }
+    
+    public Usuarios getUsuarioPorNombre(String nombre){
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("appPU");
+        UsuariosJpaController jpa = new UsuariosJpaController(emf);
+        List<Usuarios> miListaU = jpa.findUsuariosEntities();
+        for(int i = 0; i < miListaU.size(); i++){
+            if(miListaU.get(i).getNombreUsuario().equalsIgnoreCase(nombre)){
+                return miListaU.get(i);
+            }
+        }
+        Usuarios miUsu = new Usuarios();
+        miUsu.setNombreUsuario("No");
+        return miUsu;
     }
 // ------------------------  Metodos Usuarios ----------------------------------------//
 // ------------------------  Metodos Roles ----------------------------------------//

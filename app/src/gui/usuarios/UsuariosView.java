@@ -176,8 +176,9 @@ public class UsuariosView extends MenuP {
     private void btnMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenuActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
-        System.gc();
         mainFrame.goMenuPrincipal();
+        estePanel = null;
+        System.gc();
     }//GEN-LAST:event_btnMenuActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed

@@ -194,6 +194,8 @@ public class ProductosView extends MenuP {
         // TODO add your handling code here:
         this.setVisible(false);
         mainFrame.goMenuPrincipal();
+        estePanel = null;
+        System.gc();
     }//GEN-LAST:event_btnMenuActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
