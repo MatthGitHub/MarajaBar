@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.4.3
+-- version 4.5.2
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 24-11-2016 a las 02:16:27
--- Versión del servidor: 5.6.24
--- Versión de PHP: 5.6.8
+-- Tiempo de generación: 04-06-2017 a las 21:31:28
+-- Versión del servidor: 10.1.13-MariaDB
+-- Versión de PHP: 5.6.23
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -14,7 +14,7 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+/*!40101 SET NAMES utf8mb4 */;
 
 --
 -- Base de datos: `marajabar`
@@ -26,7 +26,7 @@ SET time_zone = "+00:00";
 -- Estructura de tabla para la tabla `auditoria`
 --
 
-CREATE TABLE IF NOT EXISTS `auditoria` (
+CREATE TABLE `auditoria` (
   `idAuditoria` int(11) NOT NULL,
   `descripcion` varchar(100) CHARACTER SET latin1 NOT NULL,
   `fechahora` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS `auditoria` (
 -- Estructura de tabla para la tabla `cajas`
 --
 
-CREATE TABLE IF NOT EXISTS `cajas` (
+CREATE TABLE `cajas` (
   `idCaja` int(11) NOT NULL,
   `fecha` int(11) NOT NULL,
   `total` int(11) NOT NULL,
@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS `cajas` (
 -- Estructura de tabla para la tabla `compras`
 --
 
-CREATE TABLE IF NOT EXISTS `compras` (
+CREATE TABLE `compras` (
   `idCompras` int(11) NOT NULL,
   `fecha` date NOT NULL,
   `total` int(11) NOT NULL
@@ -64,7 +64,7 @@ CREATE TABLE IF NOT EXISTS `compras` (
 -- Estructura de tabla para la tabla `detallecompras`
 --
 
-CREATE TABLE IF NOT EXISTS `detallecompras` (
+CREATE TABLE `detallecompras` (
   `fkMerca` int(11) NOT NULL,
   `fkCompras` int(11) NOT NULL,
   `cantidad` int(11) NOT NULL
@@ -76,46 +76,55 @@ CREATE TABLE IF NOT EXISTS `detallecompras` (
 -- Estructura de tabla para la tabla `detalleventas`
 --
 
-CREATE TABLE IF NOT EXISTS `detalleventas` (
+CREATE TABLE `detalleventas` (
   `fkVenta` int(11) NOT NULL,
   `fkProducto` int(11) NOT NULL,
   `cantidad` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
+--
+-- Volcado de datos para la tabla `detalleventas`
+--
+
+INSERT INTO `detalleventas` (`fkVenta`, `fkProducto`, `cantidad`) VALUES
+(44, 1, 1),
+(44, 3, 1),
+(44, 6, 1),
+(45, 3, 1),
+(46, 1, 1),
+(46, 5, 1),
+(47, 3, 2),
+(47, 4, 1),
+(47, 6, 1),
+(48, 4, 2),
+(48, 5, 1),
+(48, 6, 1),
+(49, 1, 1),
+(49, 3, 1),
+(49, 5, 1),
+(50, 3, 1),
+(50, 4, 1),
+(56, 2, 1),
+(56, 5, 1);
+
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `estadomesa`
+-- Estructura de tabla para la tabla `estadosventa`
 --
 
-CREATE TABLE IF NOT EXISTS `estadomesa` (
-  `idEstado` int(11) NOT NULL,
-  `descripcion` varchar(15) COLLATE utf8_spanish2_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `estadoscaja`
---
-
-CREATE TABLE IF NOT EXISTS `estadoscaja` (
+CREATE TABLE `estadosventa` (
   `idEstadoVenta` int(11) NOT NULL,
   `descripcion` varchar(10) CHARACTER SET latin1 NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
--- --------------------------------------------------------
-
 --
--- Estructura de tabla para la tabla `mercaderia`
+-- Volcado de datos para la tabla `estadosventa`
 --
 
-CREATE TABLE IF NOT EXISTS `mercaderia` (
-  `idMerca` int(11) NOT NULL,
-  `Descripcion` varchar(50) COLLATE utf8_spanish2_ci DEFAULT NULL,
-  `fkProveedor` int(11) NOT NULL,
-  `costo` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+INSERT INTO `estadosventa` (`idEstadoVenta`, `descripcion`) VALUES
+(1, 'cerrada'),
+(2, 'abierta');
 
 -- --------------------------------------------------------
 
@@ -123,12 +132,20 @@ CREATE TABLE IF NOT EXISTS `mercaderia` (
 -- Estructura de tabla para la tabla `mesa`
 --
 
-CREATE TABLE IF NOT EXISTS `mesa` (
+CREATE TABLE `mesa` (
   `idMesa` int(11) NOT NULL,
   `Descripcion` varchar(150) COLLATE utf8_spanish2_ci DEFAULT NULL,
-  `fkSector` int(11) NOT NULL,
-  `fkEstadoMesa` int(11) NOT NULL
+  `fkSector` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+
+--
+-- Volcado de datos para la tabla `mesa`
+--
+
+INSERT INTO `mesa` (`idMesa`, `Descripcion`, `fkSector`) VALUES
+(1, 'Esquina de la ventana', 3),
+(2, 'Esta ahi', 2),
+(100, '', 99);
 
 -- --------------------------------------------------------
 
@@ -136,11 +153,11 @@ CREATE TABLE IF NOT EXISTS `mesa` (
 -- Estructura de tabla para la tabla `permisos`
 --
 
-CREATE TABLE IF NOT EXISTS `permisos` (
+CREATE TABLE `permisos` (
   `idPermiso` int(11) NOT NULL,
   `nombrePermiso` varchar(35) COLLATE utf8_spanish2_ci NOT NULL,
   `Descripcion` varchar(180) COLLATE utf8_spanish2_ci NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 --
 -- Volcado de datos para la tabla `permisos`
@@ -159,13 +176,25 @@ INSERT INTO `permisos` (`idPermiso`, `nombrePermiso`, `Descripcion`) VALUES
 -- Estructura de tabla para la tabla `productos`
 --
 
-CREATE TABLE IF NOT EXISTS `productos` (
+CREATE TABLE `productos` (
   `idProducto` int(11) NOT NULL,
   `nombreProducto` varchar(100) COLLATE utf8_spanish2_ci NOT NULL,
   `Descripcion` varchar(100) COLLATE utf8_spanish2_ci DEFAULT NULL,
   `precio` int(11) NOT NULL,
   `fkTipo` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+
+--
+-- Volcado de datos para la tabla `productos`
+--
+
+INSERT INTO `productos` (`idProducto`, `nombreProducto`, `Descripcion`, `precio`, `fkTipo`) VALUES
+(1, 'Jarra cerveza', '1Lts cerveza rubia,roja o negra artesanal', 100, 1),
+(2, 'Pizza Maraja', 'Muzzarella, Panceta y Huevo Frito', 200, 1),
+(3, 'Pizza margarita', 'Muzzarella', 150, 1),
+(4, 'Hamburgesa maraja', 'Queso, panceta, huevo frito + guarnicion', 170, 1),
+(5, 'Jarra Fernet', '1Lts fernet', 120, 1),
+(6, 'Jarra gancia', '1Lts de gancia', 100, 1);
 
 -- --------------------------------------------------------
 
@@ -173,20 +202,20 @@ CREATE TABLE IF NOT EXISTS `productos` (
 -- Estructura de tabla para la tabla `proveedores`
 --
 
-CREATE TABLE IF NOT EXISTS `proveedores` (
+CREATE TABLE `proveedores` (
   `idProveedor` int(11) NOT NULL,
   `nombreProveedor` varchar(50) COLLATE utf8_spanish2_ci NOT NULL,
   `cuit` varchar(15) COLLATE utf8_spanish2_ci DEFAULT NULL,
   `telefono` varchar(25) COLLATE utf8_spanish2_ci DEFAULT NULL,
   `email` varchar(35) COLLATE utf8_spanish2_ci DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 --
 -- Volcado de datos para la tabla `proveedores`
 --
 
 INSERT INTO `proveedores` (`idProveedor`, `nombreProveedor`, `cuit`, `telefono`, `email`) VALUES
-(1, 'Merco Sur', '99-000988767-3', '01154654322', 'elmerco@tetrae.todo');
+(3, 'Proveedor1', '30-158789645-1', '2944655052', 'proveedoruno@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -194,10 +223,10 @@ INSERT INTO `proveedores` (`idProveedor`, `nombreProveedor`, `cuit`, `telefono`,
 -- Estructura de tabla para la tabla `roles`
 --
 
-CREATE TABLE IF NOT EXISTS `roles` (
+CREATE TABLE `roles` (
   `idRol` int(11) NOT NULL,
   `Descripcion` varchar(20) COLLATE utf8_spanish2_ci NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 --
 -- Volcado de datos para la tabla `roles`
@@ -205,7 +234,8 @@ CREATE TABLE IF NOT EXISTS `roles` (
 
 INSERT INTO `roles` (`idRol`, `Descripcion`) VALUES
 (1, 'administrador'),
-(2, 'supervisor');
+(2, 'supervisor'),
+(3, 'cajero');
 
 -- --------------------------------------------------------
 
@@ -213,7 +243,7 @@ INSERT INTO `roles` (`idRol`, `Descripcion`) VALUES
 -- Estructura de tabla para la tabla `rolespermisos`
 --
 
-CREATE TABLE IF NOT EXISTS `rolespermisos` (
+CREATE TABLE `rolespermisos` (
   `fkRol` int(11) NOT NULL,
   `fkPermiso` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
@@ -224,8 +254,8 @@ CREATE TABLE IF NOT EXISTS `rolespermisos` (
 
 INSERT INTO `rolespermisos` (`fkRol`, `fkPermiso`) VALUES
 (1, 1),
-(2, 1),
-(1, 2);
+(1, 2),
+(2, 1);
 
 -- --------------------------------------------------------
 
@@ -233,10 +263,10 @@ INSERT INTO `rolespermisos` (`fkRol`, `fkPermiso`) VALUES
 -- Estructura de tabla para la tabla `sectores`
 --
 
-CREATE TABLE IF NOT EXISTS `sectores` (
+CREATE TABLE `sectores` (
   `idSector` int(11) NOT NULL,
   `nombreSector` varchar(15) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `sectores`
@@ -246,7 +276,8 @@ INSERT INTO `sectores` (`idSector`, `nombreSector`) VALUES
 (2, 'Salon'),
 (3, 'Arriba'),
 (4, 'Abajo'),
-(5, 'Afuera');
+(5, 'Afuera'),
+(99, 'Movil');
 
 -- --------------------------------------------------------
 
@@ -254,10 +285,18 @@ INSERT INTO `sectores` (`idSector`, `nombreSector`) VALUES
 -- Estructura de tabla para la tabla `tipoproducto`
 --
 
-CREATE TABLE IF NOT EXISTS `tipoproducto` (
+CREATE TABLE `tipoproducto` (
   `idTipoProducto` int(11) NOT NULL,
   `descripcion` varchar(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `tipoproducto`
+--
+
+INSERT INTO `tipoproducto` (`idTipoProducto`, `descripcion`) VALUES
+(1, 'Producto'),
+(2, 'Mercaderia');
 
 -- --------------------------------------------------------
 
@@ -265,20 +304,12 @@ CREATE TABLE IF NOT EXISTS `tipoproducto` (
 -- Estructura de tabla para la tabla `usuarios`
 --
 
-CREATE TABLE IF NOT EXISTS `usuarios` (
+CREATE TABLE `usuarios` (
   `idUsuario` int(11) NOT NULL,
   `nombreUsuario` varchar(15) COLLATE utf8_spanish2_ci NOT NULL,
   `clave` varchar(15) COLLATE utf8_spanish2_ci NOT NULL,
   `fkRol` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
-
---
--- Volcado de datos para la tabla `usuarios`
---
-
-INSERT INTO `usuarios` (`idUsuario`, `nombreUsuario`, `clave`, `fkRol`) VALUES
-(1, 'mbenditti', 'matias', 1),
-(2, 'jimhoff', 'juan', 2);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 -- --------------------------------------------------------
 
@@ -286,13 +317,32 @@ INSERT INTO `usuarios` (`idUsuario`, `nombreUsuario`, `clave`, `fkRol`) VALUES
 -- Estructura de tabla para la tabla `ventas`
 --
 
-CREATE TABLE IF NOT EXISTS `ventas` (
+CREATE TABLE `ventas` (
   `idVenta` int(11) NOT NULL,
   `fkMesa` int(11) NOT NULL,
   `fecha` date NOT NULL,
   `total` int(11) NOT NULL,
   `fkEstado` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+
+--
+-- Volcado de datos para la tabla `ventas`
+--
+
+INSERT INTO `ventas` (`idVenta`, `fkMesa`, `fecha`, `total`, `fkEstado`) VALUES
+(44, 100, '2017-05-18', 350, 1),
+(45, 100, '2017-05-18', 150, 1),
+(46, 2, '2017-05-18', 220, 1),
+(47, 1, '2017-05-18', 570, 1),
+(48, 1, '2017-05-18', 560, 1),
+(49, 2, '2017-05-18', 370, 1),
+(50, 100, '2017-05-18', 320, 1),
+(51, 2, '2017-05-18', 0, 1),
+(52, 100, '2017-05-18', 0, 1),
+(53, 100, '2017-05-18', 0, 1),
+(54, 100, '2017-05-18', 0, 1),
+(55, 1, '2017-05-18', 0, 1),
+(56, 1, '2017-05-19', 320, 1);
 
 --
 -- Índices para tablas volcadas
@@ -333,31 +383,17 @@ ALTER TABLE `detalleventas`
   ADD KEY `fkProducto` (`fkProducto`);
 
 --
--- Indices de la tabla `estadomesa`
+-- Indices de la tabla `estadosventa`
 --
-ALTER TABLE `estadomesa`
-  ADD PRIMARY KEY (`idEstado`);
-
---
--- Indices de la tabla `estadoscaja`
---
-ALTER TABLE `estadoscaja`
+ALTER TABLE `estadosventa`
   ADD PRIMARY KEY (`idEstadoVenta`);
-
---
--- Indices de la tabla `mercaderia`
---
-ALTER TABLE `mercaderia`
-  ADD PRIMARY KEY (`idMerca`),
-  ADD KEY `fkProveedor` (`fkProveedor`);
 
 --
 -- Indices de la tabla `mesa`
 --
 ALTER TABLE `mesa`
   ADD PRIMARY KEY (`idMesa`),
-  ADD KEY `fkSalon` (`fkSector`),
-  ADD KEY `fkEstadoMesa` (`fkEstadoMesa`);
+  ADD KEY `fkSalon` (`fkSector`);
 
 --
 -- Indices de la tabla `permisos`
@@ -438,127 +474,104 @@ ALTER TABLE `cajas`
 ALTER TABLE `compras`
   MODIFY `idCompras` int(11) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT de la tabla `estadomesa`
+-- AUTO_INCREMENT de la tabla `estadosventa`
 --
-ALTER TABLE `estadomesa`
-  MODIFY `idEstado` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT de la tabla `estadoscaja`
---
-ALTER TABLE `estadoscaja`
-  MODIFY `idEstadoVenta` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT de la tabla `mercaderia`
---
-ALTER TABLE `mercaderia`
-  MODIFY `idMerca` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `estadosventa`
+  MODIFY `idEstadoVenta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT de la tabla `mesa`
 --
 ALTER TABLE `mesa`
-  MODIFY `idMesa` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idMesa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
 --
 -- AUTO_INCREMENT de la tabla `permisos`
 --
 ALTER TABLE `permisos`
-  MODIFY `idPermiso` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
+  MODIFY `idPermiso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT de la tabla `productos`
 --
 ALTER TABLE `productos`
-  MODIFY `idProducto` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+  MODIFY `idProducto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT de la tabla `proveedores`
 --
 ALTER TABLE `proveedores`
-  MODIFY `idProveedor` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+  MODIFY `idProveedor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT de la tabla `roles`
 --
 ALTER TABLE `roles`
-  MODIFY `idRol` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+  MODIFY `idRol` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT de la tabla `sectores`
 --
 ALTER TABLE `sectores`
-  MODIFY `idSector` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
+  MODIFY `idSector` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=100;
 --
 -- AUTO_INCREMENT de la tabla `tipoproducto`
 --
 ALTER TABLE `tipoproducto`
-  MODIFY `idTipoProducto` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idTipoProducto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `idUsuario` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+  MODIFY `idUsuario` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `ventas`
 --
 ALTER TABLE `ventas`
-  MODIFY `idVenta` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idVenta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 --
 -- Restricciones para tablas volcadas
 --
 
 --
--- Filtros para la tabla `cajas`
---
-ALTER TABLE `cajas`
-  ADD CONSTRAINT `cajas_ibfk_1` FOREIGN KEY (`fkEstado`) REFERENCES `estados_caja` (`idEstadoVenta`);
-
---
 -- Filtros para la tabla `detallecompras`
 --
 ALTER TABLE `detallecompras`
-  ADD CONSTRAINT `detallecompras_ibfk_1` FOREIGN KEY (`fkMerca`) REFERENCES `mercaderia` (`idMerca`),
-  ADD CONSTRAINT `detallecompras_ibfk_2` FOREIGN KEY (`fkCompras`) REFERENCES `compras` (`idCompras`);
+  ADD CONSTRAINT `rfkCompra` FOREIGN KEY (`fkCompras`) REFERENCES `compras` (`idCompras`),
+  ADD CONSTRAINT `rfkMerca` FOREIGN KEY (`fkMerca`) REFERENCES `productos` (`idProducto`);
 
 --
 -- Filtros para la tabla `detalleventas`
 --
 ALTER TABLE `detalleventas`
-  ADD CONSTRAINT `detalleventas_ibfk_1` FOREIGN KEY (`fkVenta`) REFERENCES `ventas` (`idVenta`),
-  ADD CONSTRAINT `detalleventas_ibfk_2` FOREIGN KEY (`fkProducto`) REFERENCES `productos` (`idProducto`);
-
---
--- Filtros para la tabla `mercaderia`
---
-ALTER TABLE `mercaderia`
-  ADD CONSTRAINT `mercaderia_ibfk_1` FOREIGN KEY (`fkProveedor`) REFERENCES `proveedores` (`idProveedor`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `rfkProducto` FOREIGN KEY (`fkProducto`) REFERENCES `productos` (`idProducto`) ON DELETE NO ACTION ON UPDATE CASCADE,
+  ADD CONSTRAINT `rfkVenta` FOREIGN KEY (`fkVenta`) REFERENCES `ventas` (`idVenta`);
 
 --
 -- Filtros para la tabla `mesa`
 --
 ALTER TABLE `mesa`
-  ADD CONSTRAINT `mesa_ibfk_1` FOREIGN KEY (`fkSector`) REFERENCES `sectores` (`idSector`),
-  ADD CONSTRAINT `mesa_ibfk_2` FOREIGN KEY (`fkEstadoMesa`) REFERENCES `estado_mesa` (`idEstado`);
+  ADD CONSTRAINT `rfkSector` FOREIGN KEY (`fkSector`) REFERENCES `sectores` (`idSector`);
 
 --
 -- Filtros para la tabla `productos`
 --
 ALTER TABLE `productos`
-  ADD CONSTRAINT `productos_ibfk_1` FOREIGN KEY (`fkTipo`) REFERENCES `tipo_producto` (`idTipoProducto`);
+  ADD CONSTRAINT `rfkTipoProducto` FOREIGN KEY (`fkTipo`) REFERENCES `tipoproducto` (`idTipoProducto`) ON DELETE NO ACTION ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `rolespermisos`
 --
 ALTER TABLE `rolespermisos`
-  ADD CONSTRAINT `rolespermisos_ibfk_1` FOREIGN KEY (`fkRol`) REFERENCES `roles` (`idRol`),
-  ADD CONSTRAINT `rolespermisos_ibfk_2` FOREIGN KEY (`fkPermiso`) REFERENCES `permisos` (`idPermiso`);
+  ADD CONSTRAINT `rfkPermiso` FOREIGN KEY (`fkPermiso`) REFERENCES `permisos` (`idPermiso`),
+  ADD CONSTRAINT `rfkRol` FOREIGN KEY (`fkRol`) REFERENCES `roles` (`idRol`);
 
 --
 -- Filtros para la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  ADD CONSTRAINT `usuarios_ibfk_1` FOREIGN KEY (`fkRol`) REFERENCES `roles` (`idRol`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `rfkUsuarioRol` FOREIGN KEY (`fkRol`) REFERENCES `roles` (`idRol`);
 
 --
 -- Filtros para la tabla `ventas`
 --
 ALTER TABLE `ventas`
-  ADD CONSTRAINT `estado_venta` FOREIGN KEY (`fkEstado`) REFERENCES `estadoVenta` (`idEstadoVenta`),
-  ADD CONSTRAINT `ventas_ibfk_2` FOREIGN KEY (`fkMesa`) REFERENCES `mesa` (`idMesa`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `rfkEstadoVenta` FOREIGN KEY (`fkEstado`) REFERENCES `estadosventa` (`idEstadoVenta`),
+  ADD CONSTRAINT `rfkMesa` FOREIGN KEY (`fkMesa`) REFERENCES `mesa` (`idMesa`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
