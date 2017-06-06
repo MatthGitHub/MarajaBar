@@ -73,6 +73,7 @@ public class ComandaFrame extends javax.swing.JFrame {
     
     public void setMesa(Integer idMesa){
         vaciarTabla(jtComanda);
+        txtTotal.setText("0");
         setTitle("Mesa: "+idMesa.toString());
         lbl_mesa.setText("Mesa: "+idMesa.toString());
         miMesa = FacadeNegocio.getFacadeNegocio().getMesa(idMesa);
@@ -82,6 +83,7 @@ public class ComandaFrame extends javax.swing.JFrame {
         }
         if(ultimaVenta != null){
             if(ultimaVenta.getFkEstado().getIdEstadoVenta() == 1){
+                laVenta = null;
                 btn_abrir.setEnabled(true);
                 btn_cerrar.setEnabled(false);
                 btn_agregar.setEnabled(false);
@@ -186,15 +188,21 @@ public class ComandaFrame extends javax.swing.JFrame {
     }
     
     public void agregarProductoAComanda(){
-        DtoProducto producto = FacadeNegocio.getFacadeNegocio().getProducto(Integer.parseInt(jtProductos.getValueAt(jtProductos.getSelectedRow(), 0).toString()));
-        DtoVentas ultimaVenta = FacadeNegocio.getFacadeNegocio().getUltimaVenta(miMesa);
-        
-        if(FacadeNegocio.getFacadeNegocio().nuevoDetalleVenta(ultimaVenta, producto)){
-            List<DtoDetalleVenta> detalles = FacadeNegocio.getFacadeNegocio().getDetalleVenta(ultimaVenta);
-            setTablaDetalle(detalles);
-        }else{
-            JOptionPane.showMessageDialog(this, "Error al cargar producto", "Error", JOptionPane.ERROR_MESSAGE);
+        if(laVenta != null){
+            if(laVenta.getFkEstado().getIdEstadoVenta() == 2){
+                DtoProducto producto = FacadeNegocio.getFacadeNegocio().getProducto(Integer.parseInt(jtProductos.getValueAt(jtProductos.getSelectedRow(), 0).toString()));
+                DtoVentas ultimaVenta = FacadeNegocio.getFacadeNegocio().getUltimaVenta(miMesa);
+
+                if(FacadeNegocio.getFacadeNegocio().nuevoDetalleVenta(ultimaVenta, producto)){
+                    List<DtoDetalleVenta> detalles = FacadeNegocio.getFacadeNegocio().getDetalleVenta(ultimaVenta);
+                    setTablaDetalle(detalles);
+                }else{
+                    JOptionPane.showMessageDialog(this, "Error al cargar producto", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
         }
+        
+        
         
     }
     
@@ -261,6 +269,7 @@ public class ComandaFrame extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        jtComanda.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane1.setViewportView(jtComanda);
 
         jtProductos.setModel(new javax.swing.table.DefaultTableModel(
@@ -279,12 +288,18 @@ public class ComandaFrame extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        jtProductos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jtProductos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 jtProductosMousePressed(evt);
             }
         });
         jScrollPane2.setViewportView(jtProductos);
+        if (jtProductos.getColumnModel().getColumnCount() > 0) {
+            jtProductos.getColumnModel().getColumn(0).setHeaderValue("Id");
+            jtProductos.getColumnModel().getColumn(1).setHeaderValue("Producto");
+            jtProductos.getColumnModel().getColumn(2).setHeaderValue("Precio");
+        }
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
