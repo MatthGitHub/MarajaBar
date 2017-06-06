@@ -165,8 +165,9 @@ public final class Main extends javax.swing.JFrame {
         comandasView = ComandaFrame.getComandaFrame();
         
         if(comandasView.isVisible()){
-            setLocationRelativeTo(this);
+            comandasView.setLocationRelativeTo(this);
         }else{
+            comandasView.setLocationRelativeTo(this);
             comandasView.setVisible(true);
         }
     }

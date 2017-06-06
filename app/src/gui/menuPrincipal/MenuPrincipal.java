@@ -77,13 +77,12 @@ public class MenuPrincipal extends MenuP {
 
                 @Override
                 public void mouseClicked(MouseEvent e) {
-                    boton.setBackground(new Color(51,255,153).brighter());
-                    mainFrame.getComandaFrame().setMesa(idMesa);
-                            
                 }
 
                 @Override
                 public void mousePressed(MouseEvent e) {
+                    boton.setBackground(new Color(51,255,153).brighter());
+                    mainFrame.getComandaFrame().setMesa(idMesa);
                 }
 
                 @Override
