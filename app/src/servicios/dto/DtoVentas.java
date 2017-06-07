@@ -8,6 +8,7 @@ package servicios.dto;
 import java.util.Date;
 import negocio.entidades.Estadosventa;
 import negocio.entidades.Mesa;
+import negocio.entidades.Usuarios;
 import negocio.entidades.Ventas;
 
 /**
@@ -20,7 +21,8 @@ public class DtoVentas {
     private Integer total;
     private Mesa fkMesa;
     private Estadosventa fkEstado;
-
+    private Usuarios fkUsuario;
+    
     public DtoVentas() {
     }
     
@@ -30,6 +32,7 @@ public class DtoVentas {
         this.setFkMesa(aCargar.getFkMesa());
         this.setIdVenta(aCargar.getIdVenta());
         this.setTotal(aCargar.getTotal());
+        this.setFkUsuario(aCargar.getFkUsuario());
         return this;
     } 
     /**
@@ -100,5 +103,13 @@ public class DtoVentas {
      */
     public void setFkEstado(Estadosventa fkEstado) {
         this.fkEstado = fkEstado;
+    }
+
+    public Usuarios getFkUsuario() {
+        return fkUsuario;
+    }
+
+    public void setFkUsuario(Usuarios fkUsuario) {
+        this.fkUsuario = fkUsuario;
     }
 }

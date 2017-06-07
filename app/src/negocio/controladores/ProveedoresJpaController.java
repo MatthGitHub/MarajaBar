@@ -18,7 +18,7 @@ import negocio.entidades.Proveedores;
 
 /**
  *
- * @author matth
+ * @author Matth
  */
 public class ProveedoresJpaController implements Serializable {
 

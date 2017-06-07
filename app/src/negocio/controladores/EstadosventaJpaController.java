@@ -21,7 +21,7 @@ import negocio.entidades.Estadosventa;
 
 /**
  *
- * @author matth
+ * @author Matth
  */
 public class EstadosventaJpaController implements Serializable {
 

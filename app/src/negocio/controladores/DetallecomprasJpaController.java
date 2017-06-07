@@ -22,7 +22,7 @@ import negocio.entidades.Productos;
 
 /**
  *
- * @author matth
+ * @author Matth
  */
 public class DetallecomprasJpaController implements Serializable {
 
@@ -39,8 +39,8 @@ public class DetallecomprasJpaController implements Serializable {
         if (detallecompras.getDetallecomprasPK() == null) {
             detallecompras.setDetallecomprasPK(new DetallecomprasPK());
         }
-        detallecompras.getDetallecomprasPK().setFkCompras(detallecompras.getCompras().getIdCompras());
         detallecompras.getDetallecomprasPK().setFkMerca(detallecompras.getProductos().getIdProducto());
+        detallecompras.getDetallecomprasPK().setFkCompras(detallecompras.getCompras().getIdCompras());
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -78,8 +78,8 @@ public class DetallecomprasJpaController implements Serializable {
     }
 
     public void edit(Detallecompras detallecompras) throws NonexistentEntityException, Exception {
-        detallecompras.getDetallecomprasPK().setFkCompras(detallecompras.getCompras().getIdCompras());
         detallecompras.getDetallecomprasPK().setFkMerca(detallecompras.getProductos().getIdProducto());
+        detallecompras.getDetallecomprasPK().setFkCompras(detallecompras.getCompras().getIdCompras());
         EntityManager em = null;
         try {
             em = getEntityManager();

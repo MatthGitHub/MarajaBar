@@ -8,6 +8,7 @@ package negocio;
 
 import gui.main.Main;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
@@ -211,6 +212,18 @@ public class FacadeNegocio {
         venta.cargarVentas(aCerrar);
         return barController.cerrarVenta(venta);
     }
+    
+    public List<DtoVentas> getVentasEntreFechas(Date desde, Date hasta){
+        List<DtoVentas> dtoVentas = new ArrayList<>();
+        Iterator<Ventas> iteradorVentas = BarController.getBarController().getVentasEntreFechas(desde, hasta).iterator();
+        while(iteradorVentas.hasNext()){
+            DtoVentas  nuevoDto = new  DtoVentas();
+            nuevoDto.cargarDto(iteradorVentas.next());
+            dtoVentas.add(nuevoDto);
+        }
+        return dtoVentas;
+    }
+    
     // --------------------------------- Metodos Venta ---------------------------------------------//
     // --------------------------------- Metodos DetalleVenta ---------------------------------------------//
     public List<DtoDetalleVenta> getDetalleVenta(DtoVentas venta){
@@ -344,7 +357,7 @@ public class FacadeNegocio {
         }
     }
     
-    public void eliminarUsuario(Integer id) throws NonexistentEntityException{
+    public void eliminarUsuario(Integer id) throws NonexistentEntityException, IllegalOrphanException{
         BarController.getBarController().eliminarUsuario(id);
     }
 // --------------------------------- Metodos Usuarios ---------------------------------------------//

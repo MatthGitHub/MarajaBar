@@ -14,6 +14,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import negocio.FacadeNegocio;
+import negocio.controladores.exceptions.IllegalOrphanException;
 import negocio.controladores.exceptions.NonexistentEntityException;
 import servicios.dto.DtoUsuario;
 
@@ -79,6 +80,8 @@ public class UsuariosView extends MenuP {
             Logger.getLogger(UsuariosView.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(this, ex, "Error", JOptionPane.ERROR_MESSAGE);
             JOptionPane.showMessageDialog(this, "Solo se pueden eliminar los usuarios que jamas hayan realizado una venta/comanda", "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (IllegalOrphanException ex) {
+            Logger.getLogger(UsuariosView.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     

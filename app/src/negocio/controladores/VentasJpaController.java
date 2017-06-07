@@ -6,24 +6,22 @@
 package negocio.controladores;
 
 import java.io.Serializable;
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import negocio.controladores.exceptions.NonexistentEntityException;
 import negocio.entidades.Estadosventa;
 import negocio.entidades.Mesa;
-import negocio.entidades.Detalleventas;
-import java.util.ArrayList;
-import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import negocio.controladores.exceptions.IllegalOrphanException;
-import negocio.controladores.exceptions.NonexistentEntityException;
+import negocio.entidades.Usuarios;
 import negocio.entidades.Ventas;
 
 /**
  *
- * @author matth
+ * @author Matth
  */
 public class VentasJpaController implements Serializable {
 
@@ -37,9 +35,6 @@ public class VentasJpaController implements Serializable {
     }
 
     public void create(Ventas ventas) {
-        if (ventas.getDetalleventasList() == null) {
-            ventas.setDetalleventasList(new ArrayList<Detalleventas>());
-        }
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -54,12 +49,11 @@ public class VentasJpaController implements Serializable {
                 fkMesa = em.getReference(fkMesa.getClass(), fkMesa.getIdMesa());
                 ventas.setFkMesa(fkMesa);
             }
-            List<Detalleventas> attachedDetalleventasList = new ArrayList<Detalleventas>();
-            for (Detalleventas detalleventasListDetalleventasToAttach : ventas.getDetalleventasList()) {
-                detalleventasListDetalleventasToAttach = em.getReference(detalleventasListDetalleventasToAttach.getClass(), detalleventasListDetalleventasToAttach.getDetalleventasPK());
-                attachedDetalleventasList.add(detalleventasListDetalleventasToAttach);
+            Usuarios fkUsuario = ventas.getFkUsuario();
+            if (fkUsuario != null) {
+                fkUsuario = em.getReference(fkUsuario.getClass(), fkUsuario.getIdUsuario());
+                ventas.setFkUsuario(fkUsuario);
             }
-            ventas.setDetalleventasList(attachedDetalleventasList);
             em.persist(ventas);
             if (fkEstado != null) {
                 fkEstado.getVentasList().add(ventas);
@@ -69,14 +63,9 @@ public class VentasJpaController implements Serializable {
                 fkMesa.getVentasList().add(ventas);
                 fkMesa = em.merge(fkMesa);
             }
-            for (Detalleventas detalleventasListDetalleventas : ventas.getDetalleventasList()) {
-                Ventas oldVentasOfDetalleventasListDetalleventas = detalleventasListDetalleventas.getVentas();
-                detalleventasListDetalleventas.setVentas(ventas);
-                detalleventasListDetalleventas = em.merge(detalleventasListDetalleventas);
-                if (oldVentasOfDetalleventasListDetalleventas != null) {
-                    oldVentasOfDetalleventasListDetalleventas.getDetalleventasList().remove(detalleventasListDetalleventas);
-                    oldVentasOfDetalleventasListDetalleventas = em.merge(oldVentasOfDetalleventasListDetalleventas);
-                }
+            if (fkUsuario != null) {
+                fkUsuario.getVentasList().add(ventas);
+                fkUsuario = em.merge(fkUsuario);
             }
             em.getTransaction().commit();
         } finally {
@@ -86,7 +75,7 @@ public class VentasJpaController implements Serializable {
         }
     }
 
-    public void edit(Ventas ventas) throws IllegalOrphanException, NonexistentEntityException, Exception {
+    public void edit(Ventas ventas) throws NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -96,20 +85,8 @@ public class VentasJpaController implements Serializable {
             Estadosventa fkEstadoNew = ventas.getFkEstado();
             Mesa fkMesaOld = persistentVentas.getFkMesa();
             Mesa fkMesaNew = ventas.getFkMesa();
-            List<Detalleventas> detalleventasListOld = persistentVentas.getDetalleventasList();
-            List<Detalleventas> detalleventasListNew = ventas.getDetalleventasList();
-            List<String> illegalOrphanMessages = null;
-            for (Detalleventas detalleventasListOldDetalleventas : detalleventasListOld) {
-                if (!detalleventasListNew.contains(detalleventasListOldDetalleventas)) {
-                    if (illegalOrphanMessages == null) {
-                        illegalOrphanMessages = new ArrayList<String>();
-                    }
-                    illegalOrphanMessages.add("You must retain Detalleventas " + detalleventasListOldDetalleventas + " since its ventas field is not nullable.");
-                }
-            }
-            if (illegalOrphanMessages != null) {
-                throw new IllegalOrphanException(illegalOrphanMessages);
-            }
+            Usuarios fkUsuarioOld = persistentVentas.getFkUsuario();
+            Usuarios fkUsuarioNew = ventas.getFkUsuario();
             if (fkEstadoNew != null) {
                 fkEstadoNew = em.getReference(fkEstadoNew.getClass(), fkEstadoNew.getIdEstadoVenta());
                 ventas.setFkEstado(fkEstadoNew);
@@ -118,13 +95,10 @@ public class VentasJpaController implements Serializable {
                 fkMesaNew = em.getReference(fkMesaNew.getClass(), fkMesaNew.getIdMesa());
                 ventas.setFkMesa(fkMesaNew);
             }
-            List<Detalleventas> attachedDetalleventasListNew = new ArrayList<Detalleventas>();
-            for (Detalleventas detalleventasListNewDetalleventasToAttach : detalleventasListNew) {
-                detalleventasListNewDetalleventasToAttach = em.getReference(detalleventasListNewDetalleventasToAttach.getClass(), detalleventasListNewDetalleventasToAttach.getDetalleventasPK());
-                attachedDetalleventasListNew.add(detalleventasListNewDetalleventasToAttach);
+            if (fkUsuarioNew != null) {
+                fkUsuarioNew = em.getReference(fkUsuarioNew.getClass(), fkUsuarioNew.getIdUsuario());
+                ventas.setFkUsuario(fkUsuarioNew);
             }
-            detalleventasListNew = attachedDetalleventasListNew;
-            ventas.setDetalleventasList(detalleventasListNew);
             ventas = em.merge(ventas);
             if (fkEstadoOld != null && !fkEstadoOld.equals(fkEstadoNew)) {
                 fkEstadoOld.getVentasList().remove(ventas);
@@ -142,16 +116,13 @@ public class VentasJpaController implements Serializable {
                 fkMesaNew.getVentasList().add(ventas);
                 fkMesaNew = em.merge(fkMesaNew);
             }
-            for (Detalleventas detalleventasListNewDetalleventas : detalleventasListNew) {
-                if (!detalleventasListOld.contains(detalleventasListNewDetalleventas)) {
-                    Ventas oldVentasOfDetalleventasListNewDetalleventas = detalleventasListNewDetalleventas.getVentas();
-                    detalleventasListNewDetalleventas.setVentas(ventas);
-                    detalleventasListNewDetalleventas = em.merge(detalleventasListNewDetalleventas);
-                    if (oldVentasOfDetalleventasListNewDetalleventas != null && !oldVentasOfDetalleventasListNewDetalleventas.equals(ventas)) {
-                        oldVentasOfDetalleventasListNewDetalleventas.getDetalleventasList().remove(detalleventasListNewDetalleventas);
-                        oldVentasOfDetalleventasListNewDetalleventas = em.merge(oldVentasOfDetalleventasListNewDetalleventas);
-                    }
-                }
+            if (fkUsuarioOld != null && !fkUsuarioOld.equals(fkUsuarioNew)) {
+                fkUsuarioOld.getVentasList().remove(ventas);
+                fkUsuarioOld = em.merge(fkUsuarioOld);
+            }
+            if (fkUsuarioNew != null && !fkUsuarioNew.equals(fkUsuarioOld)) {
+                fkUsuarioNew.getVentasList().add(ventas);
+                fkUsuarioNew = em.merge(fkUsuarioNew);
             }
             em.getTransaction().commit();
         } catch (Exception ex) {
@@ -170,7 +141,7 @@ public class VentasJpaController implements Serializable {
         }
     }
 
-    public void destroy(Integer id) throws IllegalOrphanException, NonexistentEntityException {
+    public void destroy(Integer id) throws NonexistentEntityException {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -182,17 +153,6 @@ public class VentasJpaController implements Serializable {
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The ventas with id " + id + " no longer exists.", enfe);
             }
-            List<String> illegalOrphanMessages = null;
-            List<Detalleventas> detalleventasListOrphanCheck = ventas.getDetalleventasList();
-            for (Detalleventas detalleventasListOrphanCheckDetalleventas : detalleventasListOrphanCheck) {
-                if (illegalOrphanMessages == null) {
-                    illegalOrphanMessages = new ArrayList<String>();
-                }
-                illegalOrphanMessages.add("This Ventas (" + ventas + ") cannot be destroyed since the Detalleventas " + detalleventasListOrphanCheckDetalleventas + " in its detalleventasList field has a non-nullable ventas field.");
-            }
-            if (illegalOrphanMessages != null) {
-                throw new IllegalOrphanException(illegalOrphanMessages);
-            }
             Estadosventa fkEstado = ventas.getFkEstado();
             if (fkEstado != null) {
                 fkEstado.getVentasList().remove(ventas);
@@ -202,6 +162,11 @@ public class VentasJpaController implements Serializable {
             if (fkMesa != null) {
                 fkMesa.getVentasList().remove(ventas);
                 fkMesa = em.merge(fkMesa);
+            }
+            Usuarios fkUsuario = ventas.getFkUsuario();
+            if (fkUsuario != null) {
+                fkUsuario.getVentasList().remove(ventas);
+                fkUsuario = em.merge(fkUsuario);
             }
             em.remove(ventas);
             em.getTransaction().commit();

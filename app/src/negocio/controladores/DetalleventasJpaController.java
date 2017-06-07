@@ -18,11 +18,10 @@ import negocio.controladores.exceptions.PreexistingEntityException;
 import negocio.entidades.Detalleventas;
 import negocio.entidades.DetalleventasPK;
 import negocio.entidades.Productos;
-import negocio.entidades.Ventas;
 
 /**
  *
- * @author matth
+ * @author Matth
  */
 public class DetalleventasJpaController implements Serializable {
 
@@ -50,19 +49,10 @@ public class DetalleventasJpaController implements Serializable {
                 productos = em.getReference(productos.getClass(), productos.getIdProducto());
                 detalleventas.setProductos(productos);
             }
-            Ventas ventas = detalleventas.getVentas();
-            if (ventas != null) {
-                ventas = em.getReference(ventas.getClass(), ventas.getIdVenta());
-                detalleventas.setVentas(ventas);
-            }
             em.persist(detalleventas);
             if (productos != null) {
                 productos.getDetalleventasList().add(detalleventas);
                 productos = em.merge(productos);
-            }
-            if (ventas != null) {
-                ventas.getDetalleventasList().add(detalleventas);
-                ventas = em.merge(ventas);
             }
             em.getTransaction().commit();
         } catch (Exception ex) {
@@ -87,15 +77,9 @@ public class DetalleventasJpaController implements Serializable {
             Detalleventas persistentDetalleventas = em.find(Detalleventas.class, detalleventas.getDetalleventasPK());
             Productos productosOld = persistentDetalleventas.getProductos();
             Productos productosNew = detalleventas.getProductos();
-            Ventas ventasOld = persistentDetalleventas.getVentas();
-            Ventas ventasNew = detalleventas.getVentas();
             if (productosNew != null) {
                 productosNew = em.getReference(productosNew.getClass(), productosNew.getIdProducto());
                 detalleventas.setProductos(productosNew);
-            }
-            if (ventasNew != null) {
-                ventasNew = em.getReference(ventasNew.getClass(), ventasNew.getIdVenta());
-                detalleventas.setVentas(ventasNew);
             }
             detalleventas = em.merge(detalleventas);
             if (productosOld != null && !productosOld.equals(productosNew)) {
@@ -105,14 +89,6 @@ public class DetalleventasJpaController implements Serializable {
             if (productosNew != null && !productosNew.equals(productosOld)) {
                 productosNew.getDetalleventasList().add(detalleventas);
                 productosNew = em.merge(productosNew);
-            }
-            if (ventasOld != null && !ventasOld.equals(ventasNew)) {
-                ventasOld.getDetalleventasList().remove(detalleventas);
-                ventasOld = em.merge(ventasOld);
-            }
-            if (ventasNew != null && !ventasNew.equals(ventasOld)) {
-                ventasNew.getDetalleventasList().add(detalleventas);
-                ventasNew = em.merge(ventasNew);
             }
             em.getTransaction().commit();
         } catch (Exception ex) {
@@ -147,11 +123,6 @@ public class DetalleventasJpaController implements Serializable {
             if (productos != null) {
                 productos.getDetalleventasList().remove(detalleventas);
                 productos = em.merge(productos);
-            }
-            Ventas ventas = detalleventas.getVentas();
-            if (ventas != null) {
-                ventas.getDetalleventasList().remove(detalleventas);
-                ventas = em.merge(ventas);
             }
             em.remove(detalleventas);
             em.getTransaction().commit();

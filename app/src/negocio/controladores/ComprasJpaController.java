@@ -21,7 +21,7 @@ import negocio.entidades.Compras;
 
 /**
  *
- * @author matth
+ * @author Matth
  */
 public class ComprasJpaController implements Serializable {
 

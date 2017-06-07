@@ -23,7 +23,7 @@ import negocio.entidades.Productos;
 
 /**
  *
- * @author matth
+ * @author Matth
  */
 public class ProductosJpaController implements Serializable {
 

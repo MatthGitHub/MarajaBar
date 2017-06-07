@@ -20,7 +20,7 @@ import negocio.entidades.Permisos;
 
 /**
  *
- * @author matth
+ * @author Matth
  */
 public class PermisosJpaController implements Serializable {
 

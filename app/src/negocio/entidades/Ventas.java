@@ -7,9 +7,7 @@ package negocio.entidades;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,26 +17,24 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 import servicios.dto.DtoVentas;
 
 /**
  *
- * @author matth
+ * @author Matth
  */
 @Entity
 @Table(name = "ventas")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Ventas.findAll", query = "SELECT v FROM Ventas v"),
-    @NamedQuery(name = "Ventas.findByIdVenta", query = "SELECT v FROM Ventas v WHERE v.idVenta = :idVenta"),
-    @NamedQuery(name = "Ventas.findByFecha", query = "SELECT v FROM Ventas v WHERE v.fecha = :fecha"),
-    @NamedQuery(name = "Ventas.findByTotal", query = "SELECT v FROM Ventas v WHERE v.total = :total")})
+    @NamedQuery(name = "Ventas.findAll", query = "SELECT v FROM Ventas v")
+    , @NamedQuery(name = "Ventas.findByIdVenta", query = "SELECT v FROM Ventas v WHERE v.idVenta = :idVenta")
+    , @NamedQuery(name = "Ventas.findByFecha", query = "SELECT v FROM Ventas v WHERE v.fecha = :fecha")
+    , @NamedQuery(name = "Ventas.findByTotal", query = "SELECT v FROM Ventas v WHERE v.total = :total")})
 public class Ventas implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -54,16 +50,27 @@ public class Ventas implements Serializable {
     @Basic(optional = false)
     @Column(name = "total")
     private int total;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "ventas")
-    private List<Detalleventas> detalleventasList;
     @JoinColumn(name = "fkEstado", referencedColumnName = "idEstadoVenta")
     @ManyToOne(optional = false)
     private Estadosventa fkEstado;
     @JoinColumn(name = "fkMesa", referencedColumnName = "idMesa")
     @ManyToOne(optional = false)
     private Mesa fkMesa;
+    @JoinColumn(name = "fkUsuario", referencedColumnName = "idUsuario")
+    @ManyToOne(optional = false)
+    private Usuarios fkUsuario;
 
     public Ventas() {
+    }
+
+    public Ventas(Integer idVenta) {
+        this.idVenta = idVenta;
+    }
+
+    public Ventas(Integer idVenta, Date fecha, int total) {
+        this.idVenta = idVenta;
+        this.fecha = fecha;
+        this.total = total;
     }
     
     public Ventas cargarVentas(DtoVentas aCargar){
@@ -73,16 +80,6 @@ public class Ventas implements Serializable {
         this.setIdVenta(aCargar.getIdVenta());
         this.setTotal(aCargar.getTotal());
         return this;
-    }
-    
-    public Ventas(Integer idVenta) {
-        this.idVenta = idVenta;
-    }
-
-    public Ventas(Integer idVenta, Date fecha, int total) {
-        this.idVenta = idVenta;
-        this.fecha = fecha;
-        this.total = total;
     }
 
     public Integer getIdVenta() {
@@ -109,15 +106,6 @@ public class Ventas implements Serializable {
         this.total = total;
     }
 
-    @XmlTransient
-    public List<Detalleventas> getDetalleventasList() {
-        return detalleventasList;
-    }
-
-    public void setDetalleventasList(List<Detalleventas> detalleventasList) {
-        this.detalleventasList = detalleventasList;
-    }
-
     public Estadosventa getFkEstado() {
         return fkEstado;
     }
@@ -132,6 +120,14 @@ public class Ventas implements Serializable {
 
     public void setFkMesa(Mesa fkMesa) {
         this.fkMesa = fkMesa;
+    }
+
+    public Usuarios getFkUsuario() {
+        return fkUsuario;
+    }
+
+    public void setFkUsuario(Usuarios fkUsuario) {
+        this.fkUsuario = fkUsuario;
     }
 
     @Override

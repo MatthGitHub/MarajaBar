@@ -21,7 +21,7 @@ import negocio.entidades.Sectores;
 
 /**
  *
- * @author matth
+ * @author Matth
  */
 public class SectoresJpaController implements Serializable {
 

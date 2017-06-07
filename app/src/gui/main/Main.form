@@ -39,6 +39,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Ventas"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mi_ventasActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="mi_compras">
               <Properties>
@@ -53,11 +56,6 @@
         <Menu class="javax.swing.JMenu" name="jm_administacion">
           <Properties>
             <Property name="text" type="java.lang.String" value="Administracion"/>
-          </Properties>
-        </Menu>
-        <Menu class="javax.swing.JMenu" name="jm_configuracion">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Configuracion"/>
           </Properties>
           <SubComponents>
             <Menu class="javax.swing.JMenu" name="jm_productos">
@@ -105,6 +103,13 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mi_mesasActionPerformed"/>
               </Events>
             </MenuItem>
+          </SubComponents>
+        </Menu>
+        <Menu class="javax.swing.JMenu" name="jm_configuracion">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Configuracion"/>
+          </Properties>
+          <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="mi_usuarios">
               <Properties>
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">

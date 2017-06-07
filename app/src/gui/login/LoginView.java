@@ -135,11 +135,6 @@ public class LoginView extends MenuP {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txt_nombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_nombreActionPerformed
-        // TODO add your handling code here:
-        txt_clave.requestFocus();
-    }//GEN-LAST:event_txt_nombreActionPerformed
-
     private void btn_ingresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ingresarActionPerformed
         // TODO add your handling code here:
         if(FacadeNegocio.getFacadeNegocio().login(txt_nombre.getText(), txt_clave.getText())){
@@ -166,6 +161,11 @@ public class LoginView extends MenuP {
         // TODO add your handling code here:
         btn_ingresar.requestFocus();
     }//GEN-LAST:event_txt_claveActionPerformed
+
+    private void txt_nombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_nombreActionPerformed
+        // TODO add your handling code here:
+        txt_clave.requestFocus();
+    }//GEN-LAST:event_txt_nombreActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

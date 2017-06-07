@@ -22,7 +22,7 @@ import negocio.entidades.Mesa;
 
 /**
  *
- * @author matth
+ * @author Matth
  */
 public class MesaJpaController implements Serializable {
 

@@ -5,6 +5,7 @@
  */
 package negocio;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import javax.swing.JOptionPane;
+import javax.persistence.Query;
 import negocio.controladores.DetalleventasJpaController;
 import negocio.controladores.EstadosventaJpaController;
 import negocio.controladores.MesaJpaController;
@@ -37,7 +38,6 @@ import negocio.entidades.Sectores;
 import negocio.entidades.Tipoproducto;
 import negocio.entidades.Usuarios;
 import negocio.entidades.Ventas;
-import servicios.dto.DtoProveedor;
 
 /**
  *
@@ -224,6 +224,7 @@ public class BarController {
         venta.setFecha(fecha);
         venta.setFkMesa(mesa);
         venta.setFkEstado(getEstadoventa(2));
+        venta.setFkUsuario(FacadeNegocio.usuario);
         jpa.create(venta);
         return venta;
     }
@@ -275,6 +276,20 @@ public class BarController {
             return false;
         }
         
+    }
+    
+    public List<Ventas> getVentasEntreFechas(Date desde, Date hasta){
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("appPU");
+        EntityManager em = emf.createEntityManager();
+        
+        java.sql.Date desdeS = new java.sql.Date(desde.getTime());
+        java.sql.Date hastaS = new java.sql.Date(hasta.getTime());
+        
+        Query q = em.createNativeQuery("SELECT * FROM ventas WHERE fecha BETWEEN ? AND ?",Ventas.class);
+        q.setParameter(1,desdeS);
+        q.setParameter(2,hastaS);
+        
+        return q.getResultList();
     }
 
     /************************* Estados venta *********************************************/
@@ -493,7 +508,7 @@ public class BarController {
         }
     }
     
-    public void eliminarUsuario(Integer id) throws NonexistentEntityException{
+    public void eliminarUsuario(Integer id) throws NonexistentEntityException, IllegalOrphanException{
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("appPU");
         UsuariosJpaController jpa = new UsuariosJpaController(emf);
         
