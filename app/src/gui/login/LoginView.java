@@ -9,6 +9,7 @@ import gui.main.Main;
 import gui.resources.MenuP;
 import java.awt.Frame;
 import static java.awt.Frame.ICONIFIED;
+import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 import negocio.FacadeNegocio;
 
@@ -69,6 +70,11 @@ public class LoginView extends MenuP {
         btn_ingresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_ingresarActionPerformed(evt);
+            }
+        });
+        btn_ingresar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btn_ingresarKeyPressed(evt);
             }
         });
 
@@ -166,6 +172,13 @@ public class LoginView extends MenuP {
         // TODO add your handling code here:
         txt_clave.requestFocus();
     }//GEN-LAST:event_txt_nombreActionPerformed
+
+    private void btn_ingresarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btn_ingresarKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+              btn_ingresarActionPerformed(null);
+          }
+    }//GEN-LAST:event_btn_ingresarKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

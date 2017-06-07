@@ -5,8 +5,10 @@
  */
 package gui.productos;
 
+import gui.comanda.ComandaFrame;
 import gui.main.Main;
 import gui.resources.MenuP;
+import javax.swing.JOptionPane;
 import negocio.FacadeNegocio;
 import servicios.dto.DtoProducto;
 
@@ -30,6 +32,12 @@ public class ProductosNuevoDialog extends javax.swing.JDialog {
         setResizable(false);
         setDefaultCloseOperation(0);
         setVisible(true);
+    }
+    
+    public void vaciarCampos(){
+        txtNombre.setText("");
+        txtDescripcion.setText("");
+        txtPrecio.setText("");
     }
 
     /**
@@ -152,15 +160,26 @@ public class ProductosNuevoDialog extends javax.swing.JDialog {
                     dProd.setNombreProducto(txtNombre.getText());
                     dProd.setPrecio(Integer.parseInt(txtPrecio.getText()));
                     FacadeNegocio.getFacadeNegocio().nuevoProducto(dProd);
-                    btnSalirActionPerformed(evt);
                     pView.setTablaProductos();
+                    ComandaFrame comanda = ComandaFrame.getComandaFrame();
+                    if(comanda != null){
+                        comanda.setTablaProductos();
+                    }
+                    btnSalirActionPerformed(evt);
+                }else{
+                    JOptionPane.showMessageDialog(this, "El campo precio es obligatorio", "Error", JOptionPane.ERROR_MESSAGE);
                 }
+            }else{
+                JOptionPane.showMessageDialog(this, "El campo descripcion es obligatorio", "Error", JOptionPane.ERROR_MESSAGE);
             }
+        }else{
+            JOptionPane.showMessageDialog(this, "El campo nombre es obligatorio", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         // TODO add your handling code here:
+        vaciarCampos();
         this.setVisible(false);
         this.dispose();
         System.gc();

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 07-06-2017 a las 04:34:59
+-- Tiempo de generación: 08-06-2017 a las 01:26:33
 -- Versión del servidor: 5.6.35
 -- Versión de PHP: 7.1.1
 
@@ -82,6 +82,14 @@ CREATE TABLE `detalleventas` (
   `cantidad` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
+--
+-- Volcado de datos para la tabla `detalleventas`
+--
+
+INSERT INTO `detalleventas` (`fkVenta`, `fkProducto`, `cantidad`) VALUES
+(1, 4, 1),
+(1, 9, 4);
+
 -- --------------------------------------------------------
 
 --
@@ -139,11 +147,24 @@ CREATE TABLE `permisos` (
 --
 
 INSERT INTO `permisos` (`idPermiso`, `nombrePermiso`, `Descripcion`) VALUES
-(1, 'Usuarios', 'MenuItem Usuarios dentro de Opciones.'),
-(2, 'UsuarioListTab', 'Pestaña para ver todos los usuarios.'),
-(3, 'UsariosModTab', 'Pestaña para modificar usuario.'),
-(4, 'UsuarioNuevoTab', 'Pestaña para crear un nuevo usuario.'),
-(5, 'UsuarioElim', 'Permiso para eliminar usuario del sistema.');
+(6, 'Estadisticas', 'Boton estadisticas dentro de la barra de menu'),
+(7, 'EstadisticasVentas', 'Boton ventas dentro del menu estadísticas'),
+(8, 'Estadisticas compras', 'Boton compras dentro del menu estadisticas'),
+(9, 'Administracion', 'Boton administración de la barra de menu'),
+(10, 'Productos', 'Boton productos dentro del menu administracion'),
+(11, 'ProductosListar', 'Boton listar dentro del menu productos'),
+(12, 'ProductosNuevo', 'Boton nuevo dentro del menu productos'),
+(13, 'ProductoEliminar', 'Boton eliminar dentro del view de productos'),
+(14, 'Proveedores', 'Boton proevedores dentro del menu administracion'),
+(15, 'PrveedorNuevo', 'Boton nuevo dentro del view de proveedores'),
+(16, 'ProveedorEliminar', 'Boton eliminar dentro del view de proveedores'),
+(17, 'Mesas', 'Boton mesas dentro del menu administracion'),
+(18, 'MesaNueva', 'Boton nueva dentro del view de mesas'),
+(19, 'MesaEliminar', 'Boton eliminar dentro del view de mesas'),
+(20, 'Configuracion', 'Boton configuración dentro de la barra de menu'),
+(21, 'Usuarios', 'Boton usuarios dentro del menu configuracion'),
+(22, 'UsuarioNuevo', 'Boton nuevo dentro del view usuarios'),
+(23, 'UsuarioEliminar', 'Boton eliminar dentro del view de usuarios');
 
 -- --------------------------------------------------------
 
@@ -169,7 +190,10 @@ INSERT INTO `productos` (`idProducto`, `nombreProducto`, `Descripcion`, `precio`
 (3, 'Pizza margarita', 'Muzzarella', 150, 1),
 (4, 'Hamburgesa maraja', 'Queso, panceta, huevo frito + guarnicion', 170, 1),
 (5, 'Jarra Fernet', '1Lts fernet', 120, 1),
-(6, 'Jarra gancia', '1Lts de gancia', 100, 1);
+(6, 'Jarra gancia', '1Lts de gancia', 100, 1),
+(7, 'Milanesa napolitana', 'MIlanga de carne a la napolitana', 180, 1),
+(8, 'SUper pancho maraja', 'Pancho con de todo', 150, 1),
+(9, 'El panchito', 'Pancho ', 100, 1);
 
 -- --------------------------------------------------------
 
@@ -222,15 +246,6 @@ CREATE TABLE `rolespermisos` (
   `fkRol` int(11) NOT NULL,
   `fkPermiso` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
-
---
--- Volcado de datos para la tabla `rolespermisos`
---
-
-INSERT INTO `rolespermisos` (`fkRol`, `fkPermiso`) VALUES
-(1, 1),
-(2, 1),
-(1, 2);
 
 -- --------------------------------------------------------
 
@@ -307,6 +322,13 @@ CREATE TABLE `ventas` (
   `fkEstado` int(11) NOT NULL,
   `fkUsuario` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+
+--
+-- Volcado de datos para la tabla `ventas`
+--
+
+INSERT INTO `ventas` (`idVenta`, `fkMesa`, `fecha`, `total`, `fkEstado`, `fkUsuario`) VALUES
+(1, 1, '2017-06-07', 570, 1, 1);
 
 --
 -- Índices para tablas volcadas
@@ -452,12 +474,12 @@ ALTER TABLE `mesa`
 -- AUTO_INCREMENT de la tabla `permisos`
 --
 ALTER TABLE `permisos`
-  MODIFY `idPermiso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `idPermiso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 --
 -- AUTO_INCREMENT de la tabla `productos`
 --
 ALTER TABLE `productos`
-  MODIFY `idProducto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `idProducto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT de la tabla `proveedores`
 --
@@ -487,7 +509,7 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `ventas`
 --
 ALTER TABLE `ventas`
-  MODIFY `idVenta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
+  MODIFY `idVenta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- Restricciones para tablas volcadas
 --

@@ -51,6 +51,11 @@ public class FacadeNegocio {
        }
        return estaClase;
    }
+   
+   public boolean verificarPermisos(int idPermiso){
+       
+   }
+   
    // ******************************** Metodos mesas ******************************************//
    /**
     * 

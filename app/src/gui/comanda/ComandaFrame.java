@@ -115,6 +115,7 @@ public class ComandaFrame extends javax.swing.JFrame {
     
     
     public void setTablaProductos(){
+        vaciarTabla(jtProductos);
         List<DtoProducto> productos = FacadeNegocio.getFacadeNegocio().getTodosLosProductos();
         String v[] = new String[3];
         
@@ -405,14 +406,13 @@ public class ComandaFrame extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(btn_abrir)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btn_cerrar)
-                            .addComponent(lbl_mesa))
-                        .addGap(3, 3, 3)))
+                    .addComponent(lbl_mesa)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(btn_abrir, javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addContainerGap()
+                            .addComponent(btn_cerrar))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -467,7 +467,9 @@ public class ComandaFrame extends javax.swing.JFrame {
 
     private void btn_cerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cerrarActionPerformed
         // TODO add your handling code here:
-        cerrarMesa();
+        if(JOptionPane.showConfirmDialog(this, "Seguro desea cerrar la mesa?") == 0){
+            cerrarMesa();
+        }
     }//GEN-LAST:event_btn_cerrarActionPerformed
 
     private void btn_quitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_quitarActionPerformed
