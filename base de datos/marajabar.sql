@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 08-06-2017 a las 01:26:33
+-- Tiempo de generación: 08-06-2017 a las 01:34:42
 -- Versión del servidor: 5.6.35
 -- Versión de PHP: 7.1.1
 
@@ -246,6 +246,30 @@ CREATE TABLE `rolespermisos` (
   `fkRol` int(11) NOT NULL,
   `fkPermiso` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+
+--
+-- Volcado de datos para la tabla `rolespermisos`
+--
+
+INSERT INTO `rolespermisos` (`fkRol`, `fkPermiso`) VALUES
+(1, 6),
+(1, 7),
+(1, 8),
+(1, 9),
+(1, 10),
+(1, 11),
+(1, 12),
+(1, 13),
+(1, 14),
+(1, 15),
+(1, 16),
+(1, 17),
+(1, 18),
+(1, 19),
+(1, 20),
+(1, 21),
+(1, 22),
+(1, 23);
 
 -- --------------------------------------------------------
 
