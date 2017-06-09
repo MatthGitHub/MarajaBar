@@ -32,6 +32,7 @@ public class UsuariosView extends MenuP {
      */
     public UsuariosView(Main mainFrame) {
         initComponents();
+        aplicarPermisosUsuarios();
         this.mainFrame = mainFrame;
         modelo = (DefaultTableModel) jtUsuarios.getModel();
         setTablaUsuarios();
@@ -43,6 +44,16 @@ public class UsuariosView extends MenuP {
             estePanel = new UsuariosView(mainFrame);
         }
         return estePanel;
+    }
+    
+    private void aplicarPermisosUsuarios(){
+        FacadeNegocio fac = FacadeNegocio.getFacadeNegocio();
+        if(!fac.verificarPermisos(22)){
+            btnGuardar.setVisible(false);
+        }
+        if(!fac.verificarPermisos(23)){
+            btnEliminar.setVisible(false);
+        }
     }
     
     public void setTablaUsuarios(){

@@ -32,6 +32,7 @@ public class ProveedoresView extends MenuP {
      */
     private ProveedoresView(Main mainFrame) {
         initComponents();
+        aplicarPermisosProveedores();
         this.mainFrame = mainFrame;
         setVisible(true);
         esconderColumna();
@@ -43,6 +44,16 @@ public class ProveedoresView extends MenuP {
             estePanel = new ProveedoresView(mainFrame);
         }
         return estePanel;
+    }
+    
+    private void aplicarPermisosProveedores(){
+        FacadeNegocio fac = FacadeNegocio.getFacadeNegocio();
+        if(!fac.verificarPermisos(15)){
+            btn_nuevo.setVisible(false);
+        }
+        if(!fac.verificarPermisos(16)){
+            btn_eliminar.setVisible(false);
+        }
     }
     
     public void esconderColumna(){

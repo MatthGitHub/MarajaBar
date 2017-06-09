@@ -18,6 +18,7 @@ import javax.persistence.Query;
 import negocio.controladores.DetalleventasJpaController;
 import negocio.controladores.EstadosventaJpaController;
 import negocio.controladores.MesaJpaController;
+import negocio.controladores.PermisosJpaController;
 import negocio.controladores.ProductosJpaController;
 import negocio.controladores.ProveedoresJpaController;
 import negocio.controladores.RolesJpaController;
@@ -31,6 +32,7 @@ import negocio.entidades.Detalleventas;
 import negocio.entidades.DetalleventasPK;
 import negocio.entidades.Estadosventa;
 import negocio.entidades.Mesa;
+import negocio.entidades.Permisos;
 import negocio.entidades.Productos;
 import negocio.entidades.Proveedores;
 import negocio.entidades.Roles;
@@ -546,4 +548,12 @@ public class BarController {
     }
     
 // ------------------------  Metodos Roles ----------------------------------------//
+// ------------------------  Metodos Permisos ----------------------------------------//
+    public Permisos getPermiso(int id){
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("appPU");
+        PermisosJpaController jpa = new PermisosJpaController(emf);
+        
+        return jpa.findPermisos(id);
+    }
+// ------------------------  Metodos Permisos ----------------------------------------//
 }

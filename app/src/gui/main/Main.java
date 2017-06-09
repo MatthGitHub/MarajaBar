@@ -21,6 +21,7 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import negocio.FacadeNegocio;
 
 /**
  *
@@ -63,6 +64,54 @@ public final class Main extends javax.swing.JFrame {
         goLoginView();
     }
     
+    
+    public void aplicarPermisosMain(){
+        FacadeNegocio fac = FacadeNegocio.getFacadeNegocio();
+        //Estadisticas
+        if(!fac.verificarPermisos(6)){
+            jm_estadisticas.setVisible(false);
+        }
+        //Ventas
+        if(!fac.verificarPermisos(7)){
+            mi_ventas.setVisible(false);
+        }
+        //Compras
+        if(!fac.verificarPermisos(8)){
+            mi_compras.setVisible(false);
+        }
+        //Administracion
+        if(!fac.verificarPermisos(9)){
+            jm_administacion.setVisible(false);
+        }
+        //Productos
+        if(!fac.verificarPermisos(10)){
+            jm_productos.setVisible(false);
+        }
+        //ProductosListar
+        if(!fac.verificarPermisos(11)){
+            mi_listarProductos.setVisible(false);
+        }
+        //ProductosNuevo
+        if(!fac.verificarPermisos(12)){
+            mi_nuevoProducto.setVisible(false);
+        }
+        //Proveedores
+        if(!fac.verificarPermisos(14)){
+            mi_proveedores.setVisible(false);
+        }
+        //Mesas
+        if(!fac.verificarPermisos(17)){
+            mi_mesas.setVisible(false);
+        }
+        //Configuracion
+        if(!fac.verificarPermisos(20)){
+            jm_configuracion.setVisible(false);
+        }
+        //Usuarios
+        if(!fac.verificarPermisos(21)){
+            mi_usuarios.setVisible(false);
+        }
+    }
     /**
      * Ingreso al login
      */

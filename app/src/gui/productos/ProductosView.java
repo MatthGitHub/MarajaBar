@@ -28,6 +28,7 @@ public class ProductosView extends MenuP {
     private ProductosView(Main mainFrame) {
         initComponents();
         this.mainFrame = mainFrame;
+        aplicarPermisosProductos();
         modelo = (DefaultTableModel) jtProductos.getModel();
         esconderColumna();
         setTablaProductos();
@@ -38,6 +39,16 @@ public class ProductosView extends MenuP {
             estePanel = new ProductosView(mainFrame);
         }
         return estePanel;
+    }
+    
+    private void aplicarPermisosProductos(){
+        FacadeNegocio fac = FacadeNegocio.getFacadeNegocio();
+        if(!fac.verificarPermisos(13)){
+            btnEliminar.setVisible(false);
+        }
+        if(!fac.verificarPermisos(12)){
+            btnNuevo.setVisible(false);
+        }
     }
     
     public void esconderColumna(){

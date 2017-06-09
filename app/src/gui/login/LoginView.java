@@ -144,6 +144,7 @@ public class LoginView extends MenuP {
     private void btn_ingresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ingresarActionPerformed
         // TODO add your handling code here:
         if(FacadeNegocio.getFacadeNegocio().login(txt_nombre.getText(), txt_clave.getText())){
+            mainFrame.aplicarPermisosMain();
             mainFrame.setResizable(true);
             mainFrame.goMenuPrincipalPrimera();
             mainFrame.setExtendedState(Frame.NORMAL);

@@ -53,7 +53,11 @@ public class FacadeNegocio {
    }
    
    public boolean verificarPermisos(int idPermiso){
-       
+       if(usuario.getFkRol().getPermisosList().contains(BarController.getBarController().getPermiso(idPermiso))){
+           return true;
+       }else{
+           return false;
+       }
    }
    
    // ******************************** Metodos mesas ******************************************//
