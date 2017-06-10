@@ -2,7 +2,7 @@
 <script src="js/bootstrap.min.js"></script>
 <link href="css/font-awesome.css" rel="stylesheet">
 <link href="css/font-awesome.min.css" rel="stylesheet">
-<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/bootstrap.min.css" rel="stylesheet">
 
 <div class="navbar navbar-default" role="navigation">
 	<div class="container-fluid">
@@ -13,7 +13,7 @@
 			<span class="icon-bar"></span>
 			<span class="icon-bar"></span>
 		  </button>
-			<a class="navbar-brand" href="#"><p><img src="images/escudobrc.gif" alt="Municipalidad Bariloche" align="middle" style="margin:0px 0px 0px 20px"></p></a>
+			<a class="navbar-brand" href="#"><p><img src="images/pp.gif" alt="Municipalidad Bariloche" align="middle" style="margin:0px 0px 0px 20px"></p></a>
 	  </div>
 	  <div class="navbar-collapse collapse">
 

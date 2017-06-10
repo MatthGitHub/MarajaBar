@@ -18,7 +18,7 @@ include('inc/config.php');
     <!-- Bootstrap core CSS -->
     <script src="js/jquery-1.12.3.js"></script>
     <script src="js/bootstrap.min.js"></script>
-    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
 
 
     <!-- Just for debugging purposes. Don't actually copy this line! -->
@@ -32,7 +32,7 @@ include('inc/config.php');
 	<style type="text/css">
 		body
 		{
-      
+
 			padding-top: 200px;
 		}
     </style>
