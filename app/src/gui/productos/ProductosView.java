@@ -107,6 +107,7 @@ public class ProductosView extends MenuP {
         btnMenu = new javax.swing.JButton();
         btnNuevo = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
+        btnModificar = new javax.swing.JButton();
 
         setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Productos", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Bradley Hand ITC", 0, 24), new java.awt.Color(255, 255, 255))); // NOI18N
 
@@ -126,6 +127,7 @@ public class ProductosView extends MenuP {
                 return canEdit [columnIndex];
             }
         });
+        jtProductos.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(jtProductos);
         if (jtProductos.getColumnModel().getColumnCount() > 0) {
             jtProductos.getColumnModel().getColumn(0).setResizable(false);
@@ -158,6 +160,15 @@ public class ProductosView extends MenuP {
             }
         });
 
+        btnModificar.setBackground(new java.awt.Color(232, 133, 133));
+        btnModificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/Budget.png"))); // NOI18N
+        btnModificar.setText("Modificar precio");
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -165,11 +176,13 @@ public class ProductosView extends MenuP {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 662, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnEliminar)
+                        .addGap(51, 51, 51)
+                        .addComponent(btnModificar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnNuevo)))
                 .addContainerGap())
@@ -181,12 +194,13 @@ public class ProductosView extends MenuP {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 481, Short.MAX_VALUE)
+                .addComponent(jScrollPane1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnNuevo)
-                        .addComponent(btnEliminar))
+                        .addComponent(btnEliminar)
+                        .addComponent(btnModificar))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(btnMenu)
                         .addContainerGap())))
@@ -216,10 +230,18 @@ public class ProductosView extends MenuP {
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        // TODO add your handling code here:
+        if(jtProductos.getSelectedRow() != -1){
+            mainFrame.goProductosModificaDialog(Integer.parseInt(modelo.getValueAt(jtProductos.getSelectedRow(), 0).toString()));
+        }
+    }//GEN-LAST:event_btnModificarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnMenu;
+    private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnNuevo;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jtProductos;

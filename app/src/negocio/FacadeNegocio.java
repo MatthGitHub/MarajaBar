@@ -167,6 +167,12 @@ public class FacadeNegocio {
        return BarController.getBarController().eliminarProducto(id);
    }
    
+   public void modificarProducto(DtoProducto aModificar) throws Exception{
+       Productos producto = new Productos();
+       producto.cargarProducto(aModificar);
+       BarController.getBarController().modificarProducto(producto);
+   }
+   
    
    
    // ******************************** Metodos productos ******************************************//

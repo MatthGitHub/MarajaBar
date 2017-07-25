@@ -65,6 +65,9 @@
               <SubComponents>
                 <MenuItem class="javax.swing.JMenuItem" name="mi_listarProductos">
                   <Properties>
+                    <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                      <KeyStroke key="Ctrl+P"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Listar"/>
                   </Properties>
                   <Events>
@@ -73,6 +76,9 @@
                 </MenuItem>
                 <MenuItem class="javax.swing.JMenuItem" name="mi_nuevoProducto">
                   <Properties>
+                    <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                      <KeyStroke key="Ctrl+N"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Nuevo"/>
                   </Properties>
                   <Events>

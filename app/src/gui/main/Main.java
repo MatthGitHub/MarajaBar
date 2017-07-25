@@ -11,6 +11,7 @@ import gui.login.LoginView;
 import gui.menuPrincipal.MenuPrincipal;
 import gui.mesas.MesasNuevaDialog;
 import gui.mesas.MesasView;
+import gui.productos.ProductosModificarDialog;
 import gui.productos.ProductosNuevoDialog;
 import gui.productos.ProductosView;
 import gui.proveedores.ProveedoresNuevoDialog;
@@ -35,6 +36,7 @@ public final class Main extends javax.swing.JFrame {
     private ProveedoresNuevoDialog proveedoresNuevo;
     private ProductosView productosView;
     private ProductosNuevoDialog productoNuevo;
+    private ProductosModificarDialog productoModifica;
     private ComandaFrame comandasView;
     private MesasView mesasView;
     private MesasNuevaDialog mesaNueva;
@@ -210,6 +212,18 @@ public final class Main extends javax.swing.JFrame {
     }
     
     /**
+     * Muestra dialog de nuevo producto
+     */
+    public void goProductosModificaDialog(int idProducto){
+        if(productoModifica == null){
+            productoModifica = new ProductosModificarDialog(this, true,idProducto);
+        }else{
+            productoModifica.setVisible(true);
+        }
+        revalidate();
+    }
+    
+    /**
      * Ingreso a la vista de las comandas
      */
     public void goComandaFrame( ){
@@ -368,6 +382,7 @@ public final class Main extends javax.swing.JFrame {
 
         jm_productos.setText("Productos");
 
+        mi_listarProductos.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_MASK));
         mi_listarProductos.setText("Listar");
         mi_listarProductos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -376,6 +391,7 @@ public final class Main extends javax.swing.JFrame {
         });
         jm_productos.add(mi_listarProductos);
 
+        mi_nuevoProducto.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_MASK));
         mi_nuevoProducto.setText("Nuevo");
         mi_nuevoProducto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

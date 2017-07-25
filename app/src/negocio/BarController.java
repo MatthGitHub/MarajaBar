@@ -209,6 +209,12 @@ public class BarController {
         }
     }
     
+    public void modificarProducto(Productos modificar) throws NonexistentEntityException, Exception{
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("appPU");
+        ProductosJpaController jpa = new ProductosJpaController(emf);
+        jpa.edit(modificar);
+    }
+    
 // ------------------------  Metodos Productos -------------------------------------------//    
 // ------------------------  Metodos Venta -----------------------------------------------//
     /**
