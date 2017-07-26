@@ -27,6 +27,7 @@ public class LoginView extends MenuP {
     public LoginView(Main mainFrame) {
         initComponents();
         mainFrame.setResizable(false);
+        
         lblMensaje.setVisible(false);
         setVisible(true);
         this.mainFrame = mainFrame;

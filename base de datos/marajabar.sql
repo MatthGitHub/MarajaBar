@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 08-06-2017 a las 01:34:42
+-- Tiempo de generación: 26-07-2017 a las 02:49:11
 -- Versión del servidor: 5.6.35
 -- Versión de PHP: 7.1.1
 
@@ -82,14 +82,6 @@ CREATE TABLE `detalleventas` (
   `cantidad` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
---
--- Volcado de datos para la tabla `detalleventas`
---
-
-INSERT INTO `detalleventas` (`fkVenta`, `fkProducto`, `cantidad`) VALUES
-(1, 4, 1),
-(1, 9, 4);
-
 -- --------------------------------------------------------
 
 --
@@ -118,17 +110,8 @@ INSERT INTO `estadosventa` (`idEstadoVenta`, `descripcion`) VALUES
 CREATE TABLE `mesa` (
   `idMesa` int(11) NOT NULL,
   `Descripcion` varchar(150) COLLATE utf8_spanish2_ci DEFAULT NULL,
-  `fkSector` int(11) NOT NULL
+  `fkSector` int(11) NOT NULL COMMENT 'Para mesas moviles el sector es 99'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
-
---
--- Volcado de datos para la tabla `mesa`
---
-
-INSERT INTO `mesa` (`idMesa`, `Descripcion`, `fkSector`) VALUES
-(1, 'Esquina de la ventana', 3),
-(2, 'Esta ahi', 2),
-(100, '', 99);
 
 -- --------------------------------------------------------
 
@@ -189,10 +172,10 @@ INSERT INTO `productos` (`idProducto`, `nombreProducto`, `Descripcion`, `precio`
 (2, 'Pizza Maraja', 'Muzzarella, Panceta y Huevo Frito', 200, 1),
 (3, 'Pizza margarita', 'Muzzarella', 150, 1),
 (4, 'Hamburgesa maraja', 'Queso, panceta, huevo frito + guarnicion', 170, 1),
-(5, 'Jarra Fernet', '1Lts fernet', 120, 1),
+(5, 'Jarra Fernet', '1Lts fernet', 170, 1),
 (6, 'Jarra gancia', '1Lts de gancia', 100, 1),
 (7, 'Milanesa napolitana', 'MIlanga de carne a la napolitana', 180, 1),
-(8, 'SUper pancho maraja', 'Pancho con de todo', 150, 1),
+(8, 'SUper pancho maraja', 'Pancho con de todo', 170, 1),
 (9, 'El panchito', 'Pancho ', 100, 1);
 
 -- --------------------------------------------------------
@@ -253,23 +236,41 @@ CREATE TABLE `rolespermisos` (
 
 INSERT INTO `rolespermisos` (`fkRol`, `fkPermiso`) VALUES
 (1, 6),
+(2, 6),
 (1, 7),
+(2, 7),
 (1, 8),
+(2, 8),
 (1, 9),
+(2, 9),
 (1, 10),
+(2, 10),
 (1, 11),
+(2, 11),
 (1, 12),
+(2, 12),
 (1, 13),
+(2, 13),
 (1, 14),
+(2, 14),
 (1, 15),
+(2, 15),
 (1, 16),
+(2, 16),
 (1, 17),
+(2, 17),
 (1, 18),
+(2, 18),
 (1, 19),
+(2, 19),
 (1, 20),
+(2, 20),
 (1, 21),
+(2, 21),
 (1, 22),
-(1, 23);
+(2, 22),
+(1, 23),
+(2, 23);
 
 -- --------------------------------------------------------
 
@@ -330,7 +331,9 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`idUsuario`, `nombreUsuario`, `clave`, `fkRol`) VALUES
-(1, 'matias', '090c36e3bb39377468363197afb3e91b', 1);
+(1, 'matias', '090c36e3bb39377468363197afb3e91b', 1),
+(2, 'supervisor', '09348c20a019be0318387c08df7a783d', 2),
+(3, 'cajero', 'f80bb5a954ee71b40f1c31b79734d82d', 3);
 
 -- --------------------------------------------------------
 
@@ -346,13 +349,6 @@ CREATE TABLE `ventas` (
   `fkEstado` int(11) NOT NULL,
   `fkUsuario` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
-
---
--- Volcado de datos para la tabla `ventas`
---
-
-INSERT INTO `ventas` (`idVenta`, `fkMesa`, `fecha`, `total`, `fkEstado`, `fkUsuario`) VALUES
-(1, 1, '2017-06-07', 570, 1, 1);
 
 --
 -- Índices para tablas volcadas
@@ -493,7 +489,7 @@ ALTER TABLE `estadosventa`
 -- AUTO_INCREMENT de la tabla `mesa`
 --
 ALTER TABLE `mesa`
-  MODIFY `idMesa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
+  MODIFY `idMesa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT de la tabla `permisos`
 --
@@ -528,12 +524,12 @@ ALTER TABLE `tipoproducto`
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `idUsuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idUsuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT de la tabla `ventas`
 --
 ALTER TABLE `ventas`
-  MODIFY `idVenta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idVenta` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- Restricciones para tablas volcadas
 --

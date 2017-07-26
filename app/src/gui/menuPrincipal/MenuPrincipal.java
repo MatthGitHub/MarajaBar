@@ -117,7 +117,7 @@ public class MenuPrincipal extends MenuP {
         btn_afuera = new javax.swing.JButton();
         btnAbajo = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
+        btnLogout = new javax.swing.JButton();
         jifMesas = new javax.swing.JInternalFrame();
         jpMesas = new PanelMesas();
         btn_movil = new javax.swing.JButton();
@@ -163,8 +163,13 @@ public class MenuPrincipal extends MenuP {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Sectores");
 
-        jButton2.setBackground(new java.awt.Color(232, 133, 133));
-        jButton2.setText("Cerrar sesion");
+        btnLogout.setBackground(new java.awt.Color(232, 133, 133));
+        btnLogout.setText("Cerrar sesion");
+        btnLogout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLogoutActionPerformed(evt);
+            }
+        });
 
         jifMesas.setTitle("Mesas");
         jifMesas.setVisible(true);
@@ -200,7 +205,7 @@ public class MenuPrincipal extends MenuP {
                         .addComponent(lblUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jButton2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnLogout, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
                                 .addContainerGap()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -239,7 +244,7 @@ public class MenuPrincipal extends MenuP {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jifMesas, javax.swing.GroupLayout.DEFAULT_SIZE, 474, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(btnLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -268,14 +273,20 @@ public class MenuPrincipal extends MenuP {
         llenarPanelMesas(99);
     }//GEN-LAST:event_btn_movilActionPerformed
 
+    private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
+        // TODO add your handling code here:
+        mainFrame.goLoginView();
+        this.setVisible(false);
+    }//GEN-LAST:event_btnLogoutActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAbajo;
+    private javax.swing.JButton btnLogout;
     private javax.swing.JButton btn_afuera;
     private javax.swing.JButton btn_arriba;
     private javax.swing.JButton btn_movil;
     private javax.swing.JButton btn_salon;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JInternalFrame jifMesas;

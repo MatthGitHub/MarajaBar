@@ -72,46 +72,68 @@ public final class Main extends javax.swing.JFrame {
         //Estadisticas
         if(!fac.verificarPermisos(6)){
             jm_estadisticas.setVisible(false);
+        }else{
+            jm_estadisticas.setVisible(true);
         }
         //Ventas
         if(!fac.verificarPermisos(7)){
             mi_ventas.setVisible(false);
+        }else{
+            mi_ventas.setVisible(true);
         }
         //Compras
         if(!fac.verificarPermisos(8)){
             mi_compras.setVisible(false);
+        }else{
+            mi_compras.setVisible(true);
         }
         //Administracion
         if(!fac.verificarPermisos(9)){
             jm_administacion.setVisible(false);
+        }else{
+            jm_administacion.setVisible(true);
         }
         //Productos
         if(!fac.verificarPermisos(10)){
             jm_productos.setVisible(false);
+        }else{
+            jm_productos.setVisible(true);
         }
         //ProductosListar
         if(!fac.verificarPermisos(11)){
             mi_listarProductos.setVisible(false);
+        }else{
+            mi_listarProductos.setVisible(true);
         }
         //ProductosNuevo
         if(!fac.verificarPermisos(12)){
             mi_nuevoProducto.setVisible(false);
+        }else{
+            mi_nuevoProducto.setVisible(true);
         }
         //Proveedores
         if(!fac.verificarPermisos(14)){
             mi_proveedores.setVisible(false);
+        }else{
+            mi_proveedores.setVisible(true);
         }
         //Mesas
         if(!fac.verificarPermisos(17)){
             mi_mesas.setVisible(false);
+        }else{
+            mi_mesas.setVisible(true);
         }
         //Configuracion
         if(!fac.verificarPermisos(20)){
             jm_configuracion.setVisible(false);
+        }else{
+            jm_configuracion.setVisible(true);
         }
         //Usuarios
         if(!fac.verificarPermisos(21)){
             mi_usuarios.setVisible(false);
+        }else{
+            mi_usuarios.setVisible(true);
         }
     }
     /**
@@ -120,8 +142,14 @@ public final class Main extends javax.swing.JFrame {
     public void goLoginView(){
         loginView = LoginView.getLoginView(this);
         if(!loginView.isVisible() == false){
+            setSize(420, 310);
+            jmb_menu.setVisible(false);
+            setLocationRelativeTo(null);
             getContentPane().add(loginView);
         }else{
+            setSize(420, 310);
+            jmb_menu.setVisible(false);
+            setLocationRelativeTo(null);
             loginView.setVisible(true);
         }
     }

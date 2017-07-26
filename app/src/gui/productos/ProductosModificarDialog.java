@@ -54,6 +54,14 @@ public class ProductosModificarDialog extends javax.swing.JDialog {
         aMod.setPrecio(Integer.parseInt(txtPrecio.getText()));
         try {
             FacadeNegocio.getFacadeNegocio().modificarProducto(aMod);
+            pView.setTablaProductos();
+            ComandaFrame comanda = ComandaFrame.getComandaFrame();
+            if(comanda != null){
+                comanda.setTablaProductos();
+            }
+            this.setVisible(false);
+            this.dispose();
+        System.gc();
         } catch (Exception ex) {
             Logger.getLogger(ProductosModificarDialog.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(this, "Error al modificar producto: "+ex,"Error",JOptionPane.ERROR_MESSAGE);

@@ -132,17 +132,17 @@ public class ProductosJpaController implements Serializable {
                 productos.setFkTipo(fkTipoNew);
             }
             List<Detallecompras> attachedDetallecomprasListNew = new ArrayList<Detallecompras>();
-            for (Detallecompras detallecomprasListNewDetallecomprasToAttach : detallecomprasListNew) {
+            /*for (Detallecompras detallecomprasListNewDetallecomprasToAttach : detallecomprasListNew) {
                 detallecomprasListNewDetallecomprasToAttach = em.getReference(detallecomprasListNewDetallecomprasToAttach.getClass(), detallecomprasListNewDetallecomprasToAttach.getDetallecomprasPK());
                 attachedDetallecomprasListNew.add(detallecomprasListNewDetallecomprasToAttach);
-            }
+            }*/
             detallecomprasListNew = attachedDetallecomprasListNew;
             productos.setDetallecomprasList(detallecomprasListNew);
             List<Detalleventas> attachedDetalleventasListNew = new ArrayList<Detalleventas>();
-            for (Detalleventas detalleventasListNewDetalleventasToAttach : detalleventasListNew) {
+            /*for (Detalleventas detalleventasListNewDetalleventasToAttach : detalleventasListNew) {
                 detalleventasListNewDetalleventasToAttach = em.getReference(detalleventasListNewDetalleventasToAttach.getClass(), detalleventasListNewDetalleventasToAttach.getDetalleventasPK());
                 attachedDetalleventasListNew.add(detalleventasListNewDetalleventasToAttach);
-            }
+            }*/
             detalleventasListNew = attachedDetalleventasListNew;
             productos.setDetalleventasList(detalleventasListNew);
             productos = em.merge(productos);

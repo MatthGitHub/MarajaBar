@@ -74,6 +74,7 @@ public class DtoProducto {
         this.setNombreProducto(aCargar.getNombreProducto());
         this.setDescripcion(aCargar.getDescripcion());
         this.setPrecio(aCargar.getPrecio());
+        this.setFkTipo(aCargar.getFkTipo());
         return this;
     }
 
