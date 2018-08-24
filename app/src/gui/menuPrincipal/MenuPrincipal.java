@@ -59,7 +59,7 @@ public class MenuPrincipal extends MenuP {
             if(esMovil(mesas.get(i))){
                 boton.setText(mesas.get(i).getDescripcion());
             }else{
-                boton.setText("Mesa "+mesas.get(i).getIdMesa().toString());
+                boton.setText(mesas.get(i).getDescripcion());
             }
                         
             boton.setSize(120,100);
